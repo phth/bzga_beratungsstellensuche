@@ -88,6 +88,7 @@ call_user_func(function ($packageKey) {
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\StringConverter::class);
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter::class);
     \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter::class);
+    \Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility::registerTypeConverter(\Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\BoolConverter::class);
 
     // Linkvalidator
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkvalidator')) {
