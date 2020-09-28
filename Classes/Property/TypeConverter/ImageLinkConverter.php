@@ -169,13 +169,23 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         }
 
         $imageInfo = getimagesizefromstring($imageContent);
-        $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
-        $pathToUploadFile = $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
-
-        if ($error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent)) {
-            throw new TypeConverterException($error, 1399312443);
+        if (is_array($imageInfo)) {
+            $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
+            if ($extension) {
+                $pathToUploadFile = $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
+                $error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent);
+                // due to Bug https://forge.typo3.org/issues/90063#change-431917 error always conatains something.
+                // therefore just testing if file got uploaded
+                $hasError = !@is_file($pathToUploadFile);
+                if ($hasError) {
+                    throw new TypeConverterException($error, 1399312443);
+                }
+            } else {
+               throw new TypeConverterException('Mime type '.$imageInfo['mime'].' is not allowed as image.', 1399312443);
+            }
+        } else {
+            throw new TypeConverterException('File is not an Image as expected', 1399312443);
         }
-
         return $pathToUploadFile;
     }
 
