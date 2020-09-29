@@ -30,35 +30,35 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     /**
      * @var string
      */
-    protected $subtitle;
+    protected $subtitle = '';
 
     /**
      * Kurzer Aufmacher zur Beratungsstelle.
      *
      * @var string
      */
-    protected $teaser;
+    protected $teaser = '';
 
     /**
      * PLZ der Beratungsstelle.
      *
      * @var string
      */
-    protected $zip;
+    protected $zip = '';
 
     /**
      * Ort der Beratungsstelle.
      *
      * @var string
      */
-    protected $city;
+    protected $city = '';
 
     /**
      * Straße der Beratungsstelle.
      *
      * @var string
      */
-    protected $street;
+    protected $street = '';
 
     /**
      * Bundesland der Beratungsstelle.
@@ -72,52 +72,52 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
      *
      * @var string
      */
-    protected $description;
+    protected $description = '';
 
     /**
      * @var string
      */
-    protected $contactPerson;
+    protected $contactPerson = '';
 
     /**
      * @var string
      */
-    protected $contactEmail;
+    protected $contactEmail = '';
 
     /**
      * @var string
      */
-    protected $telephone;
+    protected $telephone = '';
 
     /**
      * @var string
      */
-    protected $telefax;
+    protected $telefax = '';
 
     /**
      * @var string
      */
-    protected $email;
+    protected $email = '';
 
     /**
      * @var string
      */
-    protected $hotline;
+    protected $hotline = '';
 
     /**
      * @var string
      */
-    protected $notice;
+    protected $notice = '';
 
     /**
      * @var string
      */
-    protected $keywords;
+    protected $keywords = '';
 
     /**
      * @var string
      */
-    protected $website;
+    protected $website = '';
 
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
@@ -135,12 +135,12 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     /**
      * @var string
      */
-    protected $institution;
+    protected $institution = '';
 
     /**
      * @var string
      */
-    protected $association;
+    protected $association = '';
 
     public function __construct(string $title = '')
     {
