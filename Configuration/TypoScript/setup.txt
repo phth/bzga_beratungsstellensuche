@@ -19,7 +19,6 @@ plugin.tx_bzgaberatungsstellensuche {
     }
 
     features {
-        skipDefaultArguments = 1
         requireCHashArgumentForActionArguments = 0
     }
 
