@@ -31,7 +31,7 @@
         "typo3/cms-reports": "^9.5.13",
         "symfony/serializer": "^3.0",
         "sjbr/static-info-tables": "^6.0",
-        "sseidelmann/static-info-tables-de": "^6.0",
+        "jambagecom/static-info-tables-de": "^6.0",
         "netzmacht/php-leaflet": "^1.1",
         "ext-json": "*",
         "ext-simplexml": "*",
