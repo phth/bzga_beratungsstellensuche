@@ -51,7 +51,8 @@
         "typo3/cms-rte-ckeditor": "^9.0",
         "helhum/typo3-console": "5.*",
         "ssch/typo3-rector": "^0.2.0",
-        "saschaegerer/phpstan-typo3": "^0.13.1"
+        "saschaegerer/phpstan-typo3": "^0.13.1",
+        "php-parallel-lint/php-parallel-lint": "^1.2"
     },
     "replace": {
         "typo3-ter/bzga-beratungsstellensuche": "self.version"
@@ -60,12 +61,25 @@
         "vendor-dir": ".Build/vendor"
     },
     "scripts": {
-        "link-extension": [
-            "@php -r 'is_dir($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
-            "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/bzga_beratungsstellensuche\") || symlink(__DIR__,$extFolder);'"
-        ],
         "post-autoload-dump": [
-            "@link-extension"
+            "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+        ],
+        "test-php-lint": [
+            ".Build/vendor/bin/parallel-lint ./Classes/",
+            ".Build/vendor/bin/parallel-lint ./Configuration/TCA/",
+            ".Build/vendor/bin/parallel-lint ./Tests/"
+        ],
+        "test-php-cs-fixer": [
+            "php-cs-fixer fix -v --dry-run --using-cache false --diff --diff-format=udiff"
+        ],
+        "php-cs-fixer": [
+            "php-cs-fixer fix -v --using-cache false --diff --diff-format=udiff"
+        ],
+        "test-unit": [
+            ".Build/vendor/bin/phpunit --colors -c Tests/Build/UnitTests.xml"
+        ],
+        "test-functional": [
+            ".Build/vendor/bin/phpunit --colors -c Tests/Build/FunctionalTests.xml"
         ]
     },
     "extra": {

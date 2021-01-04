@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php declare(strict_types = 1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
@@ -18,7 +18,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Utility;
 use Bzga\BzgaBeratungsstellensuche\Hooks\PageLayoutView;
 use TYPO3\CMS\Backend\Template\DocumentTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
-use TYPO3\CMS\Backend\Utility\IconUtility as CoreIconUtility;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
@@ -39,9 +38,9 @@ class IconUtility
 
     public function getIconForRecord(string $table, array $record): string
     {
-        $data = '<span data-toggle="tooltip" data-placement="top" data-title="id='.$record['uid'].'">'
-                .$this->iconFactory->getIconForRecord($table, $record, Icon::SIZE_SMALL)->render()
-                .'</span> ';
+        $data = '<span data-toggle="tooltip" data-placement="top" data-title="id=' . $record['uid'] . '">'
+                . $this->iconFactory->getIconForRecord($table, $record, Icon::SIZE_SMALL)->render()
+                . '</span> ';
         $content = BackendUtilityCore::wrapClickMenuOnIcon(
             $data,
             $table,
@@ -57,8 +56,8 @@ class IconUtility
             $id = $record['uid'];
             $currentPageId = (int)GeneralUtility::_GET('id');
             $link = htmlspecialchars($this->getEditLink($record, $currentPageId));
-            $switchLabel = $this->getLanguageService()->sL(PageLayoutView::LLPATH.'pagemodule.switchToPage');
-            $content .= ' <a href="#" data-toggle="tooltip" data-placement="top" data-title="'.$switchLabel.'" onclick=\'top.jump("'.$link.'", "web_layout", "web", '.$id.');return false\'>'.$linkTitle.'</a>';
+            $switchLabel = $this->getLanguageService()->sL(PageLayoutView::LLPATH . 'pagemodule.switchToPage');
+            $content .= ' <a href="#" data-toggle="tooltip" data-placement="top" data-title="' . $switchLabel . '" onclick=\'top.jump("' . $link . '", "web_layout", "web", ' . $id . ');return false\'>' . $linkTitle . '</a>';
         } else {
             $content .= $linkTitle;
         }

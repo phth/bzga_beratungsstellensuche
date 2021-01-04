@@ -18,8 +18,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\AbstractEntity;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
-use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Countable;
 use IteratorAggregate;

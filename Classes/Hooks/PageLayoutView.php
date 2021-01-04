@@ -279,9 +279,9 @@ class PageLayoutView
 
             foreach ($rawPagesRecords as $page) {
                 $pagesOut[] = htmlspecialchars(BackendUtilityCore::getRecordTitle(
-                        'pages',
-                        $page
-                    )) . ' (' . $page['uid'] . ')';
+                    'pages',
+                    $page
+                )) . ' (' . $page['uid'] . ')';
             }
 
             $recursiveLevel = (int)$this->getFieldFromFlexform('settings.recursive');

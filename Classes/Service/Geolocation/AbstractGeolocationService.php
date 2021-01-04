@@ -19,7 +19,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Factories\HttpClientFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\SettingsService;
-use Geocoder\Geocoder;
 use Geocoder\Provider\Provider;
 
 /**
@@ -68,19 +67,19 @@ abstract class AbstractGeolocationService implements GeolocationServiceInterface
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition): float
     {
         return self::EARTH_RADIUS * acos(
-                cos(deg2rad($demandPosition->getLatitude())) * cos(deg2rad($locationPosition->getLatitude())) * cos(
-                    deg2rad($locationPosition->getLongitude()) - deg2rad($demandPosition->getLongitude())
-                ) + sin(deg2rad($demandPosition->getLatitude())) * sin(deg2rad($locationPosition->getLatitude()))
-            );
+            cos(deg2rad($demandPosition->getLatitude())) * cos(deg2rad($locationPosition->getLatitude())) * cos(
+                deg2rad($locationPosition->getLongitude()) - deg2rad($demandPosition->getLongitude())
+            ) + sin(deg2rad($demandPosition->getLatitude())) * sin(deg2rad($locationPosition->getLatitude()))
+        );
     }
 
     public function getDistanceSqlField(GeoPositionDemandInterface $demandPosition, string $table, string $alias = 'distance'): string
     {
         return sprintf(
-                   self::DISTANCE_SQL_FIELD,
-                   $demandPosition->getLatitude(),
-                   $demandPosition->getLongitude(),
-                   $demandPosition->getKilometers()
-               ) . ' AS ' . $alias;
+            self::DISTANCE_SQL_FIELD,
+            $demandPosition->getLatitude(),
+            $demandPosition->getLongitude(),
+            $demandPosition->getKilometers()
+        ) . ' AS ' . $alias;
     }
 }

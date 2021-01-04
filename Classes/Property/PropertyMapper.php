@@ -47,7 +47,7 @@ class PropertyMapper implements TypeConverterInterface
         foreach ($this->typeConverters as $typeConverter) {
             if (true === $typeConverter->supports($source, $type) && $this->converterSupportsType(
                 $typeConverter,
-                    $type
+                $type
             )
             ) {
                 return $typeConverter;

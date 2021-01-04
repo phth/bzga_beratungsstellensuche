@@ -16,7 +16,6 @@ use SJBR\StaticInfoTables\Domain\Model\CountryZone;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Backend\Backend\Avatar\Image;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
