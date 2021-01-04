@@ -123,7 +123,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         }
 
         // First of all we delete the old references
-        /** @var ExternalIdInterface|AbstractEntity $entity */
+        /** @var AbstractEntity|ExternalIdInterface $entity */
         $entity = $configuration['entity'];
 
         $fileReferenceData = [
@@ -181,7 +181,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
                     throw new TypeConverterException($error, 1399312443);
                 }
             } else {
-               throw new TypeConverterException('Mime type '.$imageInfo['mime'].' is not allowed as image.', 1399312443);
+                throw new TypeConverterException('Mime type ' . $imageInfo['mime'] . ' is not allowed as image.', 1399312443);
             }
         } else {
             throw new TypeConverterException('File is not an Image as expected', 1399312443);

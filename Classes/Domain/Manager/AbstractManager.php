@@ -19,6 +19,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\AbstractBaseRepository;
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
+use function count;
 use Countable;
 use IteratorAggregate;
 use Psr\Log\LoggerInterface;
@@ -27,7 +28,6 @@ use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use function count;
 
 /**
  * @author Sebastian Schreiber

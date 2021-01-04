@@ -34,7 +34,7 @@ class ext_update
 
         $content .= '<p>' . LocalizationUtility::translate(
             'updateLanguageLabels',
-                'StaticInfoTables'
+            'StaticInfoTables'
         ) . ' bzga_beratungsstellensuche.</p>';
 
         $this->createImageUploadFolder();

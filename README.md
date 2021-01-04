@@ -1,6 +1,6 @@
 Beratungsstellensuche
 =====================
-[![Build Status](https://img.shields.io/travis/sabbelasichon/bzga_beratungsstellensuche/master.svg?style=flat-square)](https://travis-ci.org/sabbelasichon/bzga_beratungsstellensuche)
+[![CI Status](https://github.com/sabbelasichon/bzga_beratungsstellensuche/workflows/CI/badge.svg)](https://github.com/sabbelasichon/bzga_beratungsstellensuche/actions)
 
 Die Erweiterung ermöglicht die Pflege und Darstellung von Beratungsstellen (Locations) auf Basis des CMS TYPO3.
 
