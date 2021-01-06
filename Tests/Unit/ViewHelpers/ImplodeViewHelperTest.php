@@ -25,11 +25,11 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var ImplodeViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var ImplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(ImplodeViewHelper::class)->setMethods(['renderChildren'])->getMock();
@@ -50,11 +50,11 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      * @dataProvider possibleInvalidValues
      */
     public function renderThrowsException($pieces)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->setArgumentsUnderTest($this->subject, ['pieces' => $pieces]);
         $this->subject->render();
     }

@@ -43,7 +43,7 @@ class ObjectStorageConverterTest extends UnitTestCase
         ];
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->subject = new ObjectStorageConverter();
     }

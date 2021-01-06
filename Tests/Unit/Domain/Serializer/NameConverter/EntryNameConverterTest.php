@@ -9,9 +9,9 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 class EntryNameConverterTest extends AbstractNameConverterTest
 {
-    protected function setUp()
+    protected function setUp(): void
     {
-        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
         $this->subject = new EntryNameConverter([], true, $dispatcher);
     }

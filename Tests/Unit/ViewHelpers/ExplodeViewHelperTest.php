@@ -24,11 +24,11 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var ExplodeViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var ExplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(ExplodeViewHelper::class)->setMethods(['renderChildren'])->getMock();
@@ -82,10 +82,10 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function renderWithWrongSubjectType()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectException(\InvalidArgumentException::class);
         $this->setArgumentsUnderTest($this->subject, ['subject' => new \stdClass()]);
         $this->subject->render();

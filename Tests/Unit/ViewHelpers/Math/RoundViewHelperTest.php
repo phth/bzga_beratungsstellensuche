@@ -24,11 +24,11 @@ class RoundViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|RoundViewHelper
+     * @var \PHPUnit\Framework\MockObject\MockObject|RoundViewHelper
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(RoundViewHelper::class)->setMethods(['renderChildren'])->getMock();

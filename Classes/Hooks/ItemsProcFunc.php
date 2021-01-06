@@ -32,7 +32,7 @@ class ItemsProcFunc
         $templateLayouts = $templateLayoutsUtility->getAvailableTemplateLayouts($config['row']['pid']);
         foreach ($templateLayouts as $layout) {
             $additionalLayout  = [
-                $GLOBALS['LANG']->sL($layout[0], true),
+                htmlspecialchars($GLOBALS['LANG']->sL($layout[0])),
                 $layout[1],
             ];
             $config['items'][] = $additionalLayout;
@@ -46,7 +46,7 @@ class ItemsProcFunc
         $formFields = $formFieldsUtility->getAvailableFormFields();
         foreach ($formFields as $formField) {
             $additionalFormField = [
-                $GLOBALS['LANG']->sL($formField[0], true),
+                htmlspecialchars($GLOBALS['LANG']->sL($formField[0])),
                 $formField[1],
             ];
             $config['items'][]   = $additionalFormField;

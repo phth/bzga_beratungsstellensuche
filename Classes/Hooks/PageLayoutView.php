@@ -296,12 +296,12 @@ class PageLayoutView
 
             if (! empty($recursiveLevelText)) {
                 $recursiveLevelText = '<br />' .
-                                      $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.recursive') . ' ' .
+                                      $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.recursive') . ' ' .
                                       $recursiveLevelText;
             }
 
             $this->tableData[] = [
-                $this->getLanguageService()->sL('LLL:EXT:lang/locallang_general.xlf:LGL.startingpoint'),
+                $this->getLanguageService()->sL('LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.startingpoint'),
                 implode(', ', $pagesOut) . $recursiveLevelText,
             ];
         }

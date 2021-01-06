@@ -6,6 +6,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Property\TypeConverter;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -18,15 +20,15 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\Exception\DownloadException;
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use Exception;
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
@@ -62,7 +64,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * @var string
      */
-    private $tempFolder = PATH_site . 'typo3temp/tx_bzgaberatungsstellensuche/';
+    private $tempFolder = 'typo3temp/tx_bzgaberatungsstellensuche/';
 
     /**
      * One of 'cancel', 'replace', 'changeName'
@@ -174,7 +176,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         if (is_array($imageInfo)) {
             $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
             if ($extension) {
-                $pathToUploadFile = $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
+                $pathToUploadFile = Environment::getPublicPath() . '/' . $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
                 $error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent);
                 // due to Bug https://forge.typo3.org/issues/90063#change-431917 error always conatains something.
                 // therefore just testing if file got uploaded
@@ -193,7 +195,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     private function importResource(string $tempFilePath): FalFile
     {
-        if (! GeneralUtility::verifyFilenameAgainstDenyPattern($tempFilePath)) {
+        if (! GeneralUtility::makeInstance(FileNameValidator::class)->isValid($tempFilePath)) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 

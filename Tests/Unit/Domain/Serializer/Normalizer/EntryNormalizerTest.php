@@ -43,28 +43,28 @@ class EntryNormalizerTest extends UnitTestCase
     protected $serializer;
 
     /**
-     * @var CountryZoneRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var CountryZoneRepository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $countryZoneRepository;
 
     /**
-     * @var CategoryRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var CategoryRepository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $categoryRepository;
 
     /**
-     * @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject
+     * @var Dispatcher|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $signalSlotDispatcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->categoryRepository = $this->getMockBuilder(CategoryRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->serializer = $this->getMockForAbstractClass(SerializerNormalizer::class);
 
-        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
         $this->subject = new EntryNormalizer(null, $dispatcher);
         $this->subject->setSerializer($this->serializer);

@@ -27,7 +27,7 @@ use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Web\Response;
+use TYPO3\CMS\Extbase\Mvc\Response;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
@@ -68,7 +68,7 @@ class EntryController extends ActionController
     /**
      * The response which will be returned by this action controller
      *
-     * @var Response
+     * @var \TYPO3\CMS\Extbase\Mvc\Response
      * @api
      */
     protected $response;

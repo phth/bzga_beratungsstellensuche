@@ -25,16 +25,16 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 class DistanceViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var GeolocationServiceCacheDecorator|\PHPUnit_Framework_MockObject_MockObject
+     * @var GeolocationServiceCacheDecorator|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $geolocationService;
 
     /**
-     * @var DistanceViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var DistanceViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->geolocationService = $this->getMockBuilder(GeolocationServiceCacheDecorator::class)->disableOriginalConstructor()->getMock();

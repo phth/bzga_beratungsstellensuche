@@ -28,7 +28,7 @@ class EntryTest extends UnitTestCase
      */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->subject = new Entry();
     }

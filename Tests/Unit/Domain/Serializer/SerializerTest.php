@@ -23,8 +23,10 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNa
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
+use PHPUnit\Framework\MockObject\MockObject;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -39,13 +41,12 @@ class SerializerTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var CategoryRepository|\PHPUnit_Framework_MockObject_MockObject
+     * @var CategoryRepository|MockObject
      */
     protected $categoryRepository;
 
     /**
      * @var CountryZoneRepository
-     * @inject
      */
     protected $countryZoneRepository;
 
@@ -55,13 +56,13 @@ class SerializerTest extends UnitTestCase
     protected $entryNormalizer;
 
     /**
-     * @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject
+     * @var Dispatcher|MockObject
      */
     protected $signalSlotDispatcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
         $this->entryNormalizer = new EntryNormalizer(null, $dispatcher);
         $this->resetSingletonInstances = true;
@@ -77,7 +78,8 @@ class SerializerTest extends UnitTestCase
             $this->entryNormalizer,
             new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher))
         ];
-        $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher);
+        $objectManager = $this->createMock(ObjectManagerInterface::class);
+        $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher, $objectManager);
     }
 
     /**

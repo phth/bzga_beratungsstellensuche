@@ -37,20 +37,20 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var Dispatcher|\PHPUnit_Framework_MockObject_MockObject
+     * @var Dispatcher|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $signalSlotDispatcher;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|SerializerNormalizer
+     * @var \PHPUnit\Framework\MockObject\MockObject\MockObject|SerializerNormalizer
      */
     protected $serializer;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $this->serializer = $this->getMockForAbstractClass(SerializerNormalizer::class);
-        $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $dispatcher = $this->getMockBuilder(Dispatcher::class)->disableOriginalConstructor()->getMock();
         $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
         $this->subject = new GetSetMethodNormalizer(null, new EntryNameConverter([], true, $dispatcher));
         $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);

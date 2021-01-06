@@ -24,11 +24,11 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|UppercaseFirstLetterViewHelper
+     * @var \PHPUnit\Framework\MockObject\MockObject|UppercaseFirstLetterViewHelper
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(UppercaseFirstLetterViewHelper::class)->setMethods(['renderChildren'])->getMock();
@@ -48,10 +48,10 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function renderThrowsInvalidArgumentException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->setArgumentsUnderTest($this->subject, ['subject' => new \stdClass()]);
         $this->subject->render();
     }

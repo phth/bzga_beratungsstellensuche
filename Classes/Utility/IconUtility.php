@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Utility;
 
+use Bzga\BzgaBeratungsstellensuche\Hooks\PageLayoutView;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 /*
  * This file is part of the TYPO3 CMS project.
  *
@@ -17,11 +19,10 @@ namespace Bzga\BzgaBeratungsstellensuche\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Bzga\BzgaBeratungsstellensuche\Hooks\PageLayoutView;
-use TYPO3\CMS\Backend\Template\DocumentTemplate;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Type\Bitmask\Permission;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -73,8 +74,8 @@ class IconUtility
         $localCalcPerms = $GLOBALS['BE_USER']->calcPerms(BackendUtilityCore::getRecord('pages', $row['uid']));
         $permsEdit = $localCalcPerms & Permission::PAGE_EDIT;
         if ($permsEdit) {
-            $returnUrl = BackendUtilityCore::getModuleUrl('web_layout', ['id' => $currentPageUid]);
-            $editLink = BackendUtilityCore::getModuleUrl('web_layout', [
+            $returnUrl = GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoute('web_layout', ['id' => $currentPageUid]);
+            $editLink = GeneralUtility::makeInstance(UriBuilder::class)->buildUriFromRoute('web_layout', [
                 'id' => $row['uid'],
                 'returnUrl' => $returnUrl,
             ]);
@@ -83,13 +84,8 @@ class IconUtility
         return $editLink;
     }
 
-    public function getLanguageService(): \TYPO3\CMS\Core\Localization\LanguageService
+    public function getLanguageService(): LanguageService
     {
         return $GLOBALS['LANG'];
-    }
-
-    private function getDocumentTemplate(): DocumentTemplate
-    {
-        return $GLOBALS['SOBE']->doc;
     }
 }

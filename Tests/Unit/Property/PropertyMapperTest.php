@@ -27,16 +27,16 @@ class PropertyMapperTest extends UnitTestCase
 {
 
     /**
-     * @var ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ObjectManagerInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $objectManager;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|PropertyMapper
+     * @var \PHPUnit\Framework\MockObject\MockObject|PropertyMapper
      */
     protected $subject;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->subject = $this->getAccessibleMock(PropertyMapper::class, ['getRegisteredTypeConverters']);
     }
@@ -55,18 +55,18 @@ class PropertyMapperTest extends UnitTestCase
      */
     public function convertSuccessfully()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface  $typeConverter */
+        /** @var \PHPUnit\Framework\MockObject\MockObject|TypeConverterBeforeInterface  $typeConverter */
         $typeConverter = $this->setUpTypeConverter();
         $typeConverter->expects(self::once())->method('convert')->willReturn(true);
         self::assertTrue($this->subject->convert('array'));
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface
+     * @return \PHPUnit\Framework\MockObject\MockObject|TypeConverterBeforeInterface
      */
     private function setUpTypeConverter()
     {
-        /** @var \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface  $typeConverter */
+        /** @var \PHPUnit\Framework\MockObject\MockObject|TypeConverterBeforeInterface  $typeConverter */
         $typeConverter  = $this->getMockBuilder(TypeConverterBeforeInterface::class)->getMock();
         $typeConverter->expects(self::once())->method('supports')->willReturn(true);
         $this->subject->expects(self::once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);

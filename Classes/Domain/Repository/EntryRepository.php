@@ -60,8 +60,8 @@ class EntryRepository extends AbstractBaseRepository
     {
         $query = $this->createQuery();
         return $query->matching($query->logicalOr([
-            $query->like('zip', $q . '%', false),
-            $query->like('city', $q . '%', false),
+            $query->like('zip', $q . '%'),
+            $query->like('city', $q . '%'),
         ]))->execute();
     }
 

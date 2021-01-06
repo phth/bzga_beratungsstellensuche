@@ -33,13 +33,13 @@ class DataMapTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var DataMapFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var DataMapFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $dataMapFactory;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->dataMapFactory = $this->getMockBuilder(DataMapFactory::class)->getMock();
+        $this->dataMapFactory = $this->getMockBuilder(DataMapFactory::class)->disableOriginalConstructor()->getMock();
         $this->subject = new DataMap($this->dataMapFactory);
     }
 

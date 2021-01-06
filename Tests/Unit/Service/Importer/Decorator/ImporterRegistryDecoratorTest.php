@@ -33,16 +33,16 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var ImporterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ImporterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $importer;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Registry
+     * @var \PHPUnit\Framework\MockObject\MockObject|Registry
      */
     protected $registry;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->importer = $this->getMockBuilder(ImporterInterface::class)->getMock();
         $this->registry = $this->getMockBuilder(Registry::class)->getMock();
