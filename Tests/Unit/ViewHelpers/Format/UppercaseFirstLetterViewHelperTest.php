@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
 
@@ -40,8 +42,8 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithRenderChildren($input, $expected)
     {
         $this->setArgumentsUnderTest($this->subject);
-        $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render());
+        $this->subject->expects(self::once())->method('renderChildren')->willReturn($input);
+        self::assertEquals($expected, $this->subject->render());
     }
 
     /**

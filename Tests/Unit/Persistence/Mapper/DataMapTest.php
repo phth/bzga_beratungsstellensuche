@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Persistence\Mapper;
 
@@ -35,8 +37,6 @@ class DataMapTest extends UnitTestCase
      */
     protected $dataMapFactory;
 
-    /**
-     */
     protected function setUp()
     {
         $this->dataMapFactory = $this->getMockBuilder(DataMapFactory::class)->getMock();
@@ -50,11 +50,11 @@ class DataMapTest extends UnitTestCase
     {
         $expectedTableName = 'tablename';
         $dataMap = $this->getMockBuilder(CoreDataMap::class)->disableOriginalConstructor()->getMock();
-        $this->dataMapFactory->expects($this->once())->method('buildDataMap')->willReturn($dataMap);
-        $dataMap->expects($this->once())->method('getTableName')->willReturn($expectedTableName);
+        $this->dataMapFactory->expects(self::once())->method('buildDataMap')->willReturn($dataMap);
+        $dataMap->expects(self::once())->method('getTableName')->willReturn($expectedTableName);
         for ($i = 0; $i <= 5; $i++) {
             $tableName = $this->subject->getTableNameByClassName(__CLASS__);
         }
-        $this->assertSame($expectedTableName, $tableName);
+        self::assertSame($expectedTableName, $tableName);
     }
 }

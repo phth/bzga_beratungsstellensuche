@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
@@ -46,13 +48,13 @@ class DistanceViewHelperTest extends ViewHelperBaseTestcase
      */
     public function render()
     {
-        $this->geolocationService->expects($this->once())->method('calculateDistance')->willReturn(1);
+        $this->geolocationService->expects(self::once())->method('calculateDistance')->willReturn(1);
         $demandPosition = $this->getMockBuilder(GeopositionInterface::class)->getMock();
         $location = $this->getMockBuilder(GeopositionInterface::class)->getMock();
         $this->subject->setArguments([
             'demandPosition' => $demandPosition,
             'location' => $location
         ]);
-        $this->assertEquals(1, $this->subject->render());
+        self::assertEquals(1, $this->subject->render());
     }
 }

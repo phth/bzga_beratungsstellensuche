@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer;
 
@@ -44,8 +46,6 @@ class GetSetMethodNormalizerTest extends UnitTestCase
      */
     protected $serializer;
 
-    /**
-     */
     protected function setUp()
     {
         $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();

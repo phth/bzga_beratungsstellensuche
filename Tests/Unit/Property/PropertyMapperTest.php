@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
 
@@ -34,8 +36,6 @@ class PropertyMapperTest extends UnitTestCase
      */
     protected $subject;
 
-    /**
-     */
     protected function setUp()
     {
         $this->subject = $this->getAccessibleMock(PropertyMapper::class, ['getRegisteredTypeConverters']);
@@ -47,7 +47,7 @@ class PropertyMapperTest extends UnitTestCase
     public function supportsReturnsTypeConverter()
     {
         $typeConverter = $this->setUpTypeConverter();
-        $this->assertSame($typeConverter, $this->subject->supports($typeConverter));
+        self::assertSame($typeConverter, $this->subject->supports($typeConverter));
     }
 
     /**
@@ -57,8 +57,8 @@ class PropertyMapperTest extends UnitTestCase
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface  $typeConverter */
         $typeConverter = $this->setUpTypeConverter();
-        $typeConverter->expects($this->once())->method('convert')->willReturn(true);
-        $this->assertTrue($this->subject->convert('array'));
+        $typeConverter->expects(self::once())->method('convert')->willReturn(true);
+        self::assertTrue($this->subject->convert('array'));
     }
 
     /**
@@ -68,8 +68,8 @@ class PropertyMapperTest extends UnitTestCase
     {
         /** @var \PHPUnit_Framework_MockObject_MockObject|TypeConverterBeforeInterface  $typeConverter */
         $typeConverter  = $this->getMockBuilder(TypeConverterBeforeInterface::class)->getMock();
-        $typeConverter->expects($this->once())->method('supports')->willReturn(true);
-        $this->subject->expects($this->once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);
+        $typeConverter->expects(self::once())->method('supports')->willReturn(true);
+        $this->subject->expects(self::once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);
 
         $this->injectObjectManager($typeConverter);
         return $typeConverter;
@@ -82,7 +82,7 @@ class PropertyMapperTest extends UnitTestCase
     private function injectObjectManager($typeConverter)
     {
         $this->objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
-        $this->objectManager->expects($this->once())->method('get')->willReturn($typeConverter);
+        $this->objectManager->expects(self::once())->method('get')->willReturn($typeConverter);
         $this->inject($this->subject, 'objectManager', $this->objectManager);
     }
 }

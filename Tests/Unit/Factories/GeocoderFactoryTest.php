@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Factories;
 
@@ -30,7 +32,7 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function googleMapsGeocoderReturned()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             GoogleMaps::class,
             GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpClientFactory::createInstance())
         );
@@ -41,7 +43,7 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function openStreetMapGeocoderReturned()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             Nominatim::class,
             GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpClientFactory::createInstance())
         );
@@ -52,7 +54,7 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function wrongTypeFallbackToGoogleMaps()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             GoogleMaps::class,
             GeocoderFactory::createInstance('something', HttpClientFactory::createInstance())
         );
@@ -64,6 +66,6 @@ class GeocoderFactoryTest extends UnitTestCase
     public function customProviderReturned()
     {
         $customProvider = $this->getMockBuilder(Provider::class)->getMock();
-        $this->assertInstanceOf(get_class($customProvider), GeocoderFactory::createInstance(get_class($customProvider), HttpClientFactory::createInstance()));
+        self::assertInstanceOf(get_class($customProvider), GeocoderFactory::createInstance(get_class($customProvider), HttpClientFactory::createInstance()));
     }
 }

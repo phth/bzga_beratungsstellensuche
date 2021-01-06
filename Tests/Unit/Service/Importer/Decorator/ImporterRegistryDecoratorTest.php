@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
 
@@ -40,8 +42,6 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
      */
     protected $registry;
 
-    /**
-     */
     protected function setUp()
     {
         $this->importer = $this->getMockBuilder(ImporterInterface::class)->getMock();
@@ -56,9 +56,9 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     public function importWithAlreadyImportedContent($content)
     {
         $hash = md5($content);
-        $this->registry->expects($this->once())->method('get')->willReturn($hash);
-        $this->registry->expects($this->never())->method('set');
-        $this->importer->expects($this->never())->method('import');
+        $this->registry->expects(self::once())->method('get')->willReturn($hash);
+        $this->registry->expects(self::never())->method('set');
+        $this->importer->expects(self::never())->method('import');
 
         $this->subject->import($content);
     }
@@ -71,9 +71,9 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     public function importUpdatedContent($content)
     {
         $hash = md5('other content');
-        $this->registry->expects($this->once())->method('get')->willReturn($hash);
-        $this->registry->expects($this->once())->method('set');
-        $this->importer->expects($this->once())->method('import');
+        $this->registry->expects(self::once())->method('get')->willReturn($hash);
+        $this->registry->expects(self::once())->method('set');
+        $this->importer->expects(self::once())->method('import');
         $this->subject->import($content);
     }
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer;
 
@@ -55,8 +57,6 @@ class EntryNormalizerTest extends UnitTestCase
      */
     protected $signalSlotDispatcher;
 
-    /**
-     */
     protected function setUp()
     {
         $this->signalSlotDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
@@ -106,7 +106,7 @@ class EntryNormalizerTest extends UnitTestCase
             'beratungsart' => [],
         ];
         $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
-        $this->countryZoneRepository->expects($this->once())->method('findOneByExternalId')->willReturn($countryZoneMock);
+        $this->countryZoneRepository->expects(self::once())->method('findOneByExternalId')->willReturn($countryZoneMock);
 
         $object = $this->subject->denormalize($data, Entry::class);
         /* @var $object Entry */

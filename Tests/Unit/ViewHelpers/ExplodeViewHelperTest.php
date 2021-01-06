@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
@@ -45,7 +47,7 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
             'removeEmptyValues' => false,
             'valuesAsKeys' => false,
         ]);
-        $this->assertSame(['Title', '', 'Subject'], $this->subject->render());
+        self::assertSame(['Title', '', 'Subject'], $this->subject->render());
     }
 
     /**
@@ -60,7 +62,7 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
             'removeEmptyValues' => true,
             'valuesAsKeys' => false,
         ]);
-        $this->assertSame(['Title', 'Subject'], $this->subject->render());
+        self::assertSame(['Title', 'Subject'], $this->subject->render());
     }
 
     /**
@@ -75,7 +77,7 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
             'removeEmptyValues' => true,
             'valuesAsKeys' => true,
         ]);
-        $this->assertSame(['Title' => 'Title', 'Subject' => 'Subject'], $this->subject->render());
+        self::assertSame(['Title' => 'Title', 'Subject' => 'Subject'], $this->subject->render());
     }
 
     /**
@@ -92,6 +94,6 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
     private function setRenderChildrenDefaultExpectation()
     {
         $subject = 'Title,,Subject';
-        $this->subject->expects($this->once())->method('renderChildren')->willReturn($subject);
+        $this->subject->expects(self::once())->method('renderChildren')->willReturn($subject);
     }
 }

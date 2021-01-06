@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
 
@@ -36,6 +38,6 @@ class TranslateViewHelperTest extends FunctionalTestCase
      */
     public function translateFromDefaultExtension(): void
     {
-        $this->assertSame('vorherige Seite', LocalizationUtility::translate('previous-page', 'bzga_beratungsstellensuche'));
+        self::assertSame('vorherige Seite', LocalizationUtility::translate('previous-page', 'bzga_beratungsstellensuche'));
     }
 }

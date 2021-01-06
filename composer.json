@@ -26,9 +26,9 @@
         }
     },
     "require": {
-        "typo3/cms-core": "^9.5.13",
-        "typo3/cms-scheduler": "^9.5.13",
-        "typo3/cms-reports": "^9.5.13",
+        "typo3/cms-core": "^9.5.13 || ^10.4",
+        "typo3/cms-scheduler": "^9.5.13 || ^10.4",
+        "typo3/cms-reports": "^9.5.13 || ^10.4",
         "symfony/serializer": "^3.0",
         "sjbr/static-info-tables": "^6.0",
         "jambagecom/static-info-tables-de": "^6.0",
@@ -41,24 +41,29 @@
         "geocoder-php/nominatim-provider": "^5.1"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.0",
-        "typo3/testing-framework": "^4.0",
-        "typo3/cms-tstemplate": "^9.0",
-        "typo3/cms-seo": "^9.0",
-        "typo3/cms-fluid-styled-content": "^9.0",
-        "typo3/cms-extensionmanager": "^9.0",
-        "typo3/cms-belog": "^9.0",
-        "typo3/cms-rte-ckeditor": "^9.0",
-        "helhum/typo3-console": "5.*",
-        "ssch/typo3-rector": "^0.2.0",
+        "typo3/testing-framework": "^5.0",
+        "typo3/cms-tstemplate": "^9.0 || ^10.4",
+        "typo3/cms-seo": "^9.0 || ^10.4",
+        "typo3/cms-fluid-styled-content": "^9.0 || ^10.4",
+        "typo3/cms-extensionmanager": "^9.0 || ^10.4",
+        "typo3/cms-belog": "^9.0 || ^10.4",
+        "typo3/cms-rte-ckeditor": "^9.0 || ^10.4",
+        "helhum/typo3-console": "^5.0 || ^6.0",
         "saschaegerer/phpstan-typo3": "^0.13.1",
-        "php-parallel-lint/php-parallel-lint": "^1.2"
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "typo3/coding-standards": "^0.2.0"
     },
     "replace": {
         "typo3-ter/bzga-beratungsstellensuche": "self.version"
     },
     "config": {
-        "vendor-dir": ".Build/vendor"
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "preferred-install": {
+            "typo3/cms": "source",
+            "typo3/cms-core": "source",
+            "*": "dist"
+        }
     },
     "scripts": {
         "post-autoload-dump": [
@@ -88,8 +93,8 @@
         },
         "typo3/cms": {
             "extension-key": "bzga_beratungsstellensuche",
-            "cms-package-dir": "{$vendor-dir}/typo3/cms",
-            "web-dir": ".Build/public"
+            "web-dir": ".Build/public",
+            "app-dir": ".Build"
         }
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer;
 
@@ -57,8 +59,6 @@ class SerializerTest extends UnitTestCase
      */
     protected $signalSlotDispatcher;
 
-    /**
-     */
     protected function setUp()
     {
         $dispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
@@ -99,10 +99,10 @@ class SerializerTest extends UnitTestCase
     public function deserializeEntryFromXml($xml)
     {
         $categoryMock = $this->getMockBuilder(Category::class)->getMock();
-        $this->categoryRepository->expects($this->any())->method('findOneByExternalId')->willReturn($categoryMock);
+        $this->categoryRepository->expects(self::any())->method('findOneByExternalId')->willReturn($categoryMock);
 
         $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
-        $this->countryZoneRepository->expects($this->any())->method('findOneByExternalId')->willReturn($countryZoneMock);
+        $this->countryZoneRepository->expects(self::any())->method('findOneByExternalId')->willReturn($countryZoneMock);
 
         $object = $this->subject->deserialize($xml, Entry::class, 'xml');
         /* @var $object Entry */

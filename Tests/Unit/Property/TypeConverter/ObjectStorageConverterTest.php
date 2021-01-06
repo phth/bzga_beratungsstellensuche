@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property\TypeConverter;
 
@@ -53,7 +55,7 @@ class ObjectStorageConverterTest extends UnitTestCase
      */
     public function isNotSupported($unsupportedSource)
     {
-        $this->assertFalse($this->subject->supports($unsupportedSource));
+        self::assertFalse($this->subject->supports($unsupportedSource));
     }
 
     /**
@@ -90,6 +92,6 @@ class ObjectStorageConverterTest extends UnitTestCase
         $storage = new ObjectStorage();
         $storage->attach($entity1);
         $storage->attach($entity2);
-        $this->assertEquals('1,2', $this->subject->convert($storage));
+        self::assertEquals('1,2', $this->subject->convert($storage));
     }
 }

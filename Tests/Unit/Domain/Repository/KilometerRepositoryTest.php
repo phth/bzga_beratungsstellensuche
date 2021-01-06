@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Repository;
 
@@ -26,8 +28,6 @@ class KilometerRepositoryTest extends UnitTestCase
      */
     protected $subject;
 
-    /**
-     */
     protected function setUp()
     {
         $this->subject = new KilometerRepository();
@@ -38,7 +38,7 @@ class KilometerRepositoryTest extends UnitTestCase
      */
     public function findKilometersBySettingsDefault()
     {
-        $this->assertSame([10 => '10', 20 => '20', 50 => '50', 100 => '100'], $this->subject->findKilometersBySettings([]));
+        self::assertSame([10 => '10', 20 => '20', 50 => '50', 100 => '100'], $this->subject->findKilometersBySettings([]));
     }
 
     /**
@@ -48,7 +48,7 @@ class KilometerRepositoryTest extends UnitTestCase
     public function findKilometersByDefinedSettings($expected, $input)
     {
         $settings = ['form' => ['kilometers' => $input]];
-        $this->assertSame($expected, $this->subject->findKilometersBySettings($settings));
+        self::assertSame($expected, $this->subject->findKilometersBySettings($settings));
     }
 
     /**

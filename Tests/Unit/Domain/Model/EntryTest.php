@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Model;
 
@@ -40,7 +42,7 @@ class EntryTest extends UnitTestCase
         $this->subject->setCity('City');
         $this->subject->setZip('Zip');
         $this->subject->setStreet('Street');
-        $this->assertEquals($address, $this->subject->getAddress());
+        self::assertEquals($address, $this->subject->getAddress());
     }
 
     /**
@@ -53,7 +55,7 @@ class EntryTest extends UnitTestCase
         $this->subject->setZip('Zip');
         $this->subject->setStreet('Street');
         $infoWindow = '<p><strong>Title</strong><br>Street<br>Zip City</p>';
-        $this->assertEquals($infoWindow, $this->subject->getInfoWindow());
+        self::assertEquals($infoWindow, $this->subject->getInfoWindow());
     }
 
     /**
@@ -66,7 +68,7 @@ class EntryTest extends UnitTestCase
         $this->subject->setZip('Zip');
         $this->subject->setStreet('Street');
         $infoWindow = '<p><strong><a href="http://domain.com">Title</a></strong><br>Street<br>Zip City</p>';
-        $this->assertEquals($infoWindow, $this->subject->getInfoWindow(['detailLink' => 'http://domain.com']));
+        self::assertEquals($infoWindow, $this->subject->getInfoWindow(['detailLink' => 'http://domain.com']));
     }
 
     /**
@@ -75,6 +77,6 @@ class EntryTest extends UnitTestCase
     public function stringCastingEntityReturnsTitle()
     {
         $this->subject->setTitle('Title');
-        $this->assertEquals('Title', (string)$this->subject);
+        self::assertEquals('Title', (string)$this->subject);
     }
 }
