@@ -1,22 +1,19 @@
 <?php
 
 declare(strict_types=1);
+
+/*
+ * This file is part of the "bzga_beratungsstellensuche" Extension for TYPO3 CMS.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
-/**
- * This file is part of the TYPO3 CMS project.
- *
- * It is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
- */
+
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Geocoder\Location as GeocoderAddress;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
