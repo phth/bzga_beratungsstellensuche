@@ -76,7 +76,7 @@ class IconUtility
             ]);
         }
 
-        return $editLink;
+        return (string)$editLink;
     }
 
     public function getLanguageService(): LanguageService
