@@ -97,6 +97,7 @@ call_user_func(function ($packageKey) {
 
     // Upgrade wizards
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Bzga\BzgaBeratungsstellensuche\Updates\CreateImageUploadFolderUpdate::class] = \Bzga\BzgaBeratungsstellensuche\Updates\CreateImageUploadFolderUpdate::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Bzga\BzgaBeratungsstellensuche\Updates\ImportCountryZonesUpdate::class] = \Bzga\BzgaBeratungsstellensuche\Updates\ImportCountryZonesUpdate::class;
 
 }, 'bzga_beratungsstellensuche');
 

@@ -26,7 +26,7 @@ jobs:
           restore-keys: |
             php-${{ matrix.php-versions }}-composer-
       - name: "Install composer dependencies"
-        run: composer install --no-progress
+        run: composer install --no-progress --no-suggest
       - name: "Run PHP lint"
         run: composer run-script test-php-lint
   php-cs-fixer:
@@ -51,7 +51,7 @@ jobs:
           restore-keys: |
             php-${{ matrix.php-versions }}-composer-
       - name: "Install composer dependencies"
-        run: composer install --no-progress
+        run: composer install --no-progress --no-suggest
       - name: "Run PHP-CS-Fixer"
         run: "composer run-script test-php-cs-fixer"
   tests:
@@ -88,7 +88,7 @@ jobs:
             php-${{ matrix.php-versions }}-typo3-
 
       - name: "Install composer dependencies"
-        run: composer require typo3/minimal "^${{ matrix.typo3-versions.typo3 }}" --prefer-dist --no-progress --no-suggest
+        run: composer install --no-progress --no-suggest
 
       - name: "Run Unit tests"
         run: composer run-script test-unit
