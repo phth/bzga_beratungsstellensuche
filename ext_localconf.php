@@ -42,7 +42,6 @@ call_user_func(function ($packageKey) {
 
     // Command controllers for scheduler
     if (TYPO3_MODE === 'BE') {
-        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = \Bzga\BzgaBeratungsstellensuche\Command\ImportCommandController::class;
         // hooking into TCE Main to monitor record updates that may require deleting documents from the index
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][]  = \Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor::class;
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] = \Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor::class;
