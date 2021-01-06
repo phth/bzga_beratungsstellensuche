@@ -94,6 +94,11 @@ call_user_func(function ($packageKey) {
     if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkvalidator')) {
         \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkvalidator.txt">');
     }
+
+    // Upgrade wizards
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Bzga\BzgaBeratungsstellensuche\Updates\CreateImageUploadFolderUpdate::class] = \Bzga\BzgaBeratungsstellensuche\Updates\CreateImageUploadFolderUpdate::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][\Bzga\BzgaBeratungsstellensuche\Updates\ImportCountryZonesUpdate::class] = \Bzga\BzgaBeratungsstellensuche\Updates\ImportCountryZonesUpdate::class;
+
 }, 'bzga_beratungsstellensuche');
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(trim('
