@@ -52,11 +52,19 @@ final class ImportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $file = $input->getOption('file');
+        $url = $input->getOption('url');
+
+        if ($file === null && $url === null) {
+            throw new \InvalidArgumentException('You must either provide a url or a file for the import');
+        }
+
         $pid = (int)$input->getOption('pid');
-        if ($input->getArgument('file') !== null) {
-            $this->xmlImporter->importFromFile($input->getArgument('file'), $pid);
-        } elseif ($input->getArgument('url') !== null) {
-            $this->xmlImporter->importFromUrl($input->getArgument('url'), $pid);
+
+        if ($file) {
+            $this->xmlImporter->importFromFile($file, $pid);
+        } elseif ($url) {
+            $this->xmlImporter->importFromUrl($url, $pid);
         }
 
         $this->import($output, (bool)$input->getOption('forceReImport'));
