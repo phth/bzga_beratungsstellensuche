@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\ViewHelpers;
 
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -26,6 +27,12 @@ class TranslateViewHelperTest extends FunctionalTestCase
      * @var array
      */
     protected $testExtensionsToLoad = ['typo3conf/ext/bzga_beratungsstellensuche', 'typo3conf/ext/static_info_tables'];
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Bootstrap::initializeLanguageObject();
+    }
 
     /**
      * @test
