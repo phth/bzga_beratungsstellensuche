@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
@@ -23,11 +25,11 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var ImplodeViewHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var ImplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(ImplodeViewHelper::class)->setMethods(['renderChildren'])->getMock();
@@ -40,19 +42,19 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderPossibleValues($input, $expected)
     {
-        $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
+        $this->subject->expects(self::once())->method('renderChildren')->willReturn($input);
 
         $this->setArgumentsUnderTest($this->subject);
-        $this->assertEquals($expected, $this->subject->render());
+        self::assertEquals($expected, $this->subject->render());
     }
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      * @dataProvider possibleInvalidValues
      */
     public function renderThrowsException($pieces)
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->setArgumentsUnderTest($this->subject, ['pieces' => $pieces]);
         $this->subject->render();
     }

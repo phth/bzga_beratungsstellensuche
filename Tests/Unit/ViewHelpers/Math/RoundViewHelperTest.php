@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Math;
 
@@ -22,11 +24,11 @@ class RoundViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|RoundViewHelper
+     * @var \PHPUnit\Framework\MockObject\MockObject|RoundViewHelper
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(RoundViewHelper::class)->setMethods(['renderChildren'])->getMock();
@@ -39,9 +41,9 @@ class RoundViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithRenderChildrenValue($input, $expected, $precision)
     {
-        $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
+        $this->subject->expects(self::once())->method('renderChildren')->willReturn($input);
         $this->subject->setArguments(['number' => null, 'precision' => $precision]);
-        $this->assertEquals($expected, $this->subject->render());
+        self::assertEquals($expected, $this->subject->render());
     }
 
     /**

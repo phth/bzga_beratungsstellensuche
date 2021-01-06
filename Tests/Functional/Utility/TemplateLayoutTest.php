@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Utility;
 
@@ -53,6 +55,6 @@ class TemplateLayoutTest extends FunctionalTestCase
         );
 
         $templateLayouts = $this->subject->getAvailableTemplateLayouts(0);
-        $this->assertSame([['Form Sidebar', 88]], $templateLayouts);
+        self::assertSame([['Form Sidebar', 88]], $templateLayouts);
     }
 }

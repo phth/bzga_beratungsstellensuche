@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Model\ValueObject;
 
@@ -28,6 +30,6 @@ class ImageLinkTest extends UnitTestCase
     {
         $identifier = '13e430b77537205400cfdc56aec80fcd';
         $subject    = new ImageLink('http://www.domain.com/path/to/image/pix.php?id=' . $identifier);
-        $this->assertSame($identifier, $subject->getIdentifier());
+        self::assertSame($identifier, $subject->getIdentifier());
     }
 }

@@ -10,5 +10,5 @@ parameters:
   checkGenericClassInNonGenericObjectType: false
 
 includes:
-    - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
+    # - .Build/vendor/saschaegerer/phpstan-typo3/extension.neon
     - phpstan-baseline.neon

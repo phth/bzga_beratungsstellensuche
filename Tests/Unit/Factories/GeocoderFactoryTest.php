@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Factories;
 
@@ -16,23 +18,34 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Factories;
  */
 
 use Bzga\BzgaBeratungsstellensuche\Factories\GeocoderFactory;
-use Bzga\BzgaBeratungsstellensuche\Factories\HttpClientFactory;
 use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\Provider;
+use Http\Client\HttpClient;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class GeocoderFactoryTest extends UnitTestCase
 {
 
     /**
+     * @var HttpClient
+     */
+    protected $httpClient;
+
+    protected function setUp(): void
+    {
+        $this->httpClient = $this->getMockBuilder(HttpClient::class)->getMock();
+        parent::setUp();
+    }
+
+    /**
      * @test
      */
     public function googleMapsGeocoderReturned()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             GoogleMaps::class,
-            GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, HttpClientFactory::createInstance())
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_GOOGLE, $this->httpClient)
         );
     }
 
@@ -41,9 +54,9 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function openStreetMapGeocoderReturned()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             Nominatim::class,
-            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, HttpClientFactory::createInstance())
+            GeocoderFactory::createInstance(GeocoderFactory::TYPE_OPEN_STREET_MAP, $this->httpClient)
         );
     }
 
@@ -52,9 +65,9 @@ class GeocoderFactoryTest extends UnitTestCase
      */
     public function wrongTypeFallbackToGoogleMaps()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             GoogleMaps::class,
-            GeocoderFactory::createInstance('something', HttpClientFactory::createInstance())
+            GeocoderFactory::createInstance('something', $this->httpClient)
         );
     }
 
@@ -64,6 +77,6 @@ class GeocoderFactoryTest extends UnitTestCase
     public function customProviderReturned()
     {
         $customProvider = $this->getMockBuilder(Provider::class)->getMock();
-        $this->assertInstanceOf(get_class($customProvider), GeocoderFactory::createInstance(get_class($customProvider), HttpClientFactory::createInstance()));
+        self::assertInstanceOf(get_class($customProvider), GeocoderFactory::createInstance(get_class($customProvider), $this->httpClient));
     }
 }

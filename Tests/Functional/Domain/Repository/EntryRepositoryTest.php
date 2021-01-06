@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Domain\Repository;
 
@@ -73,7 +75,7 @@ class EntryRepositoryTest extends FunctionalTestCase
         $demand = $this->objectManager->get(Demand::class);
         $demand->setKeywords('Keyword');
         $entries = $this->entryRepository->findDemanded($demand);
-        $this->assertEquals(self::ENTRY_DEFAULT_FIXTURE_UID, $this->getIdListOfItems($entries));
+        self::assertEquals(self::ENTRY_DEFAULT_FIXTURE_UID, $this->getIdListOfItems($entries));
     }
 
     /**
@@ -81,7 +83,7 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function countByExternalIdAndHash(): void
     {
-        $this->assertEquals(1, $this->entryRepository->countByExternalIdAndHash(1, '32dwwes8'));
+        self::assertEquals(1, $this->entryRepository->countByExternalIdAndHash(1, '32dwwes8'));
     }
 
     /**
@@ -91,7 +93,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     {
         /** @var Entry $entry */
         $entry = $this->entryRepository->findOneByExternalId(1);
-        $this->assertEquals($entry->getUid(), self::ENTRY_DEFAULT_FIXTURE_UID);
+        self::assertEquals($entry->getUid(), self::ENTRY_DEFAULT_FIXTURE_UID);
     }
 
     /**
@@ -103,8 +105,8 @@ class EntryRepositoryTest extends FunctionalTestCase
 
         $this->setUpBackendUserFromFixture(1);
         $this->entryRepository->deleteByUid(self::ENTRY_DEFAULT_FIXTURE_UID);
-        $this->assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
-        $this->assertEquals(
+        self::assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
+        self::assertEquals(
             0,
             $this->selectCount(
                 '*',
@@ -112,7 +114,7 @@ class EntryRepositoryTest extends FunctionalTestCase
                 'uid_local = ' . self::ENTRY_DEFAULT_FIXTURE_UID
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             $this->selectCount(
                 '*',
@@ -120,7 +122,7 @@ class EntryRepositoryTest extends FunctionalTestCase
                 'deleted = 0 AND fieldname = "image" AND tablenames = "tx_bzgaberatungsstellensuche_domain_model_entry" AND uid_foreign = ' . self::ENTRY_DEFAULT_FIXTURE_UID
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             $this->selectCount(
                 '*',
@@ -128,7 +130,7 @@ class EntryRepositoryTest extends FunctionalTestCase
                 'file = 10014'
             )
         );
-        $this->assertEquals(
+        self::assertEquals(
             0,
             $this->selectCount(
                 '*',
@@ -152,7 +154,7 @@ class EntryRepositoryTest extends FunctionalTestCase
                 'uid' => 2,
             ],
         ];
-        $this->assertEquals($expectedEntries, $oldEntries);
+        self::assertEquals($expectedEntries, $oldEntries);
     }
 
     protected function getIdListOfItems(QueryResultInterface $items): string

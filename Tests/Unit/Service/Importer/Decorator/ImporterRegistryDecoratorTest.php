@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
 
@@ -31,18 +33,16 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var ImporterInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ImporterInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $importer;
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|Registry
+     * @var \PHPUnit\Framework\MockObject\MockObject|Registry
      */
     protected $registry;
 
-    /**
-     */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->importer = $this->getMockBuilder(ImporterInterface::class)->getMock();
         $this->registry = $this->getMockBuilder(Registry::class)->getMock();
@@ -56,9 +56,9 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     public function importWithAlreadyImportedContent($content)
     {
         $hash = md5($content);
-        $this->registry->expects($this->once())->method('get')->willReturn($hash);
-        $this->registry->expects($this->never())->method('set');
-        $this->importer->expects($this->never())->method('import');
+        $this->registry->expects(self::once())->method('get')->willReturn($hash);
+        $this->registry->expects(self::never())->method('set');
+        $this->importer->expects(self::never())->method('import');
 
         $this->subject->import($content);
     }
@@ -71,9 +71,9 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     public function importUpdatedContent($content)
     {
         $hash = md5('other content');
-        $this->registry->expects($this->once())->method('get')->willReturn($hash);
-        $this->registry->expects($this->once())->method('set');
-        $this->importer->expects($this->once())->method('import');
+        $this->registry->expects(self::once())->method('get')->willReturn($hash);
+        $this->registry->expects(self::once())->method('set');
+        $this->importer->expects(self::once())->method('import');
         $this->subject->import($content);
     }
 

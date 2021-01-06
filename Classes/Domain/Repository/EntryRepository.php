@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
@@ -58,8 +60,8 @@ class EntryRepository extends AbstractBaseRepository
     {
         $query = $this->createQuery();
         return $query->matching($query->logicalOr([
-            $query->like('zip', $q . '%', false),
-            $query->like('city', $q . '%', false),
+            $query->like('zip', $q . '%'),
+            $query->like('city', $q . '%'),
         ]))->execute();
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
@@ -23,7 +23,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity as CoreAbstractEntity;
  */
 abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterface, ExternalIdInterface
 {
-    use DummyTrait, ExternalIdTrait;
+    use DummyTrait;
+    use ExternalIdTrait;
 
     /**
      * @var string

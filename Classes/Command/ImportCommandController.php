@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Command;
 
@@ -55,7 +55,7 @@ class ImportCommandController extends CommandController
             $this->xmlImporter->importFromFile($file, $pid);
             $this->import($forceReImport);
         } catch (FileDoesNotExistException $e) {
-            throw new $e;
+            throw new $e();
         }
     }
 
@@ -65,7 +65,7 @@ class ImportCommandController extends CommandController
             $this->xmlImporter->importFromUrl($url, $pid);
             $this->import($forceReImport);
         } catch (UnexpectedValueException $e) {
-            throw new $e;
+            throw new $e();
         }
     }
 

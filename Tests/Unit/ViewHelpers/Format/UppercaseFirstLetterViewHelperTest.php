@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
 
@@ -22,11 +24,11 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
 
     /**
-     * @var \PHPUnit_Framework_MockObject_MockObject|UppercaseFirstLetterViewHelper
+     * @var \PHPUnit\Framework\MockObject\MockObject|UppercaseFirstLetterViewHelper
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->subject = $this->getMockBuilder(UppercaseFirstLetterViewHelper::class)->setMethods(['renderChildren'])->getMock();
@@ -40,16 +42,16 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
     public function renderWithRenderChildren($input, $expected)
     {
         $this->setArgumentsUnderTest($this->subject);
-        $this->subject->expects($this->once())->method('renderChildren')->willReturn($input);
-        $this->assertEquals($expected, $this->subject->render());
+        $this->subject->expects(self::once())->method('renderChildren')->willReturn($input);
+        self::assertEquals($expected, $this->subject->render());
     }
 
     /**
      * @test
-     * @expectedException \InvalidArgumentException
      */
     public function renderThrowsInvalidArgumentException()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->setArgumentsUnderTest($this->subject, ['subject' => new \stdClass()]);
         $this->subject->render();
     }
