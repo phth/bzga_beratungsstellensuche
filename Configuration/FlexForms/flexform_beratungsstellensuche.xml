@@ -25,6 +25,7 @@
                             <onChange>reload</onChange>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items>
                                     <numIndex index="1">
                                         <numIndex index="0">LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.entry_list</numIndex>
@@ -70,6 +71,7 @@
                             <label>LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.recursive</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <items type="array">
                                     <numIndex index="2" type="array">
                                         <numIndex index="0">LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.0</numIndex>
@@ -123,6 +125,7 @@
                             <label>LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_additional.formFields</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectMultipleSideBySide</renderType>
                                 <itemsProcFunc>Bzga\BzgaBeratungsstellensuche\Hooks\ItemsProcFunc->user_formFields</itemsProcFunc>
                                 <items>
                                     <numIndex index="0" type="array">
@@ -249,6 +252,7 @@
                             <label>LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:flexforms_template.templateLayout</label>
                             <config>
                                 <type>select</type>
+                                <renderType>selectSingle</renderType>
                                 <itemsProcFunc>Bzga\BzgaBeratungsstellensuche\Hooks\ItemsProcFunc->user_templateLayout</itemsProcFunc>
                                 <items>
                                     <numIndex index="0" type="array">

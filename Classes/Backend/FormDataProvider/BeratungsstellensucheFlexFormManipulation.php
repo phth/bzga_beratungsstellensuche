@@ -9,16 +9,13 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Bzga\BzgaBeratungsstellensuche\Hooks;
+namespace Bzga\BzgaBeratungsstellensuche\Backend\FormDataProvider;
 
+use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * @author Sebastian Schreiber
- */
-class BackendUtility
+final class BeratungsstellensucheFlexFormManipulation implements FormDataProviderInterface
 {
-
     /**
      * Fields which are removed in detail view
      *
@@ -52,16 +49,12 @@ class BackendUtility
         'template' => '',
     ];
 
-    public function getFlexFormDS_postProcessDS(array &$dataStructure, array $conf, array $row, string $table): void
-    {
-        if ($table === 'tt_content' && $row['list_type'] === 'bzgaberatungsstellensuche_pi1' && is_array($dataStructure)) {
-            $this->updateFlexforms($dataStructure, $row);
-        }
-    }
-
-    private function updateFlexforms(array &$dataStructure, array $row): void
+    private function updateFlexforms(array $result): array
     {
         $selectedView = '';
+
+        $row = $result['databaseRow'];
+        $dataStructure = $result['processedTca']['columns']['pi_flexform']['config']['ds'];
 
         // get the first selected action
         if (is_string($row['pi_flexform'])) {
@@ -86,13 +79,13 @@ class BackendUtility
             // Modify the flexform structure depending on the first found action
             switch ($selectedView) {
                 case 'Entry->list;Entry->show':
-                    $this->deleteFromStructure($dataStructure, $this->removedFieldsInListView);
+                    $dataStructure = $this->deleteFromStructure($dataStructure, $this->removedFieldsInListView);
                     break;
                 case 'Entry->show':
-                    $this->deleteFromStructure($dataStructure, $this->removedFieldsInDetailView);
+                    $dataStructure = $this->deleteFromStructure($dataStructure, $this->removedFieldsInDetailView);
                     break;
                 case 'Entry->form':
-                    $this->deleteFromStructure($dataStructure, $this->removedFieldsInFormView);
+                    $dataStructure = $this->deleteFromStructure($dataStructure, $this->removedFieldsInFormView);
                     break;
                 default:
             }
@@ -107,16 +100,33 @@ class BackendUtility
                 }
             }
         }
+        $result['processedTca']['columns']['pi_flexform']['config']['ds'] = $dataStructure;
+
+        return $result;
     }
 
-    private function deleteFromStructure(array &$dataStructure, array $fieldsToBeRemoved): void
+    private function deleteFromStructure(array $dataStructure, array $fieldsToBeRemoved): array
     {
         foreach ($fieldsToBeRemoved as $sheetName => $sheetFields) {
             $fieldsInSheet = GeneralUtility::trimExplode(',', $sheetFields, true);
-
             foreach ($fieldsInSheet as $fieldName) {
                 unset($dataStructure['sheets'][$sheetName]['ROOT']['el']['settings.' . $fieldName]);
             }
         }
+
+        return $dataStructure;
+    }
+
+    public function addData(array $result): array
+    {
+        if ($result['tableName'] === 'tt_content'
+            && $result['databaseRow']['CType'] === 'list'
+            && $result['databaseRow']['list_type'] === 'bzgaberatungsstellensuche_pi1'
+            && is_array($result['processedTca']['columns']['pi_flexform']['config']['ds'])
+        ) {
+            $result = $this->updateFlexForms($result);
+        }
+
+        return $result;
     }
 }
