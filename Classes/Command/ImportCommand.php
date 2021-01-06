@@ -14,6 +14,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -86,10 +87,11 @@ final class ImportCommand extends Command
         $persistBatch = 200;
         $i = 0;
 
-        $output->progressStart($this->xmlImporter->count());
+        $progressBar = new ProgressBar($output, $this->xmlImporter->count());
+
         foreach ($this->xmlImporter as $value) {
             $this->xmlImporter->importEntry($value);
-            $output->progressAdvance();
+            $progressBar->advance();
 
             if ($i === $persistBatch) {
                 $this->xmlImporter->persist();
@@ -99,7 +101,7 @@ final class ImportCommand extends Command
             }
         }
         $this->xmlImporter->persist();
-        $output->progressFinish();
+        $progressBar->finish();
         $this->xmlImporter->cleanUp();
     }
 }
