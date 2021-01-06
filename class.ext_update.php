@@ -37,19 +37,7 @@ class ext_update
             'StaticInfoTables'
         ) . ' bzga_beratungsstellensuche.</p>';
 
-        $this->createImageUploadFolder();
-
         return $content;
-    }
-
-    private function createImageUploadFolder(): void
-    {
-        $storageRepository = ResourceFactory::getInstance()->getDefaultStorage();
-        $storageFolder = $storageRepository->getDefaultFolder()->getPublicUrl();
-        $imageFolder = GeneralUtility::getFileAbsFileName(sprintf('%s/tx_bzgaberatungsstellensuche', rtrim($storageFolder, '/')));
-        if (false === is_dir($imageFolder)) {
-            GeneralUtility::mkdir($imageFolder);
-        }
     }
 
     public function access(): bool
