@@ -160,8 +160,8 @@ class EntryRepository extends AbstractBaseRepository
 
         $lowestLat = (double)$userLocation->getLatitude() - rad2deg($radius / $earthRadius);
         $highestLat = (double)$userLocation->getLatitude() + rad2deg($radius / $earthRadius);
-        $lowestLng = (double)$userLocation->getLongitude() - rad2deg($radius / $earthRadius);
-        $highestLng = (double)$userLocation->getLongitude() + rad2deg($radius / $earthRadius);
+        $lowestLng = (double)$userLocation->getLongitude() - rad2deg(asin($radius / $earthRadius) / cos(deg2rad($userLocation->getLatitude())));
+        $highestLng = (double)$userLocation->getLongitude() + rad2deg(asin($radius / $earthRadius) / cos(deg2rad($userLocation->getLatitude())));
 
         return [
             $query->greaterThanOrEqual('latitude', $lowestLat),
