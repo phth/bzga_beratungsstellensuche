@@ -3,9 +3,8 @@
     <tx_bzgaberatungsstellensuche_domain_model_entry>
         <uid>1</uid>
         <pid>1</pid>
-        <title>Category</title>
+        <title>Beratungsstelle mit special Keyword</title>
         <subtitle>1</subtitle>
-        <teaser>Teaser</teaser>
         <zip>00000</zip>
         <hash>32dwwes8</hash>
         <city>Musterstadt</city>
@@ -15,7 +14,6 @@
         <latitude>1</latitude>
         <external_id>1</external_id>
         <description>Lange Beschreibung</description>
-        <keywords>Keyword, Title</keywords>
         <notice>Notice</notice>
     </tx_bzgaberatungsstellensuche_domain_model_entry>
     <tx_bzgaberatungsstellensuche_domain_model_entry>
@@ -23,7 +21,6 @@
         <pid>1</pid>
         <title>Category</title>
         <subtitle>1</subtitle>
-        <teaser>Teaser</teaser>
         <zip>00000</zip>
         <city>Musterstadt</city>
         <street>Ottostraße</street>
@@ -32,7 +29,6 @@
         <latitude>1</latitude>
         <external_id>10</external_id>
         <description>Lange Beschreibung</description>
-        <keywords>Title</keywords>
         <notice>Notice</notice>
     </tx_bzgaberatungsstellensuche_domain_model_entry>
     <tx_bzgaberatungsstellensuche_entry_category_mm>
