@@ -30,13 +30,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     protected $subtitle = '';
 
     /**
-     * Kurzer Aufmacher zur Beratungsstelle.
-     *
-     * @var string
-     */
-    protected $teaser = '';
-
-    /**
      * PLZ der Beratungsstelle.
      *
      * @var string
@@ -79,11 +72,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     /**
      * @var string
      */
-    protected $contactEmail = '';
-
-    /**
-     * @var string
-     */
     protected $telephone = '';
 
     /**
@@ -105,11 +93,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
      * @var string
      */
     protected $notice = '';
-
-    /**
-     * @var string
-     */
-    protected $keywords = '';
 
     /**
      * @var string
@@ -173,16 +156,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     public function setSubtitle(string $subtitle): void
     {
         $this->subtitle = $subtitle;
-    }
-
-    public function getTeaser(): string
-    {
-        return $this->teaser;
-    }
-
-    public function setTeaser(string $teaser): void
-    {
-        $this->teaser = $teaser;
     }
 
     public function getZip(): string
@@ -261,16 +234,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
         $this->contactPerson = $contactPerson;
     }
 
-    public function getContactEmail(): string
-    {
-        return $this->contactEmail;
-    }
-
-    public function setContactEmail(string $contactEmail): void
-    {
-        $this->contactEmail = $contactEmail;
-    }
-
     public function getTelephone(): string
     {
         return $this->telephone;
@@ -319,16 +282,6 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     public function setNotice(string $notice): void
     {
         $this->notice = $notice;
-    }
-
-    public function getKeywords(): string
-    {
-        return $this->keywords;
-    }
-
-    public function setKeywords(string $keywords): void
-    {
-        $this->keywords = $keywords;
     }
 
     public function getWebsite(): string

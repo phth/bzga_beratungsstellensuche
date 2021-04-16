@@ -35,7 +35,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     /**
      * @var string
      */
-    protected $searchFields = 'title,teaser,subtitle,description,keywords';
+    protected $searchFields = 'title,subtitle,description';
 
     /**
      * @var string

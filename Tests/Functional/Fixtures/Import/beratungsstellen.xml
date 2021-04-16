@@ -8,7 +8,6 @@
             <untertitel></untertitel>
             <ansprechpartner>Max Mustermann</ansprechpartner>
             <link>http://meine-domain.com.de/</link>
-            <kurztext>Ein kurzer Text steht hier</kurztext>
             <plz>33333</plz>
             <ort>Musterstadt</ort>
             <bundesland>1</bundesland>
@@ -32,8 +31,6 @@
             </beratungsart>
             <verband>Verband der Beratungsstelle</verband>
             <kontaktform>0</kontaktform>
-            <kontaktemail>max.mustermann@domain.com</kontaktemail>
-            <suchcontent>Keywords, Schwangerschaft, Familienplanung</suchcontent>
         </entry>
     </entrys>
     <beratungsarten>
