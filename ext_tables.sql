@@ -8,7 +8,6 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_entry (
   title varchar(255) DEFAULT '' NOT NULL,
   subtitle varchar(255) DEFAULT '' NOT NULL,
   external_id int(11) DEFAULT '0' NOT NULL,
-  teaser text NOT NULL,
   zip varchar(255) DEFAULT '' NOT NULL,
   city varchar(255) DEFAULT '' NOT NULL,
   street varchar(255) DEFAULT '' NOT NULL,
@@ -22,14 +21,12 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_entry (
   association varchar(255) DEFAULT '' NOT NULL,
 
   contact_person varchar(255) DEFAULT '' NOT NULL,
-  contact_email varchar(255) DEFAULT '' NOT NULL,
   telephone varchar(255) DEFAULT '' NOT NULL,
   telefax varchar(255) DEFAULT '' NOT NULL,
   email varchar(255) DEFAULT '' NOT NULL,
   website varchar(255) DEFAULT '' NOT NULL,
   hotline varchar(255) DEFAULT '' NOT NULL,
   notice text NOT NULL,
-  keywords text NOT NULL,
   slug varchar(2048),
 
   categories int(11) unsigned DEFAULT '0' NOT NULL,

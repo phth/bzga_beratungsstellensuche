@@ -36,7 +36,6 @@ class EntryNameConverterTest extends AbstractNameConverterTest
             ['mapy', 'latitude'],
             ['mapx', 'longitude'],
             ['bundesland', 'state'],
-            ['kurztext', 'teaser'],
             ['plz', 'zip'],
             ['ort', 'city'],
             ['logo', 'image'],
@@ -51,8 +50,6 @@ class EntryNameConverterTest extends AbstractNameConverterTest
             ['hinweistext', 'notice'],
             ['angebot', 'description'],
             ['verband', 'association'],
-            ['kontaktemail', 'contact_email'],
-            ['suchcontent', 'keywords'],
             ['beratungsart', 'categories'],
         ];
     }

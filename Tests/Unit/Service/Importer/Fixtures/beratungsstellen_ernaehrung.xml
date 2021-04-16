@@ -1,24 +1,208 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<beratungsstellen version="1.0">
-    <referat id='ebs2'>Qualifizierter Beratung bei Essstörungen 2015</referat>
+<?xml version="1.0"?>
+<response>
     <entrys>
         <entry>
-            <index>3063</index>
-            <titel>Eine Beratungsstelle</titel>
-            <link>http://meine-domain.com</link>
-            <kurztext>Ein Kurztext</kurztext>
-            <plz>33333</plz>
-            <ort>Musterstadt</ort>
-            <bundesland>13</bundesland>
-            <strasse>Musterstraße 1</strasse>
-            <mapok>1</mapok>
-            <mapx>13.78266050000002</mapx>
-            <mapy>51.0675372</mapy>
-            <konfession>0</konfession>
-            <beratungsfelder></beratungsfelder>
-            <kategorien></kategorien>
-            <suchcontent>Keywords, Menge
-            </suchcontent>
+            <index>3451</index>
+            <title>Caritas Fachambulanz BGL e.V.</title>
+            <untertitel></untertitel>
+            <link>https://badb.local/node/3451</link>
+            <plz>83435</plz>
+            <ort>Bad Reichenhall</ort>
+            <bundesland>2</bundesland>
+            <strasse>Wittelsbacherstr. 10b</strasse>
+            <mapx>12.877928</mapx>
+            <mapy>47.727514</mapy>
+            <telefon>08651 - 95850</telefon>
+            <fax>08651 - 958511</fax>
+            <email>fachambulanzBGL@caritasmuenchen.de</email>
+            <traeger></traeger>
+            <website>http://www.caritas-fachambulanz-bgl.de</website>
+            <beratertelefon></beratertelefon>
+            <hinweistext>08:00 Uhr bis 13:00 Uhr von Montag bis Freitag</hinweistext>
+            <beratungsschein></beratungsschein>
+            <kostenuebernahmeverhuetung></kostenuebernahmeverhuetung>
+            <logo></logo>
+            <konfession></konfession>
+            <beratungsart>
+                <index>1</index>
+                <index>2</index>
+                <index>3</index>
+                <index>4</index>
+                <index>6</index>
+                <index>8</index>
+            </beratungsart>
+            <verband></verband>
         </entry>
     </entrys>
-</beratungsstellen>
+    <beratungsarten>
+        <beratungsart>
+            <index>1</index>
+            <sort>?</sort>
+            <label>Pers&#xF6;nliche Beratung</label>
+        </beratungsart>
+        <beratungsart>
+            <index>2</index>
+            <sort>?</sort>
+            <label>Einzelberatung</label>
+        </beratungsart>
+        <beratungsart>
+            <index>3</index>
+            <sort>?</sort>
+            <label>Gruppenberatung</label>
+        </beratungsart>
+        <beratungsart>
+            <index>4</index>
+            <sort>?</sort>
+            <label>Telefonische Beratung</label>
+        </beratungsart>
+        <beratungsart>
+            <index>5</index>
+            <sort>?</sort>
+            <label>Internetberatung</label>
+        </beratungsart>
+        <beratungsart>
+            <index>6</index>
+            <sort>?</sort>
+            <label>Beratung per E-Mail</label>
+        </beratungsart>
+        <beratungsart>
+            <index>7</index>
+            <sort>?</sort>
+            <label>Chatroom (Echtzeit)</label>
+        </beratungsart>
+        <beratungsart>
+            <index>8</index>
+            <sort>?</sort>
+            <label>Video-Beratung</label>
+        </beratungsart>
+        <beratungsart>
+            <index>9</index>
+            <sort>?</sort>
+            <label>Andere</label>
+        </beratungsart>
+    </beratungsarten>
+    <pndberatunglangen>
+        <sprachen>
+            <index>17</index>
+            <sort>?</sort>
+            <label>deutsch</label>
+        </sprachen>
+        <sprachen>
+            <index>18</index>
+            <sort>?</sort>
+            <label>englisch</label>
+        </sprachen>
+        <sprachen>
+            <index>19</index>
+            <sort>?</sort>
+            <label>franz&#xF6;sisch</label>
+        </sprachen>
+        <sprachen>
+            <index>20</index>
+            <sort>?</sort>
+            <label>russisch</label>
+        </sprachen>
+        <sprachen>
+            <index>21</index>
+            <sort>?</sort>
+            <label>t&#xFC;rkisch</label>
+        </sprachen>
+        <sprachen>
+            <index>22</index>
+            <sort>?</sort>
+            <label>arabisch</label>
+        </sprachen>
+        <sprachen>
+            <index>23</index>
+            <sort>?</sort>
+            <label>spanisch</label>
+        </sprachen>
+        <sprachen>
+            <index>24</index>
+            <sort>?</sort>
+            <label>polnisch</label>
+        </sprachen>
+    </pndberatunglangen>
+    <bundeslaender>
+        <bundesland>
+            <index>1</index>
+            <sort>?</sort>
+            <label>Baden-W&#xFC;rttemberg</label>
+        </bundesland>
+        <bundesland>
+            <index>2</index>
+            <sort>?</sort>
+            <label>Bayern</label>
+        </bundesland>
+        <bundesland>
+            <index>3</index>
+            <sort>?</sort>
+            <label>Berlin</label>
+        </bundesland>
+        <bundesland>
+            <index>4</index>
+            <sort>?</sort>
+            <label>Brandenburg</label>
+        </bundesland>
+        <bundesland>
+            <index>5</index>
+            <sort>?</sort>
+            <label>Bremen</label>
+        </bundesland>
+        <bundesland>
+            <index>6</index>
+            <sort>?</sort>
+            <label>Hamburg</label>
+        </bundesland>
+        <bundesland>
+            <index>7</index>
+            <sort>?</sort>
+            <label>Hessen</label>
+        </bundesland>
+        <bundesland>
+            <index>8</index>
+            <sort>?</sort>
+            <label>Mecklenburg-Vorpommern</label>
+        </bundesland>
+        <bundesland>
+            <index>9</index>
+            <sort>?</sort>
+            <label>Niedersachsen</label>
+        </bundesland>
+        <bundesland>
+            <index>10</index>
+            <sort>?</sort>
+            <label>Nordrhein-Westfalen</label>
+        </bundesland>
+        <bundesland>
+            <index>11</index>
+            <sort>?</sort>
+            <label>Rheinland-Pfalz</label>
+        </bundesland>
+        <bundesland>
+            <index>12</index>
+            <sort>?</sort>
+            <label>Saarland</label>
+        </bundesland>
+        <bundesland>
+            <index>13</index>
+            <sort>?</sort>
+            <label>Sachsen</label>
+        </bundesland>
+        <bundesland>
+            <index>14</index>
+            <sort>?</sort>
+            <label>Sachsen-Anhalt</label>
+        </bundesland>
+        <bundesland>
+            <index>15</index>
+            <sort>?</sort>
+            <label>Schleswig-Holstein</label>
+        </bundesland>
+        <bundesland>
+            <index>16</index>
+            <sort>?</sort>
+            <label>Th&#xFC;ringen</label>
+        </bundesland>
+    </bundeslaender>
+</response>
