@@ -144,7 +144,7 @@ class MapController extends AbstractWidgetController
 
             // Current marker does not need detail link
             if (false === $isCurrentMarker) {
-                $detailsPid = $this->settings['singlePid'] ?? $this->getTyposcriptFrontendController()->id;
+                $detailsPid = (int)$this->settings['singlePid'] ?? $this->getTyposcriptFrontendController()->id;
                 $uriBuilder = $this->controllerContext->getUriBuilder();
                 $infoWindowParameters['detailLink'] = $uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
                     'show',
