@@ -64,6 +64,10 @@
             "typo3/cms": "source",
             "typo3/cms-core": "source",
             "*": "dist"
+        },
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
         }
     },
     "scripts": {
