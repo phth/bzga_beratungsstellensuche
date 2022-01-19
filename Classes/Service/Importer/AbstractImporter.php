@@ -14,7 +14,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Service\Importer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\CategoryManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Manager\EntryManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
+use Bzga\BzgaBeratungsstellensuche\Domain\ValueObject\ImportAuthorization;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
+use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -63,13 +65,42 @@ abstract class AbstractImporter implements ImporterInterface
         $this->import($content, $pid);
     }
 
-    public function importFromUrl(string $url, int $pid = 0): void
+    public function importFromUrl(string $url, ImportAuthorization $importAuthorization, int $pid = 0): void
     {
         if (! GeneralUtility::isValidUrl($url)) {
-            throw new UnexpectedValueException(sprintf('This is not a valid url: %s', $url));
+            throw new UnexpectedValueException(sprintf('This is not a valid url: "%s"', $url));
         }
 
-        $content = GeneralUtility::getUrl($url);
+        $requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
+
+        $response = $requestFactory->request($importAuthorization->getUrl(), 'POST', [
+            'form_params' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => $importAuthorization->getClientId(),
+                'client_secret' => $importAuthorization->getClientSecret(),
+            ]
+        ]);
+
+        $json = json_decode($response->getBody()->__toString(), true);
+
+        if ($json === false) {
+            throw new UnexpectedValueException(sprintf('Could not retrieve token from url "%s"', $url));
+        }
+
+        $headers = [
+            'Authorization' => 'Bearer ' . $json['access_token'],
+            'Accept'        => 'application/xml',
+        ];
+
+        $response = $requestFactory->request($url, 'GET', [
+            'headers' => $headers,
+            'query' => [
+                '_format' => 'xml',
+            ]
+        ]);
+
+        $content = $response->getBody()->__toString();
+
         if (false === $content) {
             throw new ContentCouldNotBeFetchedException('The content could not be fetched');
         }

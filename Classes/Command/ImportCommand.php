@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Command;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
+use Bzga\BzgaBeratungsstellensuche\Domain\ValueObject\ImportAuthorization;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -48,6 +49,9 @@ final class ImportCommand extends Command
             ->addOption('file', 'f', InputOption::VALUE_OPTIONAL, 'The file import')
             ->addOption('url', 'u', InputOption::VALUE_OPTIONAL, 'The url to import')
             ->addOption('pid', 'p', InputOption::VALUE_OPTIONAL, 'The pid to store the files', 0)
+            ->addOption('tokenUrl', 't', InputOption::VALUE_OPTIONAL, 'The url to retrieve the authorization token', '')
+            ->addOption('clientId', 'ci', InputOption::VALUE_OPTIONAL, 'The client id', '')
+            ->addOption('clientSecret', 'cs', InputOption::VALUE_OPTIONAL, 'The client secret', '')
             ->addOption('forceReImport', 'force', InputOption::VALUE_OPTIONAL, 'Should we force the reimport. Truncate all data before', false);
     }
 
@@ -55,9 +59,16 @@ final class ImportCommand extends Command
     {
         $file = $input->getOption('file');
         $url = $input->getOption('url');
+        $clientId = $input->getOption('clientId');
+        $clientSecret = $input->getOption('clientSecret');
+        $tokenUrl = $input->getOption('tokenUrl');
 
         if ($file === null && $url === null) {
             throw new \InvalidArgumentException('You must either provide a url or a file for the import');
+        }
+
+        if ($url && ($clientId === null || $clientSecret === null || $tokenUrl === null)) {
+            throw new \InvalidArgumentException('You must define a clientId, clientSecret and the tokenUrl if you want to import from an url');
         }
 
         $pid = (int)$input->getOption('pid');
@@ -65,7 +76,12 @@ final class ImportCommand extends Command
         if ($file) {
             $this->xmlImporter->importFromFile($file, $pid);
         } elseif ($url) {
-            $this->xmlImporter->importFromUrl($url, $pid);
+            $importAuthorization = new ImportAuthorization(
+                $tokenUrl,
+                $clientId,
+                $clientSecret
+            );
+            $this->xmlImporter->importFromUrl($url, $importAuthorization, $pid);
         }
 
         $this->import($output, (bool)$input->getOption('forceReImport'));
