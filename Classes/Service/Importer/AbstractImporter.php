@@ -54,7 +54,13 @@ abstract class AbstractImporter implements ImporterInterface
             throw new FileDoesNotExistException(sprintf('The file %s does not exists', $file));
         }
 
-        $this->importFromSource($file, $pid);
+        $content = file_get_contents($file);
+
+        if (false === $content) {
+            throw new ContentCouldNotBeFetchedException('The content could not be fetched');
+        }
+
+        $this->import($content, $pid);
     }
 
     public function importFromUrl(string $url, int $pid = 0): void
@@ -63,7 +69,12 @@ abstract class AbstractImporter implements ImporterInterface
             throw new UnexpectedValueException(sprintf('This is not a valid url: %s', $url));
         }
 
-        $this->importFromSource($url, $pid);
+        $content = GeneralUtility::getUrl($url);
+        if (false === $content) {
+            throw new ContentCouldNotBeFetchedException('The content could not be fetched');
+        }
+
+        $this->import($content, $pid);
     }
 
     public function injectCategoryManager(CategoryManager $categoryManager): void
@@ -84,15 +95,5 @@ abstract class AbstractImporter implements ImporterInterface
     public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
-    }
-
-    private function importFromSource(string $source, int $pid): void
-    {
-        $content = GeneralUtility::getUrl($source);
-        if (false === $content) {
-            throw new ContentCouldNotBeFetchedException('The content could not be fetched');
-        }
-
-        $this->import($content, $pid);
     }
 }
