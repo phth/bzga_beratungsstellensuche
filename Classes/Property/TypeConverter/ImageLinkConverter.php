@@ -191,8 +191,14 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     private function importResource(string $tempFilePath): FalFile
     {
-        if (! GeneralUtility::makeInstance(FileNameValidator::class)->isValid($tempFilePath)) {
-            throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
+        if (class_exists('TYPO3\\CMS\\Core\\Resource\\Security\\FileNameValidator')) {
+            if (! GeneralUtility::makeInstance(FileNameValidator::class)->isValid($tempFilePath)) {
+                throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
+            }
+        } else {
+            if (! GeneralUtility::verifyFilenameAgainstDenyPattern($tempFilePath)) {
+                throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
+            }
         }
 
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($this->defaultUploadFolder);
@@ -233,31 +239,31 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     private function getFileUid(ImageLink $source, $entity): ?int
     {
-        // First we check if we already have a file with the identifier in the database
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
-        $row = $queryBuilder->select('uid')
-                     ->from('sys_file')
-                     ->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->execute()->fetch();
+        // First we check if we already have a file with the identifier in the database (if source identifier is set)
+        if ($source->getIdentifier() !== '') {
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
+            $row = $queryBuilder->select('*')
+                ->from('sys_file')
+                ->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->execute()->fetch();
+            if ($row) {
+                return $row['uid'];
+            }
+            $pathToUploadFile = $this->downloadFile($source, $entity);
 
-        if ($row) {
-            return $row['uid'];
+            try {
+                $falFile = $this->importResource($pathToUploadFile);
+                $this->getDatabaseConnectionForTable('sys_file')->update(
+                    'sys_file',
+                    ['external_identifier' => $source->getIdentifier()],
+                    ['uid' => $falFile->getUid()]
+                );
+
+                return $falFile->getUid();
+            } catch (Exception $e) {
+                return null;
+            }
         }
-
-        $pathToUploadFile = $this->downloadFile($source, $entity);
-
-        try {
-            $falFile = $this->importResource($pathToUploadFile);
-
-            $this->getDatabaseConnectionForTable('sys_file')->update(
-                'sys_file',
-                ['external_identifier' => $source->getIdentifier()],
-                ['uid' => $falFile->getUid()]
-            );
-
-            return $falFile->getUid();
-        } catch (Exception $e) {
-            return null;
-        }
+        return null;
     }
 
     public function injectResourceFactory(ResourceFactory $resourceFactory): void
