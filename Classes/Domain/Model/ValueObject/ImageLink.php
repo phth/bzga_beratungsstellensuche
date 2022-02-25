@@ -50,6 +50,8 @@ class ImageLink
         if (array_key_exists('query', $urlSegments)) {
             parse_str($urlSegments['query'], $querySegments);
             $this->identifier = $querySegments['id'];
+        } else {
+            $this->identifier = $externalUrl;
         }
     }
 }
