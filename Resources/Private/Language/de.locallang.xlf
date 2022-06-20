@@ -5,78 +5,103 @@
         <header/>
         <body>
             <trans-unit id="no-entries-found" xml:space="preserve">
+                <source>Unfortunately, no entries were found for your request.</source>
                 <target>Es wurden leider keine Einträge zu Ihrer Anfrage gefunden.</target>
             </trans-unit>
             <trans-unit id="previous-page" xml:space="preserve">
+                <source>previous page</source>
                 <target>vorherige Seite</target>
             </trans-unit>
             <trans-unit id="next-page" xml:space="preserve">
+                <source>next page</source>
                 <target>nächste Seite</target>
             </trans-unit>
             <trans-unit id="consulting-agreement-form-label" xml:space="preserve">
+                <source>Counseling certificate</source>
                 <target>Beratungsschein</target>
             </trans-unit>
             <trans-unit id="consulting-agreement-notice-headline" xml:space="preserve">
+                <source>Hint</source>
                 <target>Hinweis</target>
             </trans-unit>
             <trans-unit id="search-btn" xml:space="preserve">
+                <source>search</source>
                 <target>suchen</target>
             </trans-unit>
             <trans-unit id="reset-btn" xml:space="preserve">
+                <source>reset</source>
                 <target>zurücksetzen</target>
             </trans-unit>
             <trans-unit id="please-choose" xml:space="preserve">
+                <source>Please choose</source>
                 <target>Bitte wählen</target>
             </trans-unit>
             <trans-unit id="kilometers-form-label" xml:space="preserve">
+                <source>Radius (in km)</source>
                 <target>Umkreis (in km)</target>
             </trans-unit>
             <trans-unit id="location-form-label" xml:space="preserve">
+                <source>Location</source>
                 <target>Standort</target>
             </trans-unit>
             <trans-unit id="keywords-form-label" xml:space="preserve">
+                <source>Key words</source>
                 <target>Schlüsselbegriffe</target>
             </trans-unit>
             <trans-unit id="categories-form-label" xml:space="preserve">
+                <source>Categories</source>
                 <target>Kategorien</target>
             </trans-unit>
             <trans-unit id="country-zones-germany-form-label" xml:space="preserve">
+                <source>Federal states</source>
                 <target>Bundesländer</target>
             </trans-unit>
             <trans-unit id="telephone" xml:space="preserve">
+                <source>Telephone</source>
                 <target>Telefon</target>
             </trans-unit>
             <trans-unit id="telefax" xml:space="preserve">
+                <source>Fax</source>
                 <target>Telefax</target>
             </trans-unit>
             <trans-unit id="email" xml:space="preserve">
+                <source>E-mail</source>
                 <target>E-Mail</target>
             </trans-unit>
             <trans-unit id="website" xml:space="preserve">
+                <source>Website</source>
                 <target>Website</target>
             </trans-unit>
             <trans-unit id="all" xml:space="preserve">
+                <source>All</source>
                 <target>Alle</target>
             </trans-unit>
             <trans-unit id="hotline" xml:space="preserve">
+                <source>Counseling phone</source>
                 <target>Beratungstelefon</target>
             </trans-unit>
             <trans-unit id="notice" xml:space="preserve">
+                <source>Notice</source>
                 <target>Hinweis</target>
             </trans-unit>
             <trans-unit id="description" xml:space="preserve">
+                <source>Description</source>
                 <target>Beschreibung</target>
             </trans-unit>
             <trans-unit id="categories" xml:space="preserve">
+                <source>Types of counseling</source>
                 <target>Beratungsarten</target>
             </trans-unit>
             <trans-unit id="back" xml:space="preserve">
+                <source>back to overview</source>
                 <target>zurück zur Übersicht</target>
             </trans-unit>
             <trans-unit id="contact-person" xml:space="preserve">
+                <source>Contact person</source>
                 <target>AnsprechpartnerIn</target>
             </trans-unit>
             <trans-unit id="association" xml:space="preserve">
+                <source>Carrier</source>
                 <target>Träger</target>
             </trans-unit>
         </body>
