@@ -56,7 +56,7 @@ return [
                         'flags-multiple',
                     ],
                 ],
-                'default' => 0,
+                'default' => -1,
             ],
         ],
         'l10n_parent' => [
