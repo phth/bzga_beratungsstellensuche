@@ -39,6 +39,6 @@ class TranslateViewHelperTest extends FunctionalTestCase
      */
     public function translateFromDefaultExtension(): void
     {
-        self::assertSame('vorherige Seite', LocalizationUtility::translate('previous page', 'bzga_beratungsstellensuche'));
+        self::assertSame('previous page', LocalizationUtility::translate('previous-page', 'bzga_beratungsstellensuche'));
     }
 }
