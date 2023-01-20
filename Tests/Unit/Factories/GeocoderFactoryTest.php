@@ -16,6 +16,7 @@ use Geocoder\Provider\GoogleMaps\GoogleMaps;
 use Geocoder\Provider\Nominatim\Nominatim;
 use Geocoder\Provider\Provider;
 use Http\Client\HttpClient;
+use Psr\Http\Client\ClientInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class GeocoderFactoryTest extends UnitTestCase
@@ -29,6 +30,8 @@ class GeocoderFactoryTest extends UnitTestCase
     protected function setUp(): void
     {
         $this->httpClient = $this->getMockBuilder(HttpClient::class)->getMock();
+
+        self::assertInstanceOf(ClientInterface::class, $this->httpClient);
         parent::setUp();
     }
 
