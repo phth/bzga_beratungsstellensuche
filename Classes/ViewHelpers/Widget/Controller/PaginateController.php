@@ -23,7 +23,6 @@ use TYPO3\CMS\Fluid\ViewHelpers\Widget\Controller\PaginateController as CorePagi
  */
 class PaginateController extends CorePaginateController
 {
-
     /**
      * @var Demand
      */

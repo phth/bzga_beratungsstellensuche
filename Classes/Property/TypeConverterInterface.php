@@ -16,7 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Property;
  */
 interface TypeConverterInterface
 {
-
     /**
      * @var string
      */

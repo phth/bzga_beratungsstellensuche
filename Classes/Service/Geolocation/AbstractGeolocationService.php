@@ -23,7 +23,6 @@ use Geocoder\Provider\Provider;
  */
 abstract class AbstractGeolocationService implements GeolocationServiceInterface
 {
-
     /**
      * @var string
      */

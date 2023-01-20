@@ -16,7 +16,6 @@ use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult as CoreQueryResult;
 
 class QueryResult extends CoreQueryResult
 {
-
     /**
      * Overwrites the original implementation of Extbase
      *

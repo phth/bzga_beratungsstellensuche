@@ -17,7 +17,6 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class ImplodeViewHelperTest extends ViewHelperBaseTestcase
 {
-
     /**
      * @var ImplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -63,7 +62,7 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
 
         return [
             [new \stdClass()],
-            [$objectStorage]
+            [$objectStorage],
         ];
     }
 
@@ -83,14 +82,13 @@ class ImplodeViewHelperTest extends ViewHelperBaseTestcase
         return [
             [[1, 2, 3], '1,2,3'],
             [['Title', 'Subject', 'Text'], 'Title,Subject,Text'],
-            [$objectStorage, '1,2,3']
+            [$objectStorage, '1,2,3'],
         ];
     }
 }
 
 class ObjectToString
 {
-
     /**
      * @var string
      */

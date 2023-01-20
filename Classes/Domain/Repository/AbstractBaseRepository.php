@@ -23,7 +23,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 abstract class AbstractBaseRepository extends Repository
 {
-
     /**
      * @var Dispatcher
      */

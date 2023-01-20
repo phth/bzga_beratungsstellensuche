@@ -16,7 +16,6 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class RoundViewHelperTest extends ViewHelperBaseTestcase
 {
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|RoundViewHelper
      */

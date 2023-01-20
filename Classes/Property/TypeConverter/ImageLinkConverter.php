@@ -34,7 +34,6 @@ use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
  */
 class ImageLinkConverter implements TypeConverterBeforeInterface
 {
-
     /**
      * Folder where the file upload should go to (including storage).
      */
@@ -95,7 +94,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     public function __construct(DataHandler $dataHandler = null)
     {
-        if (null === $dataHandler) {
+        if ($dataHandler === null) {
             $dataHandler = GeneralUtility::makeInstance(DataHandler::class);
         }
         $this->dataHandler = $dataHandler;
@@ -118,7 +117,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     public function convert($source, array $configuration = null)
     {
         // Check if we have no image url, return 0 if not
-        if ('' === $source->getExternalUrl()) {
+        if ($source->getExternalUrl() === '') {
             return 0;
         }
 
@@ -164,7 +163,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     {
         $imageContent = GeneralUtility::getUrl($source->getExternalUrl());
 
-        if (false === $imageContent) {
+        if ($imageContent === false) {
             throw new DownloadException(sprintf('The file %s could not be downloaded', $source->getExternalUrl()));
         }
 

@@ -22,7 +22,6 @@ use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
  */
 class MapViewHelper extends AbstractWidgetViewHelper
 {
-
     /**
      * @var MapController
      */

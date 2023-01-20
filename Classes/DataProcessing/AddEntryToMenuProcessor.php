@@ -56,7 +56,7 @@ final class AddEntryToMenuProcessor implements DataProcessorInterface
             'active' => 1,
             'current' => 1,
             'link' => GeneralUtility::getIndpEnv('TYPO3_REQUEST_URL'),
-            'isEntry' => true
+            'isEntry' => true,
         ];
     }
 

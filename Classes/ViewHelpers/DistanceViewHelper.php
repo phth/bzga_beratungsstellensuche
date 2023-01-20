@@ -20,7 +20,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class DistanceViewHelper extends AbstractViewHelper
 {
-
     /**
      * @var GeolocationServiceCacheDecorator
      */

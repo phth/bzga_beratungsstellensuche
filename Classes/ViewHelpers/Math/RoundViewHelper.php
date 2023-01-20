@@ -27,7 +27,7 @@ class RoundViewHelper extends AbstractViewHelper
     {
         $number = $arguments['number'];
         $precision = $arguments['precision'];
-        if (null === $number) {
+        if ($number === null) {
             $number = $renderChildrenClosure();
         }
         return round($number, $precision);

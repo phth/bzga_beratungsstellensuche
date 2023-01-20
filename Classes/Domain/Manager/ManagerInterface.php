@@ -19,7 +19,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 interface ManagerInterface
 {
-
     /**
      * @return mixed
      */

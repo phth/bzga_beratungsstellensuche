@@ -23,7 +23,6 @@ use TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper;
  */
 class PaginateViewHelper extends AbstractWidgetViewHelper
 {
-
     /**
      * @var PaginateController
      */

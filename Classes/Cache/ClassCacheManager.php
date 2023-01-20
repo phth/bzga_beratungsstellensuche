@@ -27,7 +27,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  */
 class ClassCacheManager implements SingletonInterface
 {
-
     /**
      * @var string
      */

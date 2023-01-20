@@ -39,7 +39,7 @@ final class CreateImageUploadFolderUpdate implements UpgradeWizardInterface
 
     public function updateNecessary(): bool
     {
-        return false === is_dir($this->getDefaultImageFolder());
+        return is_dir($this->getDefaultImageFolder()) === false;
     }
 
     public function getPrerequisites(): array

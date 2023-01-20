@@ -10,10 +10,10 @@
 return [
     'bzga:beratungsstellensuche:import' => [
         'class' => \Bzga\BzgaBeratungsstellensuche\Command\ImportCommand::class,
-        'schedulable' => true
+        'schedulable' => true,
     ],
     'bzga:beratungsstellensuche:truncate' => [
         'class' => \Bzga\BzgaBeratungsstellensuche\Command\TruncateCommand::class,
-        'schedulable' => true
-    ]
+        'schedulable' => true,
+    ],
 ];

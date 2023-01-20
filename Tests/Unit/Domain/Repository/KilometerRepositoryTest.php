@@ -16,7 +16,6 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class KilometerRepositoryTest extends UnitTestCase
 {
-
     /**
      * @var KilometerRepository
      */

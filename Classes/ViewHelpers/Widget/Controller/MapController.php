@@ -31,7 +31,6 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
  */
 class MapController extends AbstractWidgetController
 {
-
     /**
      * @var array
      */
@@ -143,7 +142,7 @@ class MapController extends AbstractWidgetController
             $infoWindowParameters = [];
 
             // Current marker does not need detail link
-            if (false === $isCurrentMarker) {
+            if ($isCurrentMarker === false) {
                 $detailsPid = (int)$this->settings['singlePid'] ?? $this->getTyposcriptFrontendController()->id;
                 $uriBuilder = $this->controllerContext->getUriBuilder();
                 $infoWindowParameters['detailLink'] = $uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(

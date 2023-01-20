@@ -16,7 +16,6 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class ExplodeViewHelperTest extends ViewHelperBaseTestcase
 {
-
     /**
      * @var ExplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */

@@ -20,7 +20,6 @@ use TYPO3\CMS\Core\Registry;
  */
 class ImporterRegistryDecorator extends AbstractImporter
 {
-
     /**
      * @var string
      */

@@ -16,7 +16,6 @@ use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
-
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|UppercaseFirstLetterViewHelper
      */
@@ -58,7 +57,7 @@ class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
         return [
             ['string', 'String'],
             ['motherAndChild', 'MotherAndChild'],
-            ['extension_key_with', 'ExtensionKeyWith']
+            ['extension_key_with', 'ExtensionKeyWith'],
         ];
     }
 }

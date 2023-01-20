@@ -30,7 +30,6 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
  */
 abstract class AbstractManager implements ManagerInterface, Countable, IteratorAggregate
 {
-
     /**
      * @var DataHandler
      */
@@ -97,7 +96,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         }
 
         $data = [
-            'pid' => $entity->getPid()
+            'pid' => $entity->getPid(),
         ];
         $properties = ObjectAccess::getGettablePropertyNames($entity);
         foreach ($properties as $propertyName) {
@@ -116,11 +115,11 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
                             'entity' => $entity,
                         ]
                     );
-                    if (null !== $propertyValue) {
+                    if ($propertyValue !== null) {
                         $data[$propertyNameLowercase] = $propertyValue;
                     }
                 } else {
-                    if (null !== $propertyValue) {
+                    if ($propertyValue !== null) {
                         $data[$propertyNameLowercase] = $propertyValue;
                     }
                 }
@@ -132,7 +131,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
         $hasChanged = true;
         if ($entity instanceof ExternalIdInterface) {
-            $hasChanged = 0 === $this->getRepository()->countByExternalIdAndHash($entity->getExternalId(), $entryHash);
+            $hasChanged = $this->getRepository()->countByExternalIdAndHash($entity->getExternalId(), $entryHash) === 0;
         }
 
         if ($hasChanged) {

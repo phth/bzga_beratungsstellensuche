@@ -21,7 +21,6 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class DataMapTest extends UnitTestCase
 {
-
     /**
      * @var DataMap
      */

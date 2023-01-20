@@ -189,7 +189,7 @@ class EntryController extends ActionController
 
     private function findCountryZonesForGermany(): array
     {
-        if (false === GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany')) {
+        if (GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany') === false) {
             return [];
         }
         $country = new Country();

@@ -23,7 +23,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 {
-
     /**
      * @var Dispatcher
      */
@@ -39,7 +38,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         NameConverterInterface $nameConverter = null
     ) {
         $this->classMetadataFactory = $classMetadataFactory;
-        if (null === $nameConverter) {
+        if ($nameConverter === null) {
             $nameConverter = new BaseMappingNameConverter();
         }
         $this->nameConverter = $nameConverter;
@@ -89,7 +88,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
                     if (isset($this->denormalizeCallbacks[$attribute])) {
                         $value = call_user_func($this->denormalizeCallbacks[$attribute], $value);
                     }
-                    if (null !== $value) {
+                    if ($value !== null) {
                         $object->$setter($value);
                     }
                 }

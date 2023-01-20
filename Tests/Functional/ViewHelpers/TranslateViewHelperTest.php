@@ -17,7 +17,6 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class TranslateViewHelperTest extends FunctionalTestCase
 {
-
     /**
      * @var array
      */

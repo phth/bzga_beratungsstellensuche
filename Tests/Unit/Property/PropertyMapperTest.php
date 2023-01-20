@@ -19,7 +19,6 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class PropertyMapperTest extends UnitTestCase
 {
-
     /**
      * @var ObjectManagerInterface|\PHPUnit\Framework\MockObject\MockObject
      */

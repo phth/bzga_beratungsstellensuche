@@ -20,7 +20,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
  */
 interface GeolocationServiceInterface
 {
-
     /**
      * @return mixed
      */

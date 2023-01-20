@@ -29,7 +29,7 @@ class ImplodeViewHelper extends AbstractViewHelper
     {
         $pieces = $arguments['pieces'];
         $glue = $arguments['glue'];
-        if (null === $pieces) {
+        if ($pieces === null) {
             $pieces = $renderChildrenClosure();
         }
         if (! is_array($pieces) && ! $pieces instanceof Traversable) {

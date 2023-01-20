@@ -26,7 +26,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class PageLayoutView
 {
-
     /**
      * Extension key
      *
@@ -337,7 +336,7 @@ class PageLayoutView
         foreach ($registeredExtensionKeys as $extensionKey) {
             $fullPathToLabel = sprintf(self::LLPATH, $extensionKey) . $label;
             $translation = $this->getLanguageService()->sL($fullPathToLabel);
-            if ('' !== $translation) {
+            if ($translation !== '') {
                 return $translation;
             }
         }

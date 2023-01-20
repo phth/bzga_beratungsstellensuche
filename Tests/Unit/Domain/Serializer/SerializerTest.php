@@ -71,7 +71,7 @@ class SerializerTest extends UnitTestCase
 
         $normalizers = [
             $this->entryNormalizer,
-            new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher))
+            new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher)),
         ];
         $objectManager = $this->createMock(ObjectManagerInterface::class);
         $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher, $objectManager);

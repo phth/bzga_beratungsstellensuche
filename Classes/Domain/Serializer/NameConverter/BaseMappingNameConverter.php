@@ -23,7 +23,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
-
     /**
      * @var Dispatcher
      */
