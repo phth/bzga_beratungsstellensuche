@@ -12,10 +12,12 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format\UppercaseFirstLetterViewHelper;
-use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
+    use ProphecyTrait;
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|UppercaseFirstLetterViewHelper
      */

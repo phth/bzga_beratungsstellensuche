@@ -76,6 +76,6 @@ class PropertyMapperTest extends UnitTestCase
     {
         $this->objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
         $this->objectManager->expects(self::once())->method('get')->willReturn($typeConverter);
-        $this->inject($this->subject, 'objectManager', $this->objectManager);
+        $this->subject->injectObjectManager($this->objectManager);
     }
 }

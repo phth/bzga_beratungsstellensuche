@@ -12,10 +12,12 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\ExplodeViewHelper;
-use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ExplodeViewHelperTest extends ViewHelperBaseTestcase
 {
+    use ProphecyTrait;
     /**
      * @var ExplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -78,7 +80,6 @@ class ExplodeViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderWithWrongSubjectType()
     {
-        $this->expectException(\InvalidArgumentException::class);
         $this->expectException(\InvalidArgumentException::class);
         $this->setArgumentsUnderTest($this->subject, ['subject' => new \stdClass()]);
         $this->subject->render();
