@@ -47,7 +47,7 @@ class DataMapTest extends UnitTestCase
         $this->dataMapFactory->expects(self::once())->method('buildDataMap')->willReturn($dataMap);
         $dataMap->expects(self::once())->method('getTableName')->willReturn($expectedTableName);
         for ($i = 0; $i <= 5; $i++) {
-            $tableName = $this->subject->getTableNameByClassName(__CLASS__);
+            $tableName = $this->subject->getTableNameByClassName(self::class);
         }
         self::assertSame($expectedTableName, $tableName);
     }

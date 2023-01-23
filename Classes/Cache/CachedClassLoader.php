@@ -29,7 +29,7 @@ class CachedClassLoader
     /**
      * @var string
      */
-    protected static $className = __CLASS__;
+    protected static $className = self::class;
 
     /**
      * @var string

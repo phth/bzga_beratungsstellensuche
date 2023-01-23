@@ -80,7 +80,7 @@ abstract class AbstractImporter implements ImporterInterface
             ],
         ]);
 
-        $json = json_decode($response->getBody()->__toString(), true);
+        $json = json_decode($response->getBody()->__toString(), true, 512, JSON_THROW_ON_ERROR);
 
         if ($json === false) {
             throw new UnexpectedValueException(sprintf('Could not retrieve token from url "%s"', $url));

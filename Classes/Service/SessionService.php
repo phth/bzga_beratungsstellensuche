@@ -23,15 +23,9 @@ class SessionService
      */
     public const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
 
-    /**
-     * @var FrontendUserAuthentication|null
-     */
-    private $frontendUser;
+    private ?\TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendUser;
 
-    /**
-     * @var string
-     */
-    private $sessionNamespace;
+    private string $sessionNamespace;
 
     public function __construct(
         string $sessionNamespace = 'beratungsstellendatenbank'

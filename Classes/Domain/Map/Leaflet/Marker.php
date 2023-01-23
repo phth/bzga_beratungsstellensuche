@@ -20,10 +20,7 @@ use Netzmacht\LeafletPHP\Definition\UI\Marker as LeafletMarker;
 
 final class Marker implements MarkerInterface
 {
-    /**
-     * @var LeafletMarker
-     */
-    private $marker;
+    private LeafletMarker $marker;
 
     public function __construct(string $identifier, CoordinateInterface $coordinate)
     {

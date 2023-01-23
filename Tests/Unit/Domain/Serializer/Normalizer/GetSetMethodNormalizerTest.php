@@ -61,7 +61,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
         $data = [
             'mapy' => $latitude,
         ];
-        $object = $this->subject->denormalize($data, 'Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry');
+        $object = $this->subject->denormalize($data, \Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry::class);
         /* @var $object Entry */
         self::assertSame($latitude, $object->getLatitude());
     }
@@ -73,9 +73,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     {
         $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
 
-        $stateCallback = function ($bundesland) use ($countryZoneMock) {
-            return $countryZoneMock;
-        };
+        $stateCallback = fn ($bundesland) => $countryZoneMock;
 
         $this->subject->setDenormalizeCallbacks(['state' => $stateCallback]);
 

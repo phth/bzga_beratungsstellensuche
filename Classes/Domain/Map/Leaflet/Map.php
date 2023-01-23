@@ -18,10 +18,7 @@ use Netzmacht\LeafletPHP\Definition\Map as LeafletMap;
 
 final class Map implements MapInterface
 {
-    /**
-     * @var LeafletMap
-     */
-    private $map;
+    private LeafletMap $map;
 
     public function __construct(LeafletMap $map)
     {

@@ -23,10 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class IconUtility
 {
-    /**
-     * @var IconFactory
-     */
-    private $iconFactory;
+    private \TYPO3\CMS\Core\Imaging\IconFactory $iconFactory;
 
     public function __construct()
     {

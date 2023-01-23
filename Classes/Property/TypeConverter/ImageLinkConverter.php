@@ -51,32 +51,18 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
      */
     public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
-    /**
-     * @var string
-     */
-    private $defaultUploadFolder = '1:/user_upload/tx_bzgaberatungsstellensuche';
+    private string $defaultUploadFolder = '1:/user_upload/tx_bzgaberatungsstellensuche';
 
-    /**
-     * @var string
-     */
-    private $tempFolder = 'typo3temp/tx_bzgaberatungsstellensuche/';
+    private string $tempFolder = 'typo3temp/tx_bzgaberatungsstellensuche/';
 
     /**
      * One of 'cancel', 'replace', 'changeName'
-     *
-     * @var string
      */
-    private $defaultConflictMode = 'replace';
+    private string $defaultConflictMode = 'replace';
 
-    /**
-     * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     */
-    private $resourceFactory;
+    private ?\TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory = null;
 
-    /**
-     * @var array
-     */
-    private static $imageMimeTypes = [
+    private static array $imageMimeTypes = [
         'bmp' => 'image/bmp',
         'gif' => 'image/gif',
         'jpeg' => 'image/jpeg',
@@ -87,10 +73,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         'tiff' => 'image/tiff',
     ];
 
-    /**
-     * @var DataHandler|null
-     */
-    private $dataHandler;
+    private ?\TYPO3\CMS\Core\DataHandling\DataHandler $dataHandler;
 
     public function __construct(DataHandler $dataHandler = null)
     {
@@ -177,26 +160,26 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
                 // therefore just testing if file got uploaded
                 $hasError = !@is_file($pathToUploadFile);
                 if ($hasError) {
-                    throw new TypeConverterException($error, 1399312443);
+                    throw new TypeConverterException($error, 1_399_312_443);
                 }
             } else {
-                throw new TypeConverterException('Mime type ' . $imageInfo['mime'] . ' is not allowed as image.', 1399312443);
+                throw new TypeConverterException('Mime type ' . $imageInfo['mime'] . ' is not allowed as image.', 1_399_312_443);
             }
         } else {
-            throw new TypeConverterException('File is not an Image as expected', 1399312443);
+            throw new TypeConverterException('File is not an Image as expected', 1_399_312_443);
         }
         return $pathToUploadFile;
     }
 
     private function importResource(string $tempFilePath): FalFile
     {
-        if (class_exists('TYPO3\\CMS\\Core\\Resource\\Security\\FileNameValidator')) {
+        if (class_exists(\TYPO3\CMS\Core\Resource\Security\FileNameValidator::class)) {
             if (! GeneralUtility::makeInstance(FileNameValidator::class)->isValid($tempFilePath)) {
-                throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
+                throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1_399_312_430);
             }
         } else {
             if (! GeneralUtility::makeInstance(FileNameValidator::class)->isValid($tempFilePath)) {
-                throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
+                throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1_399_312_430);
             }
         }
 

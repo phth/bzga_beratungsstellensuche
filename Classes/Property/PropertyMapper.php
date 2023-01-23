@@ -22,12 +22,9 @@ class PropertyMapper implements TypeConverterInterface
     /**
      * @var TypeConverterInterface[]
      */
-    private $typeConverters = [];
+    private array $typeConverters = [];
 
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
+    private ?\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager = null;
 
     public function injectObjectManager(ObjectManagerInterface $objectManager): void
     {

@@ -16,15 +16,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
  */
 class ImageLink
 {
-    /**
-     * @var string
-     */
-    private $externalUrl;
+    private string $externalUrl;
 
-    /**
-     * @var string
-     */
-    private $identifier = '';
+    private string $identifier = '';
 
     public function __construct(string $externalUrl)
     {

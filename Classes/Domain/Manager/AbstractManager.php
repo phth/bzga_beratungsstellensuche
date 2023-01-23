@@ -18,7 +18,6 @@ use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use function count;
 use Countable;
 use IteratorAggregate;
-use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -40,30 +39,15 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      */
     protected $dataMap = [];
 
-    /**
-     * @var \SplObjectStorage
-     */
-    private $entries;
+    private \SplObjectStorage $entries;
 
-    /**
-     * @var array
-     */
-    private $externalUids = [];
+    private array $externalUids = [];
 
-    /**
-     * @var DataMap
-     */
-    private $dataMapFactory;
+    private \Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap $dataMapFactory;
 
-    /**
-     * @var PropertyMapper
-     */
-    private $propertyMapper;
+    private \Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper $propertyMapper;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private \Psr\Log\LoggerInterface $logger;
 
     public function __construct(
         DataHandler $dataHandler,
@@ -79,7 +63,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
         $this->entries = new \SplObjectStorage();
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function create(AbstractEntity $entity)

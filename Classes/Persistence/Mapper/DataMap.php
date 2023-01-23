@@ -21,12 +21,9 @@ class DataMap
     /**
      * @var string[]
      */
-    private $cachedTableNames = [];
+    private array $cachedTableNames = [];
 
-    /**
-     * @var DataMapFactory
-     */
-    private $dataMapFactory;
+    private \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory $dataMapFactory;
 
     public function __construct(DataMapFactory $dataMapFactory)
     {

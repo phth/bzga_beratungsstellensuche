@@ -13,18 +13,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\ValueObject;
 
 final class ImportAuthorization
 {
-    /**
-     * @var string
-     */
-    private $url;
-    /**
-     * @var string
-     */
-    private $clientId;
-    /**
-     * @var string
-     */
-    private $clientSecret;
+    private string $url;
+    private string $clientId;
+    private string $clientSecret;
 
     public function __construct(string $url, string $clientId, string $clientSecret)
     {
