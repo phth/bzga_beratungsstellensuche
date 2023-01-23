@@ -9,6 +9,8 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Bzga\BzgaBeratungsstellensuche\Command\ImportCommand;
+use Bzga\BzgaBeratungsstellensuche\Command\TruncateCommand;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
@@ -28,4 +30,16 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->alias(GeolocationServiceInterface::class, GeolocationService::class);
 
     $services->set(GeolocationServiceCacheDecorator::class)->public();
+
+    // Add commands
+    $services->set('console.command.beratungsstellensuche_import', ImportCommand::class)
+        ->tag('console.command', [
+            'command' => 'bzga:beratungsstellensuche:import',
+            'schedulable' => true,
+        ]);
+    $services->set('console.command.beratungsstellensuche_truncate', TruncateCommand::class)
+        ->tag('console.command', [
+            'command' => 'bzga:beratungsstellensuche:truncate',
+            'schedulable' => true,
+        ]);
 };
