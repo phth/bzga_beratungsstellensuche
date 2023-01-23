@@ -11,18 +11,26 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Controller;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapBuilderFactory;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\MapWindowInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\SessionService;
+use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
 use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * @author Sebastian Schreiber
@@ -43,6 +51,11 @@ class EntryController extends ActionController
      * @var KilometerRepository
      */
     protected $kilometerRepository;
+
+    /**
+     * @var MapBuilderFactory
+     */
+    protected $mapBuilderFactory;
 
     /**
      * @var SessionService
@@ -167,9 +180,123 @@ class EntryController extends ActionController
             $this->redirect('list', null, null, [], $this->settings['listPid'], null, 404);
         }
 
-        $assignedViewValues = compact('entry', 'demand');
+        $mapId = sprintf('map_%s', StringUtility::getUniqueId());
+        $assignedViewValues = compact('entry', 'demand', 'mapId');
         $assignedViewValues = $this->emitActionSignal(Events::SHOW_ACTION_SIGNAL, $assignedViewValues);
         $this->view->assignMultiple($assignedViewValues);
+    }
+
+    public function mapJavaScriptAction(string $mapId, ?Entry $mainEntry = null, ?Demand $demand = null): void
+    {
+        // TODO: while the tests are green this does not work yet
+        $mapBuilder = $this->mapBuilderFactory->createMapBuilder();
+
+        $this->view->assign('mapId', $mapId);
+
+        // These are only some defaults and can be overridden via a hook method
+        $map = $mapBuilder->createMap($mapId);
+
+        // Set map options configurable via TypoScript, option:value => maxZoom:17
+        $mapOptions = isset($this->settings['map']['options']) ? GeneralUtility::trimExplode(',', $this->settings['map']['options']) : [];
+
+        if (is_array($mapOptions) && ! empty($mapOptions)) {
+            foreach ($mapOptions as $mapOption) {
+                list($mapOptionKey, $mapOptionValue) = GeneralUtility::trimExplode(':', $mapOption, true, 2);
+                $map->setOption($mapOptionKey, $mapOptionValue);
+            }
+        }
+
+        $entries = new ObjectStorage();
+        if ($demand !== null) {
+            try {
+                $queryResult = $this->entryRepository->findDemanded($demand);
+                $entries = Utility::transformQueryResultToObjectStorage($queryResult);
+            } catch (InvalidQueryException $e) {
+            }
+        }
+
+        if ($mainEntry !== null) {
+            $entries->attach($mainEntry);
+        }
+
+        $markerCluster = $mapBuilder->createMarkerCluster('markercluster', $map);
+
+        foreach ($entries as $entry) {
+            /* @var $entry GeopositionInterface|MapWindowInterface */
+            $coordinate = $mapBuilder->createCoordinate($entry->getLatitude(), $entry->getLongitude());
+            $marker = $mapBuilder->createMarker(sprintf('marker_%d', $entry->getUid()), $coordinate);
+
+            $iconFile = $this->settings['map']['pathToDefaultMarker'] ?? '';
+            $isCurrentMarker = false;
+            if ($entry === $mainEntry) {
+                $isCurrentMarker = true;
+                $iconFile = $this->settings['map']['pathToActiveMarker'] ?? '';
+                $map->setCenter($coordinate);
+            }
+
+            if (! empty($iconFile)) {
+                $marker->addIconFromPath(Utility::stripPathSite(GeneralUtility::getFileAbsFileName($iconFile)));
+            }
+
+            $infoWindowParameters = [];
+
+            // Current marker does not need detail link
+            if (!$isCurrentMarker) {
+                $detailsPid = (int)($this->settings['singlePid'] ?? $this->getTyposcriptFrontendController()->id);
+                $uriBuilder = $this->controllerContext->getUriBuilder();
+                $infoWindowParameters['detailLink'] = $uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
+                    'show',
+                    ['entry' => $entry],
+                    'Entry'
+                );
+            }
+
+            // Create Info Window
+            $popUp = $mapBuilder->createPopUp('popUp');
+
+            // Call hook functions for modify the info window
+            if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'])) {
+                $params = [
+                    'popUp' => &$popUp,
+                    'isCurrentMarker' => $isCurrentMarker,
+                    'demand' => $demand,
+                ];
+                foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'] as $reference) {
+                    GeneralUtility::callUserFunction($reference, $params, $this);
+                }
+            }
+
+            $marker->addPopUp($popUp, $entry->getInfoWindow($infoWindowParameters), $isCurrentMarker);
+
+            // Call hook functions for modify the marker
+            if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyMarker'])) {
+                $params = [
+                    'marker' => &$marker,
+                    'isCurrentMarker' => $isCurrentMarker,
+                ];
+                foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyMarker'] as $reference) {
+                    GeneralUtility::callUserFunction($reference, $params, $this);
+                }
+            }
+            $markerCluster->addMarker($marker);
+        }
+
+        // Call hook functions for modify the map
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyMap'])) {
+            $params = [
+                'map' => &$map,
+            ];
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyMap'] as $reference) {
+                GeneralUtility::callUserFunction($reference, $params, $this);
+            }
+        }
+
+        $this->view->assign('map', $mapBuilder->build($map));
+    }
+
+    private function getTyposcriptFrontendController(): TypoScriptFrontendController
+    {
+        return $GLOBALS['TSFE'];
     }
 
     public function autocompleteAction(string $q): void
