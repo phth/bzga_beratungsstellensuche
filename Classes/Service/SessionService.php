@@ -28,10 +28,7 @@ class SessionService
      */
     private $frontendUser;
 
-    /**
-     * @var string
-     */
-    private $sessionNamespace;
+    private string $sessionNamespace;
 
     public function __construct(
         string $sessionNamespace = 'beratungsstellendatenbank'

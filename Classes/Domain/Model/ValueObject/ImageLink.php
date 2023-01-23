@@ -16,10 +16,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
  */
 class ImageLink
 {
-    /**
-     * @var string
-     */
-    private $externalUrl;
+    private string $externalUrl;
 
     /**
      * @var string

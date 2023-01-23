@@ -16,11 +16,6 @@ parameters:
 			path: Classes/Domain/Repository/EntryRepository.php
 
 		-
-			message: "#^Variable \\$value on left side of \\?\\? always exists and is not nullable\\.$#"
-			count: 1
-			path: Classes/Domain/Repository/KilometerRepository.php
-
-		-
 			message: "#^Call to an undefined method SJBR\\\\StaticInfoTables\\\\Domain\\\\Repository\\\\CountryZoneRepository\\:\\:findOneByExternalId\\(\\)\\.$#"
 			count: 1
 			path: Classes/Domain/Serializer/Normalizer/EntryNormalizer.php

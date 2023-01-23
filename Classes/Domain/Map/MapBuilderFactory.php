@@ -16,10 +16,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 final class MapBuilderFactory
 {
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
+    private ObjectManagerInterface $objectManager;
 
     public function __construct(ObjectManagerInterface $objectManager)
     {

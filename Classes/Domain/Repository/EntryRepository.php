@@ -69,7 +69,7 @@ class EntryRepository extends AbstractBaseRepository
             $searchConstraints = [];
 
             if (count($searchFields) === 0) {
-                throw new \UnexpectedValueException('No search fields defined', 1318497755);
+                throw new \UnexpectedValueException('No search fields defined', 1_318_497_755);
             }
 
             $keywordsArray = GeneralUtility::trimExplode(' ', $keywords);

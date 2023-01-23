@@ -34,6 +34,6 @@ final class AutocompleteJson extends AbstractView
             }
         }
 
-        return json_encode(array_unique($suggestions));
+        return json_encode(array_unique($suggestions), JSON_THROW_ON_ERROR);
     }
 }

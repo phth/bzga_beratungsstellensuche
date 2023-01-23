@@ -203,7 +203,7 @@ class EntryController extends ActionController
 
         if (is_array($mapOptions) && ! empty($mapOptions)) {
             foreach ($mapOptions as $mapOption) {
-                list($mapOptionKey, $mapOptionValue) = GeneralUtility::trimExplode(':', $mapOption, true, 2);
+                [$mapOptionKey, $mapOptionValue] = GeneralUtility::trimExplode(':', $mapOption, true, 2);
                 $map->setOption($mapOptionKey, $mapOptionValue);
             }
         }

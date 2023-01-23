@@ -1,5 +1,7 @@
 <?php
 
+use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
+use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use Bzga\BzgaBeratungsstellensuche\Controller\EntryController;
@@ -106,8 +108,8 @@ call_user_func(function ($packageKey) {
     if (! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][CacheFactory::CACHE_KEY])
     ) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][CacheFactory::CACHE_KEY] = [
-            'frontend' => '\TYPO3\CMS\Core\Cache\Frontend\VariableFrontend',
-            'backend'  => '\TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend',
+            'frontend' => '\\' . VariableFrontend::class,
+            'backend'  => '\\' . Typo3DatabaseBackend::class,
             'options'  => [],
         ];
     }
