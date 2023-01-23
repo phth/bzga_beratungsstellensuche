@@ -33,7 +33,7 @@ class ObjectStorageConverterTest extends UnitTestCase
         return [
             [1],
             ['string'],
-            [new stdClass()]
+            [new stdClass()],
         ];
     }
 

@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Factories;
 
 use GuzzleHttp\HandlerStack;
-use Http\Adapter\Guzzle6\Client;
+use Http\Adapter\Guzzle7\Client;
 use Http\Client\HttpClient;
 
 /**

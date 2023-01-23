@@ -26,7 +26,6 @@ use Traversable;
  */
 class XmlImporter extends AbstractImporter implements Countable, IteratorAggregate
 {
-
     /**
      * @var string
      */

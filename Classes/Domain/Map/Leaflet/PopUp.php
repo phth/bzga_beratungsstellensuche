@@ -16,7 +16,6 @@ use Netzmacht\LeafletPHP\Definition\UI\Popup as CorePopUp;
 
 final class PopUp implements PopUpInterface
 {
-
     /**
      * @var \Netzmacht\LeafletPHP\Definition\UI\Popup
      */

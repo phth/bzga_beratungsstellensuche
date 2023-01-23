@@ -27,7 +27,7 @@ class UppercaseFirstLetterViewHelper extends AbstractViewHelper
     public static function renderStatic(array $arguments, Closure $renderChildrenClosure, RenderingContextInterface $renderingContext)
     {
         $subject = $arguments['subject'];
-        if (null === $subject) {
+        if ($subject === null) {
             $subject = $renderChildrenClosure();
         }
         if (! is_string($subject)) {

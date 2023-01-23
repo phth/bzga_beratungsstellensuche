@@ -16,7 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche;
  */
 final class Events
 {
-
     /**
      * Signal is emitted before the import starts.
      * So you are able to extend the importer with your own logic beforehand

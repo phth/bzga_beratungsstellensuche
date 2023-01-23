@@ -31,14 +31,14 @@ class ExplodeViewHelper extends AbstractViewHelper
         $glue = $arguments['glue'];
         $removeEmptyValues = $arguments['removeEmptyValues'];
         $valuesAsKeys = $arguments['valuesAsKeys'];
-        if (null === $subject) {
+        if ($subject === null) {
             $subject = $renderChildrenClosure();
         }
         if (!is_scalar($subject)) {
             throw new InvalidArgumentException('The provided value must be of type string');
         }
         $array = GeneralUtility::trimExplode($glue, $subject, $removeEmptyValues);
-        if (true === $valuesAsKeys) {
+        if ($valuesAsKeys === true) {
             $array = array_combine($array, $array);
         }
         return $array;

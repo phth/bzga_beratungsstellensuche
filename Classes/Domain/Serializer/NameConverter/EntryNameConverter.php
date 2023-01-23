@@ -16,7 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
  */
 class EntryNameConverter extends BaseMappingNameConverter
 {
-
     /**
      * Mapping of names, left side incoming names in xml|array, right side name for object
      * @var array

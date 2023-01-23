@@ -30,7 +30,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class EntryRepository extends AbstractBaseRepository
 {
-
     /**
      * @var GeolocationServiceCacheDecorator
      */
@@ -173,7 +172,6 @@ class EntryRepository extends AbstractBaseRepository
 
     public function deleteByUid(int $uid): void
     {
-
         /** @var FileRepository $fileRepository */
         $fileRepository = GeneralUtility::makeInstance(FileRepository::class);
 

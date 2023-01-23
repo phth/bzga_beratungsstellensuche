@@ -23,14 +23,13 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 abstract class AbstractBaseRepository extends Repository
 {
-
     /**
      * @var Dispatcher
      */
     protected $signalSlotDispatcher;
 
     /**
-     * @var array
+     * @var array<non-empty-string, QueryInterface::ORDER_*>
      */
     protected $defaultOrderings = ['title' => QueryInterface::ORDER_ASCENDING];
 

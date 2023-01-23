@@ -26,7 +26,6 @@ use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
  */
 class Serializer extends BaseSerializer
 {
-
     /**
      * @var Dispatcher
      */

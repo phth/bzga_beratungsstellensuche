@@ -65,13 +65,14 @@ class SerializerTest extends UnitTestCase
         $this->signalSlotDispatcher->method('dispatch')->willReturn(['extendedNormalizers' => []]);
         $this->countryZoneRepository = $this->getMockBuilder(CountryZoneRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
         $this->categoryRepository = $this->getMockBuilder(CategoryRepository::class)->setMethods(['findOneByExternalId'])->disableOriginalConstructor()->getMock();
-        $this->inject($this->entryNormalizer, 'signalSlotDispatcher', $this->signalSlotDispatcher);
-        $this->inject($this->entryNormalizer, 'categoryRepository', $this->categoryRepository);
-        $this->inject($this->entryNormalizer, 'countryZoneRepository', $this->countryZoneRepository);
+
+        $this->entryNormalizer->injectSignalSlotDispatcher($this->signalSlotDispatcher);
+        $this->entryNormalizer->injectCategoryRepository($this->categoryRepository);
+        $this->entryNormalizer->injectCountryZoneRepository($this->countryZoneRepository);
 
         $normalizers = [
             $this->entryNormalizer,
-            new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher))
+            new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher)),
         ];
         $objectManager = $this->createMock(ObjectManagerInterface::class);
         $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher, $objectManager);

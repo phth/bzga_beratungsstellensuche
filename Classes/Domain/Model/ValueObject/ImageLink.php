@@ -16,7 +16,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject;
  */
 class ImageLink
 {
-
     /**
      * @var string
      */

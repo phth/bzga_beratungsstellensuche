@@ -27,7 +27,6 @@ use UnexpectedValueException;
  */
 abstract class AbstractImporter implements ImporterInterface
 {
-
     /**
      * @var Serializer
      */
@@ -58,7 +57,7 @@ abstract class AbstractImporter implements ImporterInterface
 
         $content = file_get_contents($file);
 
-        if (false === $content) {
+        if ($content === false) {
             throw new ContentCouldNotBeFetchedException('The content could not be fetched');
         }
 
@@ -78,7 +77,7 @@ abstract class AbstractImporter implements ImporterInterface
                 'grant_type' => 'client_credentials',
                 'client_id' => $importAuthorization->getClientId(),
                 'client_secret' => $importAuthorization->getClientSecret(),
-            ]
+            ],
         ]);
 
         $json = json_decode($response->getBody()->__toString(), true);
@@ -96,12 +95,12 @@ abstract class AbstractImporter implements ImporterInterface
             'headers' => $headers,
             'query' => [
                 '_format' => 'xml',
-            ]
+            ],
         ]);
 
         $content = $response->getBody()->__toString();
 
-        if (false === $content) {
+        if ($content === false) {
             throw new ContentCouldNotBeFetchedException('The content could not be fetched');
         }
 

@@ -21,7 +21,6 @@ use SimpleXMLIterator;
  */
 class Importer
 {
-
     /**
      * @var EntryRepository
      */

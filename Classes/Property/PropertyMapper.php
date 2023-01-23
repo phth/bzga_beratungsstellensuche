@@ -19,7 +19,6 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
  */
 class PropertyMapper implements TypeConverterInterface
 {
-
     /**
      * @var TypeConverterInterface[]
      */
@@ -42,7 +41,7 @@ class PropertyMapper implements TypeConverterInterface
     public function supports($source, string $type = TypeConverterInterface::CONVERT_BEFORE)
     {
         foreach ($this->typeConverters as $typeConverter) {
-            if (true === $typeConverter->supports($source, $type) && $this->converterSupportsType(
+            if ($typeConverter->supports($source, $type) === true && $this->converterSupportsType(
                 $typeConverter,
                 $type
             )
@@ -60,7 +59,7 @@ class PropertyMapper implements TypeConverterInterface
     public function convert($source, array $configuration = null)
     {
         foreach ($this->typeConverters as $typeConverter) {
-            if (true === $typeConverter->supports($source)) {
+            if ($typeConverter->supports($source) === true) {
                 return $typeConverter->convert($source, $configuration);
             }
         }

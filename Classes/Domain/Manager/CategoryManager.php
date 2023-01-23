@@ -19,7 +19,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
  */
 class CategoryManager extends AbstractManager
 {
-
     /**
      * @var CategoryRepository
      */

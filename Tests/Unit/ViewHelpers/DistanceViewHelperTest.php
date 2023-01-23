@@ -14,10 +14,12 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\DistanceViewHelper;
-use TYPO3\TestingFramework\Fluid\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DistanceViewHelperTest extends ViewHelperBaseTestcase
 {
+    use ProphecyTrait;
     /**
      * @var GeolocationServiceCacheDecorator|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -33,8 +35,9 @@ class DistanceViewHelperTest extends ViewHelperBaseTestcase
         parent::setUp();
         $this->geolocationService = $this->getMockBuilder(GeolocationServiceCacheDecorator::class)->disableOriginalConstructor()->getMock();
         $this->subject = $this->getMockBuilder(DistanceViewHelper::class)->setMethods(['renderChildren'])->getMock();
-        $this->subject->injectGeolocationService($this->geolocationService);
         $this->injectDependenciesIntoViewHelper($this->subject);
+
+        $this->subject->injectGeolocationService($this->geolocationService);
     }
 
     /**
@@ -47,7 +50,7 @@ class DistanceViewHelperTest extends ViewHelperBaseTestcase
         $location = $this->getMockBuilder(GeopositionInterface::class)->getMock();
         $this->subject->setArguments([
             'demandPosition' => $demandPosition,
-            'location' => $location
+            'location' => $location,
         ]);
         self::assertEquals(1, $this->subject->render());
     }

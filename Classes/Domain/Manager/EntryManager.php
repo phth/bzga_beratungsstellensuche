@@ -19,7 +19,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
  */
 class EntryManager extends AbstractManager
 {
-
     /**
      * @var EntryRepository
      */

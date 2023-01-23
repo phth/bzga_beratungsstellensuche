@@ -21,7 +21,6 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class ImporterRegistryDecoratorTest extends UnitTestCase
 {
-
     /**
      * @var ImporterRegistryDecorator
      */

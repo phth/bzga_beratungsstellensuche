@@ -15,7 +15,6 @@ use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 
 final class BoolConverter implements TypeConverterBeforeInterface
 {
-
     /**
      * @inheritDoc
      */

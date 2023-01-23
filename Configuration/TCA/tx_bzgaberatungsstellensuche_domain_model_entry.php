@@ -74,14 +74,14 @@ return [
         ],
         'l10n_source' => [
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'l10n_diffsource' => [
             'config' => [
                 'type' => 'passthrough',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         't3ver_label' => [
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
@@ -102,9 +102,9 @@ return [
                     [
                         0 => '',
                         1 => '',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ],
         'starttime' => [
             'exclude' => true,
@@ -118,7 +118,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
-            ]
+            ],
         ],
         'endtime' => [
             'exclude' => true,
@@ -132,7 +132,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
-            ]
+            ],
         ],
         'external_id' => [
             'config' => [
@@ -200,7 +200,7 @@ return [
                 'max' => 255,
                 'eval' => 'trim,required',
                 'softref' => 'email[subst]',
-            ]
+            ],
         ],
         'hotline' => [
             'exclude' => 0,
@@ -233,7 +233,7 @@ return [
                 'max' => 255,
                 'eval' => 'trim,required',
                 'softref' => 'typolink_tag,email[subst],url',
-            ]
+            ],
         ],
         'zip' => [
             'exclude' => 0,

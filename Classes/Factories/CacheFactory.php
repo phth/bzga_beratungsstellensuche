@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
  */
 class CacheFactory
 {
-
     /**
      * @var string
      */

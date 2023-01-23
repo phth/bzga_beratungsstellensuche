@@ -18,7 +18,6 @@ use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
  */
 class DataMap
 {
-
     /**
      * @var string[]
      */

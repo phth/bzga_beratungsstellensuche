@@ -26,7 +26,6 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class EntryNormalizerTest extends UnitTestCase
 {
-
     /**
      * @var EntryNormalizer
      */
@@ -63,9 +62,9 @@ class EntryNormalizerTest extends UnitTestCase
         $dispatcher->method('dispatch')->willReturn(['extendedMapNames' => []]);
         $this->subject = new EntryNormalizer(null, $dispatcher);
         $this->subject->setSerializer($this->serializer);
-        $this->inject($this->subject, 'signalSlotDispatcher', $this->signalSlotDispatcher);
-        $this->inject($this->subject, 'countryZoneRepository', $this->countryZoneRepository);
-        $this->inject($this->subject, 'categoryRepository', $this->categoryRepository);
+        $this->subject->injectSignalSlotDispatcher($this->signalSlotDispatcher);
+        $this->subject->injectCategoryRepository($this->categoryRepository);
+        $this->subject->injectCountryZoneRepository($this->countryZoneRepository);
     }
 
     /**
