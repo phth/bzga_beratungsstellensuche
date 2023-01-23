@@ -13,6 +13,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Model;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
+use TYPO3\CMS\Extbase\Annotation\ORM\Cascade;
+use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -53,7 +55,7 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     /**
      * Bundesland der Beratungsstelle.
      *
-     * @var \SJBR\StaticInfoTables\Domain\Model\CountryZone
+     * @var CountryZone
      */
     protected $state;
 
@@ -100,15 +102,15 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
     protected $website = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
+     * @var FileReference
+     * @Cascade("remove")
      */
     protected $image;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade("remove")
+     * @var ObjectStorage<Category>
+     * @Lazy
+     * @Cascade("remove")
      */
     protected $categories;
 

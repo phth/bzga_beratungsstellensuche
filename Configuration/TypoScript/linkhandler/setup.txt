@@ -5,6 +5,5 @@ config.recordLinks.tx_bzgaberatungsstellensuche_domain_model_entry {
         additionalParams.data = field:uid
         # If there is a plugin with mode "Detail", the controller and action parameter might be skipped
         additionalParams.wrap = &tx_bzgaberatungsstellensuche_pi1[controller]=Entry&tx_bzgaberatungsstellensuche_pi1[action]=show&tx_bzgaberatungsstellensuche_pi1[entry]=|
-        useCacheHash = 1
     }
 }

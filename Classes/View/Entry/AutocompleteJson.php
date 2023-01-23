@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\View\Entry;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Extbase\Mvc\View\AbstractView;
 
 final class AutocompleteJson extends AbstractView
@@ -26,11 +25,11 @@ final class AutocompleteJson extends AbstractView
         $suggestions = [];
 
         foreach ($entries as $entry) {
-            if (StringUtility::beginsWith($entry->getCity(), $q)) {
+            if (\str_starts_with($entry->getCity(), $q)) {
                 $suggestions[] = $entry->getCity();
             }
 
-            if (StringUtility::beginsWith($entry->getZip(), $q)) {
+            if (\str_starts_with($entry->getZip(), $q)) {
                 $suggestions[] = $entry->getZip();
             }
         }

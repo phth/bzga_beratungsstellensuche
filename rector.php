@@ -11,6 +11,7 @@ use Rector\Set\ValueObject\SetList;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Rector\General\ConvertImplicitVariablesToExplicitGlobalsRector;
 use Ssch\TYPO3Rector\Rector\General\ExtEmConfRector;
+use Ssch\TYPO3Rector\Rector\v9\v0\InjectAnnotationRector;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -30,10 +31,9 @@ return static function (RectorConfig $rectorConfig): void {
 
     $rectorConfig->skip([
         NameImportingPostRector::class => [
-            __DIR__ . '/ext_localconf.php',
-            __DIR__ . '/ext_tables.php',
             __DIR__ . '/Configuration/*.php',
             __DIR__ . '/Configuration/**/*.php',
+            __DIR__ . '/Classes/Domain/Model/CountryZone.php',
         ]
     ]);
 

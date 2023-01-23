@@ -69,7 +69,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     private $defaultConflictMode = 'replace';
 
     /**
-     * @var \TYPO3\CMS\Core\Resource\ResourceFactory
+     * @var ResourceFactory
      */
     private $resourceFactory;
 

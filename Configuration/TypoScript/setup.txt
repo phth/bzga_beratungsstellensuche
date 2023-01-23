@@ -6,22 +6,18 @@ plugin.tx_bzgaberatungsstellensuche {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Templates/
             100 = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
         }
-
         partialRootPaths {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Partials/
             100 = {$plugin.tx_bzgaberatungsstellensuche.view.partialRootPath}
         }
-
         layoutRootPaths {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Layouts/
             100 = {$plugin.tx_bzgaberatungsstellensuche.view.layoutRootPath}
         }
     }
-
     features {
         requireCHashArgumentForActionArguments = 0
     }
-
     # settings
     settings {
         singlePid = {$plugin.tx_bzgaberatungsstellensuche.settings.singlePid}
@@ -33,7 +29,6 @@ plugin.tx_bzgaberatungsstellensuche {
         list {
             itemsPerPage = {$plugin.tx_bzgaberatungsstellensuche.settings.list.itemsPerPage}
         }
-
         map {
             locale = {$plugin.tx_bzgaberatungsstellensuche.settings.map.locale}
             useSsl = {$plugin.tx_bzgaberatungsstellensuche.settings.map.useSsl}

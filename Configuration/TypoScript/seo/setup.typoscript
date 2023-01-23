@@ -16,10 +16,9 @@ plugin.tx_seo {
                                 uid = tx_bzgaberatungsstellensuche_pi1[entry]
                             }
                             additionalGetParameters {
-                              tx_bzgaberatungsstellensuche_pi1.controller = Entry
-                              tx_bzgaberatungsstellensuche_pi1.action = show
+                                tx_bzgaberatungsstellensuche_pi1.controller = Entry
+                                tx_bzgaberatungsstellensuche_pi1.action = show
                             }
-                            useCacheHash = 1
                         }
                     }
                 }

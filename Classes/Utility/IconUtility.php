@@ -41,10 +41,7 @@ class IconUtility
         $content = BackendUtilityCore::wrapClickMenuOnIcon(
             $data,
             $table,
-            $record['uid'],
-            '',
-            '',
-            '+info,edit,history'
+            $record['uid']
         );
 
         $linkTitle = htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));

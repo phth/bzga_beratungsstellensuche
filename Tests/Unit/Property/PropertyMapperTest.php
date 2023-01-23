@@ -14,18 +14,19 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 class PropertyMapperTest extends UnitTestCase
 {
     /**
-     * @var ObjectManagerInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var ObjectManagerInterface|MockObject
      */
     protected $objectManager;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|PropertyMapper
+     * @var MockObject|PropertyMapper
      */
     protected $subject;
 
@@ -48,18 +49,18 @@ class PropertyMapperTest extends UnitTestCase
      */
     public function convertSuccessfully()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject|TypeConverterBeforeInterface  $typeConverter */
+        /** @var MockObject|TypeConverterBeforeInterface $typeConverter */
         $typeConverter = $this->setUpTypeConverter();
         $typeConverter->expects(self::once())->method('convert')->willReturn(true);
         self::assertTrue($this->subject->convert('array'));
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|TypeConverterBeforeInterface
+     * @return MockObject|TypeConverterBeforeInterface
      */
     private function setUpTypeConverter()
     {
-        /** @var \PHPUnit\Framework\MockObject\MockObject|TypeConverterBeforeInterface  $typeConverter */
+        /** @var MockObject|TypeConverterBeforeInterface $typeConverter */
         $typeConverter  = $this->getMockBuilder(TypeConverterBeforeInterface::class)->getMock();
         $typeConverter->expects(self::once())->method('supports')->willReturn(true);
         $this->subject->expects(self::once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);

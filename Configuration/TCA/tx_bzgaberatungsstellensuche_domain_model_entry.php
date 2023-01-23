@@ -7,7 +7,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-if (!defined('TYPO3_MODE')) {
+if (!defined('TYPO3')) {
     die('Access denied.');
 }
 
@@ -32,9 +32,6 @@ return [
         'iconfile' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/tx_bzgaberatungsstellensuche_domain_model_category.svg',
         'searchFields' => 'title,subtitle,city,zip,description,contact_person,institution,association',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, subtitle, categories, image, website, zip, city, street, state, longitude, latitude, description, contact_person, telephone, telefax, email, hotline, notice, keywords, institution, association',
-    ],
     'types' => [
         '1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, slug, subtitle, image, notice, description, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.relations, categories, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.address, street, zip, city, state, longitude, latitude, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_db.xlf:tabs.contact, contact_person, telephone, telefax, email, website, hotline, institution, association, --div--;LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:tabs.access,starttime, endtime'],
     ],
@@ -45,26 +42,13 @@ return [
         'sys_language_uid' => [
             'exclude' => true,
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.language',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
-                'special' => 'languages',
-                'items' => [
-                    [
-                        'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
-                        -1,
-                        'flags-multiple',
-                    ],
-                ],
-                'default' => -1,
-            ],
+            'config' => ['type' => 'language'],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
             'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'tx_bzgaberatungsstellensuche_domain_model_entry',
                 'size' => 1,
                 'maxitems' => 1,
@@ -346,7 +330,6 @@ return [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'internal_type' => 'db',
                 'allowed' => 'tx_bzgaberatungsstellensuche_domain_model_category',
                 'foreign_table' => 'tx_bzgaberatungsstellensuche_domain_model_category',
                 'foreign_table_where' => 'ORDER BY tx_bzgaberatungsstellensuche_domain_model_category.title',
@@ -354,10 +337,6 @@ return [
                 'minitems' => 0,
                 'maxitems' => 100,
                 'MM' => 'tx_bzgaberatungsstellensuche_entry_category_mm',
-                'wizards' => [
-                    '_PADDING' => 0,
-                    '_VERTICAL' => 1,
-                ],
             ],
         ],
         'institution' => [

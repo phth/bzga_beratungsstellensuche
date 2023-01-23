@@ -17,6 +17,7 @@ use Bzga\BzgaBeratungsstellensuche\Utility\TemplateLayout;
 use TYPO3\CMS\Backend\Utility\BackendUtility as BackendUtilityCore;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Messaging\FlashMessageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -230,7 +231,7 @@ class PageLayoutView
             FlashMessage::class,
             $text,
             '',
-            FlashMessage::WARNING
+            AbstractMessage::WARNING
         );
         $flashMessageService = GeneralUtility::makeInstance(FlashMessageService::class);
         $defaultFlashMessageQueue = $flashMessageService->getMessageQueueByIdentifier();
@@ -283,9 +284,9 @@ class PageLayoutView
             $recursiveLevel = (int)$this->getFieldFromFlexform('settings.recursive');
             $recursiveLevelText = '';
             if ($recursiveLevel === 250) {
-                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.5');
+                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.5');
             } elseif ($recursiveLevel > 0) {
-                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:cms/locallang_ttc.xlf:recursive.I.' . $recursiveLevel);
+                $recursiveLevelText = $this->getLanguageService()->sL('LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:recursive.I.' . $recursiveLevel);
             }
 
             if (! empty($recursiveLevelText)) {
