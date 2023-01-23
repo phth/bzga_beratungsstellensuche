@@ -15,6 +15,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\ValueObject\ImageLink;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
+use PHPUnit\Framework\MockObject\MockObject;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -37,17 +38,17 @@ class EntryNormalizerTest extends UnitTestCase
     protected $serializer;
 
     /**
-     * @var CountryZoneRepository|\PHPUnit\Framework\MockObject\MockObject
+     * @var CountryZoneRepository|MockObject
      */
     protected $countryZoneRepository;
 
     /**
-     * @var CategoryRepository|\PHPUnit\Framework\MockObject\MockObject
+     * @var CategoryRepository|MockObject
      */
     protected $categoryRepository;
 
     /**
-     * @var Dispatcher|\PHPUnit\Framework\MockObject\MockObject
+     * @var Dispatcher|MockObject
      */
     protected $signalSlotDispatcher;
 

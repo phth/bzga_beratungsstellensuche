@@ -23,10 +23,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class IconUtility
 {
-    /**
-     * @var IconFactory
-     */
-    private $iconFactory;
+    private IconFactory $iconFactory;
 
     public function __construct()
     {
@@ -41,10 +38,7 @@ class IconUtility
         $content = BackendUtilityCore::wrapClickMenuOnIcon(
             $data,
             $table,
-            $record['uid'],
-            '',
-            '',
-            '+info,edit,history'
+            $record['uid']
         );
 
         $linkTitle = htmlspecialchars(BackendUtilityCore::getRecordTitle($table, $record));

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto;
 
+use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 
@@ -43,7 +44,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     protected $location = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Bzga\BzgaBeratungsstellensuche\Domain\Model\Category>
+     * @var ObjectStorage<Category>
      */
     protected $categories;
 
@@ -53,12 +54,12 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     protected $kilometers = 10;
 
     /**
-     * @var \SJBR\StaticInfoTables\Domain\Model\CountryZone
+     * @var CountryZone
      */
     protected $countryZone;
 
     /**
-     * @var \Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator
+     * @var GeolocationServiceCacheDecorator
      */
     protected $geolocationService;
 

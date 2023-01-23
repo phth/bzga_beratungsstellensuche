@@ -43,16 +43,12 @@ class ObjectStorageConverter implements TypeConverterBeforeInterface
             throw new InvalidArgumentException(sprintf('The %s type is not allowed', gettype($source)));
         }
 
-        $items = array_filter($source->toArray(), static function ($item) {
-            return $item instanceof DomainObjectInterface;
-        });
+        $items = array_filter($source->toArray(), static fn ($item) => $item instanceof DomainObjectInterface);
 
-        if (count($items) !== $source->count()) {
+        if (count((array)$items) !== $source->count()) {
             throw new InvalidArgumentException('The storage contains values not of type AbstractEntity');
         }
 
-        return implode(',', array_map(static function (DomainObjectInterface $item) {
-            return $item->getUid();
-        }, $items));
+        return implode(',', array_map(static fn (DomainObjectInterface $item) => $item->getUid(), $items));
     }
 }

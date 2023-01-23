@@ -31,20 +31,11 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
      */
     public const FORMAT = 'xml';
 
-    /**
-     * @var int
-     */
-    private $pid;
+    private ?int $pid = null;
 
-    /**
-     * @var SimpleXMLIterator
-     */
-    private $entries;
+    private ?\SimpleXMLIterator $entries = null;
 
-    /**
-     * @var SimpleXMLIterator
-     */
-    private $sxe;
+    private ?\SimpleXMLIterator $sxe = null;
 
     public function import(string $content, int $pid = 0): void
     {
@@ -73,7 +64,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
 
     public function count(): int
     {
-        return count($this->entries);
+        return $this->entries === null ? 0 : count($this->entries);
     }
 
     public function persist(): void
@@ -119,6 +110,6 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
 
     public function __toString(): string
     {
-        return __CLASS__;
+        return self::class;
     }
 }

@@ -21,10 +21,7 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 final class TruncateCommand extends Command
 {
-    /**
-     * @var EntryRepository|object
-     */
-    private $entryRepository;
+    private EntryRepository $entryRepository;
 
     public function __construct(string $name = null, EntryRepository $entryRepository = null)
     {

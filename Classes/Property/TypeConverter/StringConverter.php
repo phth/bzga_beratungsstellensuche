@@ -15,10 +15,7 @@ use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
 
 final class StringConverter implements TypeConverterBeforeInterface
 {
-    /**
-     * @var string
-     */
-    private $allowedTags = '<p><ul><li><em><i><b><br>';
+    private string $allowedTags = '<p><ul><li><em><i><b><br>';
 
     /**
      * @inheritDoc

@@ -15,13 +15,14 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Map\CoordinateInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Map\MarkerInterface;
 use Netzmacht\LeafletPHP\Definition\Map as LeafletMap;
+use Netzmacht\LeafletPHP\Definition\UI\Marker;
 
 final class Map implements MapInterface
 {
     /**
      * @var LeafletMap
      */
-    private $map;
+    private LeafletMap $map;
 
     public function __construct(LeafletMap $map)
     {
@@ -48,7 +49,7 @@ final class Map implements MapInterface
 
     public function addMarker(MarkerInterface $marker): void
     {
-        /** @var \Netzmacht\LeafletPHP\Definition\UI\Marker $leafletMarker */
+        /** @var Marker $leafletMarker */
         $leafletMarker = $marker->getMarker();
         $leafletMarker->addTo($this->map);
         $this->map->addLayer($leafletMarker);

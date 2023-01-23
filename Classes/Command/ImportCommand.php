@@ -25,15 +25,9 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 final class ImportCommand extends Command
 {
-    /**
-     * @var XmlImporter|object
-     */
-    private $xmlImporter;
+    private XmlImporter $xmlImporter;
 
-    /**
-     * @var EntryRepository|object
-     */
-    private $entryRepository;
+    private EntryRepository $entryRepository;
 
     public function __construct(string $name = null, XmlImporter $xmlImporter = null, EntryRepository $entryRepository = null)
     {

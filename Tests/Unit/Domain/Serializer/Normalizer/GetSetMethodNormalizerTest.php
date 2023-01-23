@@ -14,6 +14,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Domain\Serializer\Normalizer
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\EntryNameConverter;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
+use PHPUnit\Framework\MockObject\MockObject;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -31,7 +32,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var Dispatcher|\PHPUnit\Framework\MockObject\MockObject
+     * @var Dispatcher|MockObject
      */
     protected $signalSlotDispatcher;
 
@@ -61,7 +62,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
         $data = [
             'mapy' => $latitude,
         ];
-        $object = $this->subject->denormalize($data, 'Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry');
+        $object = $this->subject->denormalize($data, Entry::class);
         /* @var $object Entry */
         self::assertSame($latitude, $object->getLatitude());
     }
@@ -73,9 +74,7 @@ class GetSetMethodNormalizerTest extends UnitTestCase
     {
         $countryZoneMock = $this->getMockBuilder(CountryZone::class)->getMock();
 
-        $stateCallback = function ($bundesland) use ($countryZoneMock) {
-            return $countryZoneMock;
-        };
+        $stateCallback = fn ($bundesland) => $countryZoneMock;
 
         $this->subject->setDenormalizeCallbacks(['state' => $stateCallback]);
 

@@ -40,30 +40,15 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
      */
     protected $dataMap = [];
 
-    /**
-     * @var \SplObjectStorage
-     */
-    private $entries;
+    private \SplObjectStorage $entries;
 
-    /**
-     * @var array
-     */
-    private $externalUids = [];
+    private array $externalUids = [];
 
-    /**
-     * @var DataMap
-     */
-    private $dataMapFactory;
+    private DataMap $dataMapFactory;
 
-    /**
-     * @var PropertyMapper
-     */
-    private $propertyMapper;
+    private PropertyMapper $propertyMapper;
 
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(
         DataHandler $dataHandler,
@@ -79,7 +64,7 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
         $this->entries = new \SplObjectStorage();
-        $this->logger = $logManager->getLogger(__CLASS__);
+        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function create(AbstractEntity $entity)

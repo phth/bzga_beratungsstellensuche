@@ -22,6 +22,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\SessionService;
 use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
+use Psr\Http\Message\ResponseInterface;
 use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -125,7 +126,7 @@ class EntryController extends ActionController
         $this->addDemandRequestArgumentFromSession();
     }
 
-    public function formAction(Demand $demand = null): void
+    public function formAction(Demand $demand = null): ResponseInterface
     {
         if (!$demand instanceof Demand) {
             $demand = $this->objectManager->get(Demand::class);
@@ -137,6 +138,7 @@ class EntryController extends ActionController
         $assignedViewValues = compact('demand', 'kilometers', 'categories', 'countryZonesGermany', 'random');
         $assignedViewValues = $this->emitActionSignal(Events::FORM_ACTION_SIGNAL, $assignedViewValues);
         $this->view->assignMultiple($assignedViewValues);
+        return $this->htmlResponse();
     }
 
     public function initializeListAction(): void
@@ -186,7 +188,7 @@ class EntryController extends ActionController
         $this->view->assignMultiple($assignedViewValues);
     }
 
-    public function mapJavaScriptAction(string $mapId, ?Entry $mainEntry = null, ?Demand $demand = null): void
+    public function mapJavaScriptAction(string $mapId, ?Entry $mainEntry = null, ?Demand $demand = null): ResponseInterface
     {
         // TODO: while the tests are green this does not work yet
         $mapBuilder = $this->mapBuilderFactory->createMapBuilder();
@@ -201,7 +203,7 @@ class EntryController extends ActionController
 
         if (is_array($mapOptions) && ! empty($mapOptions)) {
             foreach ($mapOptions as $mapOption) {
-                list($mapOptionKey, $mapOptionValue) = GeneralUtility::trimExplode(':', $mapOption, true, 2);
+                [$mapOptionKey, $mapOptionValue] = GeneralUtility::trimExplode(':', $mapOption, true, 2);
                 $map->setOption($mapOptionKey, $mapOptionValue);
             }
         }
@@ -292,6 +294,7 @@ class EntryController extends ActionController
         }
 
         $this->view->assign('map', $mapBuilder->build($map));
+        return $this->htmlResponse();
     }
 
     private function getTyposcriptFrontendController(): TypoScriptFrontendController
@@ -299,10 +302,11 @@ class EntryController extends ActionController
         return $GLOBALS['TSFE'];
     }
 
-    public function autocompleteAction(string $q): void
+    public function autocompleteAction(string $q): ResponseInterface
     {
         $this->view->assign('entries', $this->entryRepository->findByQuery($q));
         $this->view->assign('q', $q);
+        return $this->htmlResponse();
     }
 
     private function findCountryZonesForGermany(): array

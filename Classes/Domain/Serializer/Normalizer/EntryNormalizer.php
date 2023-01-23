@@ -46,17 +46,11 @@ class EntryNormalizer extends GetSetMethodNormalizer
      */
     protected function prepareForDenormalization($data): array
     {
-        $stateCallback = function ($externalId) {
-            return $this->countryZoneRepository->findOneByExternalId($externalId);
-        };
+        $stateCallback = fn ($externalId) => $this->countryZoneRepository->findOneByExternalId($externalId);
 
-        $categoriesCallback = function () {
-            return self::convertToObjectStorage($this->categoryRepository, func_get_args());
-        };
+        $categoriesCallback = fn () => self::convertToObjectStorage($this->categoryRepository, func_get_args());
 
-        $logoCallback = function ($logo) {
-            return new ImageLink($logo);
-        };
+        $logoCallback = fn ($logo) => new ImageLink($logo);
 
         $this->setDenormalizeCallbacks(
             [

@@ -38,7 +38,7 @@ plugin.tx_solr.index.queue {
             keywords {
                 field = keywords
             }
-            sortTitle_stringS  = title
+            sortTitle_stringS = title
         }
     }
 }

@@ -13,13 +13,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers\Format;
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\Format\UppercaseFirstLetterViewHelper;
 use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class UppercaseFirstLetterViewHelperTest extends ViewHelperBaseTestcase
 {
     use ProphecyTrait;
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|UppercaseFirstLetterViewHelper
+     * @var MockObject|UppercaseFirstLetterViewHelper
      */
     protected $subject;
 

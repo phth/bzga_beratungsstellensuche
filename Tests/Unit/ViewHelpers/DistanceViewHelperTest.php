@@ -15,18 +15,19 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\DistanceViewHelper;
 use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class DistanceViewHelperTest extends ViewHelperBaseTestcase
 {
     use ProphecyTrait;
     /**
-     * @var GeolocationServiceCacheDecorator|\PHPUnit\Framework\MockObject\MockObject
+     * @var GeolocationServiceCacheDecorator|MockObject
      */
     protected $geolocationService;
 
     /**
-     * @var DistanceViewHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var DistanceViewHelper|MockObject
      */
     protected $subject;
 

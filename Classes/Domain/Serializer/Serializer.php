@@ -33,7 +33,7 @@ class Serializer extends BaseSerializer
 
     public function __construct(array $normalizers = [], array $encoders = [], Dispatcher $signalSlotDispatcher = null, ObjectManagerInterface $objectManager = null)
     {
-        $objectManager = $objectManager ?? GeneralUtility::makeInstance(ObjectManager::class);
+        $objectManager ??= GeneralUtility::makeInstance(ObjectManager::class);
 
         if (empty($normalizers)) {
             /* @var $objectManager ObjectManager */

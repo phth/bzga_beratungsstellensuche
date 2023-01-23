@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Persistence\Mapper;
 
 use Bzga\BzgaBeratungsstellensuche\Persistence\Mapper\DataMap;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMap as CoreDataMap;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapFactory;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -27,7 +28,7 @@ class DataMapTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var DataMapFactory|\PHPUnit\Framework\MockObject\MockObject
+     * @var DataMapFactory|MockObject
      */
     protected $dataMapFactory;
 
@@ -47,7 +48,7 @@ class DataMapTest extends UnitTestCase
         $this->dataMapFactory->expects(self::once())->method('buildDataMap')->willReturn($dataMap);
         $dataMap->expects(self::once())->method('getTableName')->willReturn($expectedTableName);
         for ($i = 0; $i <= 5; $i++) {
-            $tableName = $this->subject->getTableNameByClassName(__CLASS__);
+            $tableName = $this->subject->getTableNameByClassName(self::class);
         }
         self::assertSame($expectedTableName, $tableName);
     }

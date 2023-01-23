@@ -18,10 +18,8 @@ final class BeratungsstellensucheFlexFormManipulation implements FormDataProvide
 {
     /**
      * Fields which are removed in detail view
-     *
-     * @var array
      */
-    private $removedFieldsInDetailView = [
+    private array $removedFieldsInDetailView = [
         'sDEF' => 'startingpoint,recursive',
         'additional' => 'listPid,list.itemsPerPage,formFields',
         'template' => '',
@@ -29,10 +27,8 @@ final class BeratungsstellensucheFlexFormManipulation implements FormDataProvide
 
     /**
      * Fields which are removed in list view
-     *
-     * @var array
      */
-    private $removedFieldsInListView = [
+    private array $removedFieldsInListView = [
         'sDEF' => '',
         'additional' => '',
         'template' => '',
@@ -40,10 +36,8 @@ final class BeratungsstellensucheFlexFormManipulation implements FormDataProvide
 
     /**
      * Fields which are remove in form view
-     *
-     * @var array
      */
-    private $removedFieldsInFormView = [
+    private array $removedFieldsInFormView = [
         'sDEF' => 'startingpoint,recursive',
         'additional' => 'singlePid,backPid,list.itemsPerPage',
         'template' => '',
@@ -70,7 +64,7 @@ final class BeratungsstellensucheFlexFormManipulation implements FormDataProvide
             }
 
         // new plugin element
-        } elseif (GeneralUtility::isFirstPartOfStr($row['uid'], 'NEW')) {
+        } elseif (\str_starts_with($row['uid'], 'NEW')) {
             // use List as starting view
             $selectedView = 'Entry->list;Entry->show';
         }

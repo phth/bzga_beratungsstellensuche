@@ -13,13 +13,14 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\ViewHelpers;
 
 use Bzga\BzgaBeratungsstellensuche\ViewHelpers\ExplodeViewHelper;
 use Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase;
+use PHPUnit\Framework\MockObject\MockObject;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ExplodeViewHelperTest extends ViewHelperBaseTestcase
 {
     use ProphecyTrait;
     /**
-     * @var ExplodeViewHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var ExplodeViewHelper|MockObject
      */
     protected $subject;
 

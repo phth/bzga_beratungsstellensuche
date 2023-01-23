@@ -13,6 +13,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Service\Importer\Decorator;
 
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Decorator\ImporterRegistryDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Registry;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -27,12 +28,12 @@ class ImporterRegistryDecoratorTest extends UnitTestCase
     protected $subject;
 
     /**
-     * @var ImporterInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var ImporterInterface|MockObject
      */
     protected $importer;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|Registry
+     * @var MockObject|Registry
      */
     protected $registry;
 

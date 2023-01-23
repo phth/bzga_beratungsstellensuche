@@ -7,7 +7,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-defined('TYPO3_MODE') or die();
+defined('TYPO3') or die();
 
 $additionalFields = [
     'zn_name_en' => 'external_id',
