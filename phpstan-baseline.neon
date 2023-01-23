@@ -36,16 +36,6 @@ parameters:
 			path: Classes/Domain/Serializer/Normalizer/EntryNormalizer.php
 
 		-
-			message: "#^Else branch is unreachable because previous condition is always true\\.$#"
-			count: 1
-			path: Classes/Persistence/QueryResult.php
-
-		-
-			message: "#^Elseif branch is unreachable because previous condition is always true\\.$#"
-			count: 1
-			path: Classes/Persistence/QueryResult.php
-
-		-
 			message: "#^Call to sprintf contains 2 placeholders, 3 values given\\.$#"
 			count: 1
 			path: Classes/Service/Geolocation/AbstractGeolocationService.php
@@ -74,4 +64,3 @@ parameters:
 			message: "#^Method Bzga\\\\BzgaBeratungsstellensuche\\\\ViewHelpers\\\\Widget\\\\Controller\\\\MapController\\:\\:getTyposcriptFrontendController\\(\\) is unused\\.$#"
 			count: 1
 			path: Classes/ViewHelpers/Widget/Controller/MapController.php
-

@@ -29,7 +29,7 @@ abstract class AbstractBaseRepository extends Repository
     protected $signalSlotDispatcher;
 
     /**
-     * @var array
+     * @var array<non-empty-string, QueryInterface::ORDER_*>
      */
     protected $defaultOrderings = ['title' => QueryInterface::ORDER_ASCENDING];
 

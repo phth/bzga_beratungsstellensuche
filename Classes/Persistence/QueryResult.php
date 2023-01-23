@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Persistence;
 
-use TYPO3\CMS\Extbase\Persistence\Generic\Qom\Statement;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult as CoreQueryResult;
 
 class QueryResult extends CoreQueryResult
@@ -25,13 +24,11 @@ class QueryResult extends CoreQueryResult
     public function count(): int
     {
         if ($this->numberOfResults === null) {
-            if (is_array($this->queryResult)) {
-                $this->numberOfResults = count($this->queryResult);
-            } elseif ($this->query->getStatement() instanceof Statement) {
-                $this->initialize();
-                $this->numberOfResults = count($this->queryResult);
+            $this->initialize();
+            if ($this->queryResult !== null) {
+                $this->numberOfResults = count($this->queryResult ?? []);
             } else {
-                return parent::count();
+                parent::count();
             }
         }
 

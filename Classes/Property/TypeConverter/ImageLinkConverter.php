@@ -195,7 +195,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
                 throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
             }
         } else {
-            if (! GeneralUtility::verifyFilenameAgainstDenyPattern($tempFilePath)) {
+            if (! GeneralUtility::makeInstance(FileNameValidator::class)->isValid($tempFilePath)) {
                 throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
             }
         }

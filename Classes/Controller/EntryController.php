@@ -22,7 +22,6 @@ use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Response;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 /**
@@ -59,14 +58,6 @@ class EntryController extends ActionController
      * @var CountryZoneRepository
      */
     protected $countryZoneRepository;
-
-    /**
-     * The response which will be returned by this action controller
-     *
-     * @var \TYPO3\CMS\Extbase\Mvc\Response
-     * @api
-     */
-    protected $response;
 
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
@@ -173,7 +164,7 @@ class EntryController extends ActionController
     {
         if (!$entry instanceof Entry) {
             // @TODO: Add possibility to hook into here.
-            $this->redirect('list', null, null, [], $this->settings['listPid'], 0, 404);
+            $this->redirect('list', null, null, [], $this->settings['listPid'], null, 404);
         }
 
         $assignedViewValues = compact('entry', 'demand');
