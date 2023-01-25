@@ -18,6 +18,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionTrait;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Geocoder\Location as GeocoderAddress;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -66,6 +67,7 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     public function __construct()
     {
         $this->categories = new ObjectStorage();
+        $this->geolocationService = GeneralUtility::makeInstance(GeolocationServiceCacheDecorator::class);
     }
 
     public function getCategories(): ?ObjectStorage
@@ -164,10 +166,5 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
     {
         $this->updateLatitudeLongitude();
         return $this->latitude !== null && $this->longitude !== null;
-    }
-
-    public function injectGeolocationService(GeolocationServiceCacheDecorator $geolocationService): void
-    {
-        $this->geolocationService = $geolocationService;
     }
 }

@@ -129,7 +129,7 @@ class EntryController extends ActionController
     public function formAction(Demand $demand = null): ResponseInterface
     {
         if (!$demand instanceof Demand) {
-            $demand = $this->objectManager->get(Demand::class);
+            $demand = GeneralUtility::makeInstance(Demand::class);
         }
         $countryZonesGermany = $this->findCountryZonesForGermany();
         $kilometers = $this->kilometerRepository->findKilometersBySettings($this->settings);

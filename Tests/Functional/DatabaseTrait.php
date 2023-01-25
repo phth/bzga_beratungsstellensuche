@@ -22,7 +22,17 @@ trait DatabaseTrait
                     ->from($table)
                     ->where($where)
                     ->execute()
-                    ->fetchColumn(0);
+                    ->fetchOne(0);
+    }
+
+    public function select(string $field, string $table, int $uid)
+    {
+        return $this->getDatabaseInstance($table)
+            ->select($field)
+            ->from($table)
+            ->where('uid=' . $uid)
+            ->execute()
+            ->fetchOne(0);
     }
 
     public function getDatabaseInstance(string $table): QueryBuilder
