@@ -18,9 +18,7 @@ use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use function count;
 use Countable;
 use IteratorAggregate;
-use Psr\Log\LoggerInterface;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
-use TYPO3\CMS\Core\Log\LogManagerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
@@ -48,13 +46,10 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
 
     private PropertyMapper $propertyMapper;
 
-    private LoggerInterface $logger;
-
     public function __construct(
         DataHandler $dataHandler,
         DataMap $dataMapFactory,
-        PropertyMapper $propertyMapper,
-        LogManagerInterface $logManager
+        PropertyMapper $propertyMapper
     ) {
         $this->dataHandler = $dataHandler;
         $this->dataHandler->bypassAccessCheckForRecords = true;
@@ -64,7 +59,6 @@ abstract class AbstractManager implements ManagerInterface, Countable, IteratorA
         $this->dataMapFactory = $dataMapFactory;
         $this->propertyMapper = $propertyMapper;
         $this->entries = new \SplObjectStorage();
-        $this->logger = $logManager->getLogger(self::class);
     }
 
     public function create(AbstractEntity $entity)
