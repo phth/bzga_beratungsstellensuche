@@ -15,18 +15,15 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 final class TruncateCommand extends Command
 {
     private EntryRepository $entryRepository;
 
-    public function __construct(string $name = null, EntryRepository $entryRepository = null)
+    public function __construct(EntryRepository $entryRepository)
     {
-        $this->entryRepository = $entryRepository ?? self::getObjectManager()->get(EntryRepository::class);
-        parent::__construct($name);
+        $this->entryRepository = $entryRepository;
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -39,10 +36,5 @@ final class TruncateCommand extends Command
     {
         $this->entryRepository->truncateAll();
         return 0;
-    }
-
-    private static function getObjectManager(): ObjectManagerInterface
-    {
-        return GeneralUtility::makeInstance(ObjectManager::class);
     }
 }

@@ -20,9 +20,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 final class ImportCommand extends Command
 {
@@ -30,11 +27,11 @@ final class ImportCommand extends Command
 
     private EntryRepository $entryRepository;
 
-    public function __construct(string $name = null, XmlImporter $xmlImporter = null, EntryRepository $entryRepository = null)
+    public function __construct(XmlImporter $xmlImporter, EntryRepository $entryRepository)
     {
-        $this->xmlImporter = $xmlImporter ?? self::getObjectManager()->get(XmlImporter::class);
-        $this->entryRepository = $entryRepository ?? self::getObjectManager()->get(EntryRepository::class);
-        parent::__construct($name);
+        $this->xmlImporter = $xmlImporter;
+        $this->entryRepository = $entryRepository;
+        parent::__construct();
     }
 
     protected function configure(): void
@@ -83,11 +80,6 @@ final class ImportCommand extends Command
         $this->import($output, (bool)$input->getOption('forceReImport'));
 
         return 0;
-    }
-
-    private static function getObjectManager(): ObjectManagerInterface
-    {
-        return GeneralUtility::makeInstance(ObjectManager::class);
     }
 
     private function import(OutputInterface $output, bool $forceReImport): void
