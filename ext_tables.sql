@@ -16,7 +16,7 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_entry (
   latitude varchar(255) DEFAULT '' NOT NULL,
   image int(11) DEFAULT '0' NOT NULL,
   hash varchar(32) DEFAULT '' NOT NULL,
-  description text NOT NULL,
+  description text  DEFAULT '' NOT NULL,
   institution varchar(255) DEFAULT '' NOT NULL,
   association varchar(255) DEFAULT '' NOT NULL,
 
@@ -26,7 +26,7 @@ CREATE TABLE tx_bzgaberatungsstellensuche_domain_model_entry (
   email varchar(255) DEFAULT '' NOT NULL,
   website varchar(255) DEFAULT '' NOT NULL,
   hotline varchar(255) DEFAULT '' NOT NULL,
-  notice text NOT NULL,
+  notice  text DEFAULT '' NOT NULL,
   slug varchar(2048),
 
   categories int(11) unsigned DEFAULT '0' NOT NULL,

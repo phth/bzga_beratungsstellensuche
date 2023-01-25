@@ -145,6 +145,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'contact_person' => [
@@ -154,6 +155,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'telephone' => [
@@ -163,6 +165,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'telefax' => [
@@ -172,6 +175,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'email' => [
@@ -184,6 +188,7 @@ return [
                 'max' => 255,
                 'eval' => 'trim,required',
                 'softref' => 'email[subst]',
+                'default' => '',
             ],
         ],
         'hotline' => [
@@ -193,6 +198,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'notice' => [
@@ -205,6 +211,7 @@ return [
                 'eval' => 'trim',
                 'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
                 'enableRichtext' => true,
+                'default' => '',
             ],
         ],
         'website' => [
@@ -217,6 +224,7 @@ return [
                 'max' => 255,
                 'eval' => 'trim,required',
                 'softref' => 'typolink_tag,email[subst],url',
+                'default' => '',
             ],
         ],
         'zip' => [
@@ -226,6 +234,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'city' => [
@@ -235,6 +244,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'street' => [
@@ -244,6 +254,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'state' => [
@@ -260,6 +271,7 @@ return [
                 'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'default' => 0,
             ],
         ],
         'longitude' => [
@@ -269,6 +281,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'latitude' => [
@@ -278,6 +291,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'slug' => [
@@ -307,6 +321,7 @@ return [
                 'eval' => 'trim',
                 'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
                 'enableRichtext' => true,
+                'default' => '',
             ],
         ],
         'image' => [
@@ -346,6 +361,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
         'association' => [
@@ -355,6 +371,7 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'trim',
+                'default' => '',
             ],
         ],
     ],
