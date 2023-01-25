@@ -1,0 +1,7 @@
+tx_bzgaberatungsstellensuche_domain_model_entry
+,uid,pid,title,subtitle,zip,hash,city,street,state,longitude,latitude,external_id,description,notice
+,1,1,Beratungsstelle mit special Keyword,1,00000,32dwwes8,Musterstadt,Ottostraße,54,70,1,1,Lange Beschreibung,Notice
+,2,1,Category,1,00000,Musterstadt,Ottostraße,54,70,1,10,Lange Beschreibung,Notice
+tx_bzgaberatungsstellensuche_entry_category_mm
+,uid_local,uid_foreign,sorting
+,1,1,1
