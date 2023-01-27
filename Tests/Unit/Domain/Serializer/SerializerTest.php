@@ -81,7 +81,7 @@ class SerializerTest extends UnitTestCase
      */
     public function deserializeCategoryFromXml()
     {
-        $xml = '<beratungsart><index>1</index><sort>2</sort>persönliche Beratung</beratungsart>';
+        $xml = '<beratungsart><index>1</index><sort>2</sort><label>persönliche Beratung</label></beratungsart>';
         $object = $this->subject->deserialize($xml, Category::class, 'xml');
         /* @var $object Category */
         self::assertSame('persönliche Beratung', $object->getTitle());
