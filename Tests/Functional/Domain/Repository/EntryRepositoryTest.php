@@ -153,6 +153,7 @@ class EntryRepositoryTest extends FunctionalTestCase
 
     public function tearDown(): void
     {
+        parent::tearDown();
         unset($this->entryRepository);
     }
 }
