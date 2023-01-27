@@ -32,7 +32,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      * @var array
      */
     protected $mapNames = [
-        '#text' => 'title',
+        'label' => 'title',
         'index' => 'external_id',
     ];
 
