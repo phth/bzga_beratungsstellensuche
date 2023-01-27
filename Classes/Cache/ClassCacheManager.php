@@ -20,7 +20,6 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * @author Sebastian Schreiber
@@ -56,9 +55,7 @@ class ClassCacheManager implements SingletonInterface
 
     protected function initializeCache(): void
     {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        /* @var $objectManager ObjectManager */
-        $cacheManager = $objectManager->get(CacheManager::class);
+        $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         /* @var $cacheManager CacheManager */
         if (!$cacheManager->hasCache($this->extensionKey)) {
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$this->extensionKey])) {

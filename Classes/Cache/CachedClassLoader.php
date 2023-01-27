@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Cache;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * @author Sebastian Schreiber
@@ -51,9 +50,8 @@ class CachedClassLoader
         if (strpos($className, static::$namespace) !== false) {
             // Lookup the class in the array of the entities defined in ext_localconf.php and check its presence in the class cache
             $entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][static::$extensionKey]['entities'];
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-            $cacheManager = $objectManager->get(CacheManager::class);
-            $classCacheManager = $objectManager->get(ClassCacheManager::class);
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
+            $classCacheManager = GeneralUtility::makeInstance(ClassCacheManager::class);
             /** @var PhpFrontend $classCache */
             $classCache = $cacheManager->getCache(static::$extensionKey);
             foreach ($entities as $entity) {

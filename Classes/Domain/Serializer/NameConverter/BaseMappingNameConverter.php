@@ -15,7 +15,6 @@ use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -54,7 +53,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
         parent::__construct($attributes, $lowerCamelCase);
 
         if (!$signalSlotDispatcher instanceof Dispatcher) {
-            $signalSlotDispatcher = GeneralUtility::makeInstance(ObjectManager::class)->get(Dispatcher::class);
+            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         }
 
         $this->signalSlotDispatcher = $signalSlotDispatcher;

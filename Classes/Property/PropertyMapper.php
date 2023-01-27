@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Property;
 
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @author Sebastian Schreiber
@@ -22,14 +22,11 @@ class PropertyMapper implements TypeConverterInterface
     /**
      * @var TypeConverterInterface[]
      */
-    private array $typeConverters = [];
+    private array $typeConverters;
 
-    private ?ObjectManagerInterface $objectManager = null;
-
-    public function injectObjectManager(ObjectManagerInterface $objectManager): void
+    public function __construct(?array $typeConverters = null)
     {
-        $this->objectManager = $objectManager;
-        $this->initializeTypeConverters();
+        $this->typeConverters = $typeConverters??$this->initializeTypeConverters();
     }
 
     /**
@@ -86,10 +83,15 @@ class PropertyMapper implements TypeConverterInterface
         return in_array($className, $interfaces, true) ? true : false;
     }
 
-    private function initializeTypeConverters(): void
+    /**
+     * @return TypeConverterInterface[]
+     */
+    private function initializeTypeConverters(): array
     {
+        $typeConverters = [];
         foreach ($this->getRegisteredTypeConverters() as $typeConverterClassName) {
-            $this->typeConverters[] = $this->objectManager->get($typeConverterClassName);
+            $typeConverters[] = GeneralUtility::makeInstance($typeConverterClassName);
         }
+        return $typeConverters;
     }
 }
