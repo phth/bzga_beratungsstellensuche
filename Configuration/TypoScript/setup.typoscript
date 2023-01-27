@@ -42,6 +42,4 @@ plugin.tx_bzgaberatungsstellensuche {
     }
 }
 
-plugin.tx_bzgaberatungsstellensuche.view.widget.Bzga\BzgaBeratungsstellensuche\ViewHelpers\Widget\PaginateViewHelper.templateRootPath = {$plugin.tx_bzgaberatungsstellensuche.view.templateRootPath}
-
 module.tx_bzgaberatungsstellensuche < plugin.tx_bzgaberatungsstellensuche

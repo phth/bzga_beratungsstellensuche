@@ -17,8 +17,6 @@ use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer as BaseSerializer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -31,15 +29,12 @@ class Serializer extends BaseSerializer
      */
     protected $signalSlotDispatcher;
 
-    public function __construct(array $normalizers = [], array $encoders = [], Dispatcher $signalSlotDispatcher = null, ObjectManagerInterface $objectManager = null)
+    public function __construct(array $normalizers = [], array $encoders = [], Dispatcher $signalSlotDispatcher = null)
     {
-        $objectManager ??= GeneralUtility::makeInstance(ObjectManager::class);
-
         if (empty($normalizers)) {
-            /* @var $objectManager ObjectManager */
             $normalizers = [
-                $objectManager->get(EntryNormalizer::class),
-                $objectManager->get(GetSetMethodNormalizer::class),
+                GeneralUtility::makeInstance(EntryNormalizer::class),
+                GeneralUtility::makeInstance(GetSetMethodNormalizer::class),
             ];
         }
         if (empty($encoders)) {
@@ -48,7 +43,7 @@ class Serializer extends BaseSerializer
             ];
         }
 
-        $this->signalSlotDispatcher = $signalSlotDispatcher ?? $objectManager->get(Dispatcher::class);
+        $this->signalSlotDispatcher = $signalSlotDispatcher ?? GeneralUtility::makeInstance(Dispatcher::class);
 
         $normalizers = $this->emitAdditionalNormalizersSignal($normalizers);
 

@@ -15,7 +15,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * @author Sebastian Schreiber
@@ -25,8 +24,7 @@ class DataHandlerProcessor
     public function processCmdmap_deleteAction(string $table, int $id, array $recordToDelete, bool &$recordWasDeleted, DataHandler $tceMain): void
     {
         if ($table === EntryRepository::ENTRY_TABLE) {
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-            $entryRepository = $objectManager->get(EntryRepository::class);
+            $entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
             $entryRepository->deleteByUid($id);
             $recordWasDeleted = true;
         }

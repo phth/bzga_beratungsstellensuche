@@ -154,7 +154,7 @@ class EntryController extends ActionController
     public function listAction(Demand $demand = null): void
     {
         if (!$demand instanceof Demand) {
-            $demand = $this->objectManager->get(Demand::class);
+            $demand = GeneralUtility::makeInstance(Demand::class);
         }
 
         if (!$demand->hasValidCoordinates()) {

@@ -13,7 +13,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Unit\Property;
 
 use Bzga\BzgaBeratungsstellensuche\Property\PropertyMapper;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterBeforeInterface;
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverterInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -25,6 +24,9 @@ class PropertyMapperTest extends UnitTestCase
      */
     protected $objectManager;
 
+    /** @var MockObject|TypeConverterBeforeInterface $typeConverter */
+    protected $typeConverter;
+
     /**
      * @var MockObject|PropertyMapper
      */
@@ -32,7 +34,10 @@ class PropertyMapperTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->subject = $this->getAccessibleMock(PropertyMapper::class, ['getRegisteredTypeConverters']);
+        /** @var MockObject|TypeConverterBeforeInterface $typeConverter */
+        $this->typeConverter = $this->getMockBuilder(TypeConverterBeforeInterface::class)->getMock();
+        $this->typeConverter->method('supports')->willReturn(true);
+        $this->subject = new PropertyMapper([$this->typeConverter]);
     }
 
     /**
@@ -40,8 +45,7 @@ class PropertyMapperTest extends UnitTestCase
      */
     public function supportsReturnsTypeConverter()
     {
-        $typeConverter = $this->setUpTypeConverter();
-        self::assertSame($typeConverter, $this->subject->supports($typeConverter));
+        self::assertSame($this->typeConverter, $this->subject->supports($this->typeConverter));
     }
 
     /**
@@ -49,34 +53,7 @@ class PropertyMapperTest extends UnitTestCase
      */
     public function convertSuccessfully()
     {
-        /** @var MockObject|TypeConverterBeforeInterface $typeConverter */
-        $typeConverter = $this->setUpTypeConverter();
-        $typeConverter->expects(self::once())->method('convert')->willReturn(true);
+        $this->typeConverter->expects(self::once())->method('convert')->willReturn(true);
         self::assertTrue($this->subject->convert('array'));
-    }
-
-    /**
-     * @return MockObject|TypeConverterBeforeInterface
-     */
-    private function setUpTypeConverter()
-    {
-        /** @var MockObject|TypeConverterBeforeInterface $typeConverter */
-        $typeConverter  = $this->getMockBuilder(TypeConverterBeforeInterface::class)->getMock();
-        $typeConverter->expects(self::once())->method('supports')->willReturn(true);
-        $this->subject->expects(self::once())->method('getRegisteredTypeConverters')->willReturn([get_class($typeConverter)]);
-
-        $this->injectObjectManager($typeConverter);
-        return $typeConverter;
-    }
-
-    /**
-     * @param $typeConverter TypeConverterInterface
-     * @internal param array $typeConverters
-     */
-    private function injectObjectManager($typeConverter)
-    {
-        $this->objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
-        $this->objectManager->expects(self::once())->method('get')->willReturn($typeConverter);
-        $this->subject->injectObjectManager($this->objectManager);
     }
 }

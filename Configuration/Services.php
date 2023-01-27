@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 use Bzga\BzgaBeratungsstellensuche\Command\ImportCommand;
 use Bzga\BzgaBeratungsstellensuche\Command\TruncateCommand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
+use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
@@ -30,6 +32,8 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->alias(GeolocationServiceInterface::class, GeolocationService::class);
 
     $services->set(GeolocationServiceCacheDecorator::class)->public();
+    $services->set(GetSetMethodNormalizer::class)->public();
+    $services->set(EntryNormalizer::class)->public();
 
     // Add commands
     $services->set('console.command.beratungsstellensuche_import', ImportCommand::class)
