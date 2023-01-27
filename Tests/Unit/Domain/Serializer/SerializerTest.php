@@ -21,7 +21,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
 use PHPUnit\Framework\MockObject\MockObject;
 use SJBR\StaticInfoTables\Domain\Model\CountryZone;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
@@ -74,8 +73,7 @@ class SerializerTest extends UnitTestCase
             $this->entryNormalizer,
             new GetSetMethodNormalizer(null, new BaseMappingNameConverter([], true, $dispatcher)),
         ];
-        $objectManager = $this->createMock(ObjectManagerInterface::class);
-        $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher, $objectManager);
+        $this->subject = new Serializer($normalizers, [], $this->signalSlotDispatcher);
     }
 
     /**
