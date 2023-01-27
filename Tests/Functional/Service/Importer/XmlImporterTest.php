@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Tests\Functional\Service\Importer;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Bzga\BzgaBeratungsstellensuche\Tests\Functional\DatabaseTrait;
 use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class XmlImporterTest extends FunctionalTestCase
@@ -65,7 +64,7 @@ class XmlImporterTest extends FunctionalTestCase
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/be_users.csv');
         $this->setUpBackendUser(1);
         Bootstrap::initializeLanguageObject();
-        $this->subject = GeneralUtility::makeInstance(XmlImporter::class);
+        $this->subject = $this->get(XmlImporter::class);
 
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/pages.csv');
         $this->importCSVDataSet(__DIR__ . '/../../Fixtures/sys_file_storage.csv');

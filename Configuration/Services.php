@@ -14,7 +14,6 @@ use Bzga\BzgaBeratungsstellensuche\Command\TruncateCommand;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
-use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -31,7 +30,6 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->alias(GeolocationServiceInterface::class, GeolocationService::class);
 
     $services->set(GeolocationServiceCacheDecorator::class)->public();
-    $services->set(XmlImporter::class)->public();
 
     // Add commands
     $services->set('console.command.beratungsstellensuche_import', ImportCommand::class)

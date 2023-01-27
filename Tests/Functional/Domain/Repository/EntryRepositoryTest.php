@@ -55,8 +55,7 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function findDemanded(): void
     {
-        /** @var Demand $demand */
-        $demand = new Demand();
+        $demand = GeneralUtility::makeInstance(Demand::class);
         $demand->setKeywords('Keyword');
         $entries = $this->entryRepository->findDemanded($demand);
         self::assertEquals(self::ENTRY_DEFAULT_FIXTURE_UID, $this->getIdListOfItems($entries));
