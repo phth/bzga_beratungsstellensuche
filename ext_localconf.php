@@ -8,8 +8,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility as GeneralExtensionManagem
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use Bzga\BzgaBeratungsstellensuche\Controller\EntryController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Imaging\IconRegistry;
-use TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider;
 use Bzga\BzgaBeratungsstellensuche\Backend\FormDataProvider\BeratungsstellensucheFlexFormManipulation;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
 use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
@@ -43,21 +41,6 @@ call_user_func(function ($packageKey) {
         [EntryController::class => 'list,form,autocomplete']
     );
 
-    if (TYPO3_MODE === 'BE') {
-        $icons = [
-            'ext-bzgaberatungsstellensuche-wizard-icon' => 'plugin_wizard.svg',
-        ];
-        $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
-        foreach ($icons as $identifier => $path) {
-            if (!$iconRegistry->isRegistered($identifier)) {
-                $iconRegistry->registerIcon(
-                    $identifier,
-                    SvgIconProvider::class,
-                    ['source' => 'EXT:bzga_beratungsstellensuche/Resources/Public/Icons/' . $path]
-                );
-            }
-        }
-    }
     $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
     // Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.
     // Todo:: remove when dropping TYPO3 v11 support
