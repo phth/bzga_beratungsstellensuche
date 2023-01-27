@@ -86,16 +86,18 @@ class XmlImporterTest extends FunctionalTestCase
         $this->subject->persist();
 
         self::assertEquals(3, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_category'));
-        self::assertEquals(1, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
-        self::assertEquals(2, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_entry_category_mm'));
+        self::assertEquals(2, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_domain_model_entry'));
+        self::assertEquals(4, $this->selectCount('*', 'tx_bzgaberatungsstellensuche_entry_category_mm'));
 
-        self::assertEquals('Titel der Beratungsstelle', $this->select('title', 'tx_bzgaberatungsstellensuche_domain_model_entry', 1));
-        self::assertEquals('8.58175', $this->select('longitude', 'tx_bzgaberatungsstellensuche_domain_model_entry', 1));
+        self::assertEquals('Fachstelle für Sucht und Suchtprävention', $this->select('title', 'tx_bzgaberatungsstellensuche_domain_model_entry', 1));
+        self::assertEquals('Frauen & Mädchen Beratungsstelle', $this->select('title', 'tx_bzgaberatungsstellensuche_domain_model_entry', 2));
+        self::assertEquals('8.12345', $this->select('longitude', 'tx_bzgaberatungsstellensuche_domain_model_entry', 1));
         self::assertEquals('Online-Beratung', $this->select('title', 'tx_bzgaberatungsstellensuche_domain_model_category', 3));
     }
 
     public function tearDown(): void
     {
+        parent::tearDown();
         unset($this->subject);
     }
 }

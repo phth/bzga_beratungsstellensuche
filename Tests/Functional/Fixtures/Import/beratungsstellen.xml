@@ -4,44 +4,80 @@
     <entrys>
         <entry>
             <index>2619</index>
-            <titel>Titel der Beratungsstelle</titel>
+            <title>Fachstelle f&#xFC;r Sucht und Suchtpr&#xE4;vention</title>
             <untertitel></untertitel>
-            <ansprechpartner>Max Mustermann</ansprechpartner>
-            <link>http://meine-domain.com.de/</link>
-            <plz>33333</plz>
-            <ort>Musterstadt</ort>
-            <bundesland>1</bundesland>
-            <strasse>Musterstraße 1</strasse>
-            <mapx>8.58175</mapx>
-            <mapy>48.77265</mapy>
+            <link>https://adressen.bzga.de/node/42</link>
+            <plz>40547</plz>
+            <ort>D&#xFC;sseldorf</ort>
+            <bundesland>10</bundesland>
+            <strasse>Musterstra&#xDF;e 1</strasse>
+            <mapx>8.12345</mapx>
+            <mapy>51.11111</mapy>
             <telefon>07051 924870</telefon>
-            <fax>07051 92487226</fax>
+            <fax></fax>
             <email>max.mustermann@domain.com</email>
-            <traeger>Träger der Beratungsstelle</traeger>
-            <website>www.domain.de</website>
-            <beratertelefon>000000000</beratertelefon>
-            <hinweistext>Di.15.00h 16.00h</hinweistext>
-            <beratungsschein>1</beratungsschein>
-            <angebot><![CDATA[<p></p>]]></angebot>
-            <logo></logo>
-            <konfession>1</konfession>
+            <traeger></traeger>
+            <website>http://www.domain.de</website>
+            <beratertelefon></beratertelefon>
+            <hinweistext>10:00 Uhr bis 22:00 Uhr Montag bis Sonntag</hinweistext>
+            <beratungsschein></beratungsschein>
+            <kostenuebernahmeverhuetung></kostenuebernahmeverhuetung>
+            <logo/>
+            <konfession></konfession>
             <beratungsart>
-                <index>2</index>
                 <index>1</index>
+                <index>2</index>
             </beratungsart>
-            <verband>Verband der Beratungsstelle</verband>
-            <kontaktform>0</kontaktform>
+            <verband></verband>
+        </entry>
+        <entry>
+            <index>3108</index>
+            <title><![CDATA[Frauen & Mädchen Beratungsstelle]]></title>
+            <untertitel></untertitel>
+            <link>https://adressen.bzga.de/node/123</link>
+            <plz>90429</plz>
+            <ort>N&#xFC;rnberg</ort>
+            <bundesland>2</bundesland>
+            <strasse>F&#xFC;rther Stra&#xDF;e 123</strasse>
+            <mapx>11.12345</mapx>
+            <mapy>49.22222</mapy>
+            <telefon>0911 12345</telefon>
+            <fax>0911 12345</fax>
+            <email>info@example.org</email>
+            <traeger></traeger>
+            <website>http://www.example.org</website>
+            <beratertelefon></beratertelefon>
+            <hinweistext>Sprechzeiten:
+                Montag 10:00 - 12:00 Uhr,
+                Dienstag 14:00 - 16:00 Uhr,
+                Donnerstag 15:00 - 17:00 Uhr
+            </hinweistext>
+            <beratungsschein></beratungsschein>
+            <kostenuebernahmeverhuetung></kostenuebernahmeverhuetung>
+            <logo/>
+            <konfession></konfession>
+            <beratungsart>
+                <index>1</index>
+                <index>2</index>
+            </beratungsart>
+            <verband></verband>
         </entry>
     </entrys>
     <beratungsarten>
         <beratungsart>
             <index>1</index>
-            <sort>2</sort>persönliche Beratung</beratungsart>
+            <sort>?</sort>
+            <label>Pers&#xF6;nliche Beratung</label>
+        </beratungsart>
         <beratungsart>
             <index>2</index>
-            <sort>3</sort>telefonische Beratung</beratungsart>
+            <sort>?</sort>
+            <label>Einzelberatung</label>
+        </beratungsart>
         <beratungsart>
             <index>3</index>
-            <sort>1</sort>Online-Beratung</beratungsart>
+            <sort>?</sort>
+            <label>Gruppenberatung</label>
+        </beratungsart>
     </beratungsarten>
 </beratungsstellen>
