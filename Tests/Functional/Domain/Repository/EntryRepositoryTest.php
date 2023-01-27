@@ -16,8 +16,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Tests\Functional\DatabaseTrait;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -25,15 +23,7 @@ class EntryRepositoryTest extends FunctionalTestCase
 {
     use DatabaseTrait;
 
-    /**
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
-
-    /**
-     * @var EntryRepository
-     */
-    protected $entryRepository;
+    protected EntryRepository $entryRepository;
 
     /**
      * @var array
@@ -53,10 +43,10 @@ class EntryRepositoryTest extends FunctionalTestCase
     {
         parent::setUp();
         GeneralUtility::writeFile(__DIR__ . '/../../Fixtures/Files/fileadmin/user_upload/claim.png', '');
-        $this->objectManager   = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->entryRepository = $this->objectManager->get(EntryRepository::class);
+        $this->entryRepository = GeneralUtility::makeInstance(EntryRepository::class);
 
-        $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.xml');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_category.csv');
+        // For some reason this data does not get loaded as csv. Try to fix this when updating for v12
         $this->importDataSet(__DIR__ . '/../../Fixtures/tx_bzgaberatungsstellensuche_domain_model_entry.xml');
     }
 
@@ -66,7 +56,7 @@ class EntryRepositoryTest extends FunctionalTestCase
     public function findDemanded(): void
     {
         /** @var Demand $demand */
-        $demand = $this->objectManager->get(Demand::class);
+        $demand = new Demand();
         $demand->setKeywords('Keyword');
         $entries = $this->entryRepository->findDemanded($demand);
         self::assertEquals(self::ENTRY_DEFAULT_FIXTURE_UID, $this->getIdListOfItems($entries));
@@ -95,9 +85,10 @@ class EntryRepositoryTest extends FunctionalTestCase
      */
     public function deleteByUid(): void
     {
-        $this->importDataSet(__DIR__ . '/../../Fixtures/sys_file_storage.xml');
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/sys_file_storage.csv');
 
-        $this->setUpBackendUserFromFixture(1);
+        $this->importCSVDataSet(__DIR__ . '/../../Fixtures/be_users.csv');
+        $this->setUpBackendUser(1);
         $this->entryRepository->deleteByUid(self::ENTRY_DEFAULT_FIXTURE_UID);
         self::assertEquals(0, $this->entryRepository->countByUid(self::ENTRY_DEFAULT_FIXTURE_UID));
         self::assertEquals(
@@ -163,6 +154,6 @@ class EntryRepositoryTest extends FunctionalTestCase
 
     public function tearDown(): void
     {
-        unset($this->entryRepository, $this->objectManager);
+        unset($this->entryRepository);
     }
 }

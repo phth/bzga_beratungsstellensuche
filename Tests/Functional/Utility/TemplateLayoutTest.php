@@ -35,8 +35,8 @@ class TemplateLayoutTest extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $backendUser = $this->setUpBackendUserFromFixture(1);
-        $backendUser->workspace = 0;
+        $this->importCSVDataSet(__DIR__ . '/../Fixtures/be_users.csv');
+        $this->setUpBackendUser(1);
         Bootstrap::initializeLanguageObject();
         $this->subject = GeneralUtility::makeInstance(TemplateLayout::class);
     }
@@ -47,7 +47,7 @@ class TemplateLayoutTest extends FunctionalTestCase
     public function getAvailableTemplateLayouts(): void
     {
         ExtensionManagementUtility::addPageTSConfig(
-            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/TSconfig/Beratungsstellensuche.txt">'
+            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Tests/Functional/Fixtures/TSconfig/Beratungsstellensuche.tsconfig">'
         );
 
         $templateLayouts = $this->subject->getAvailableTemplateLayouts(0);
