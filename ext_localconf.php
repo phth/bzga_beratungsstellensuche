@@ -3,6 +3,8 @@
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
 use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility as GeneralExtensionManagementUtility;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use Bzga\BzgaBeratungsstellensuche\Controller\EntryController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -56,8 +58,12 @@ call_user_func(function ($packageKey) {
             }
         }
     }
-
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/ContentElementWizard.txt">');
+    $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
+    // Only include page.tsconfig if TYPO3 version is below 12 so that it is not imported twice.
+    // Todo:: remove when dropping TYPO3 v11 support
+    if ($versionInformation->getMajorVersion() < 12) {
+        GeneralExtensionManagementUtility::addPageTSConfig('@import \'EXT:bzga_beratungsstellensuche/Configuration/page.tsconfig\'');
+    }
 
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord'][BeratungsstellensucheFlexFormManipulation::class] = [
         'depends' => [
@@ -91,10 +97,11 @@ call_user_func(function ($packageKey) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][$packageKey]['backend'] = FileBackend::class;
     }
     // Configure clear cache post processing for extended domain models
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][$packageKey] = 'Bzga\\BzgaBeratungsstellensuche\\Cache\\ClassCacheManager->reBuild';
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][$packageKey]
+        = 'Bzga\\BzgaBeratungsstellensuche\\Cache\\ClassCacheManager->reBuild';
 
     // Register cached domain model classes autoloader
-    require_once \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($packageKey) . 'Classes/Cache/CachedClassLoader.php';
+    require_once GeneralExtensionManagementUtility::extPath($packageKey) . 'Classes/Cache/CachedClassLoader.php';
     CachedClassLoader::registerAutoloader();
 
     // Names of entities which can be overriden
@@ -122,8 +129,8 @@ call_user_func(function ($packageKey) {
     ExtensionManagementUtility::registerTypeConverter(BoolConverter::class);
 
     // Linkvalidator
-    if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('linkvalidator')) {
-        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig('<INCLUDE_TYPOSCRIPT: source="FILE:EXT:bzga_beratungsstellensuche/Configuration/TSconfig/Page/mod.linkvalidator.txt">');
+    if (GeneralExtensionManagementUtility::isLoaded('linkvalidator')) {
+        GeneralExtensionManagementUtility::addPageTSConfig('@import \'EXT:bzga_beratungsstellensuche/Configuration/TsConfig/Page/LinkValidator/*.tsconfig\'');
     }
 
     // Upgrade wizards
@@ -132,7 +139,7 @@ call_user_func(function ($packageKey) {
 
 }, 'bzga_beratungsstellensuche');
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTypoScriptSetup(trim('
+GeneralExtensionManagementUtility::addTypoScriptSetup(trim('
     config.pageTitleProviders {
         beratungsstelle {
             provider = Bzga\BzgaBeratungsstellensuche\PageTitle\PageTitleProvider
