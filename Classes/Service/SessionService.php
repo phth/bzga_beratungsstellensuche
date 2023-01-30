@@ -18,15 +18,7 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  */
 class SessionService
 {
-    /**
-     * @var string
-     */
-    public const SESSIONNAMESPACE = 'beratungsstellendatenbank_session';
-
-    /**
-     * @var FrontendUserAuthentication|null
-     */
-    private $frontendUser;
+    private ?FrontendUserAuthentication $frontendUser;
 
     private string $sessionNamespace;
 
@@ -37,24 +29,30 @@ class SessionService
         $this->sessionNamespace = $sessionNamespace;
     }
 
-    /**
-     * @return array|mixed|null
-     */
-    public function restoreFromSession()
+    public function restoreFromSession(): ?array
     {
-        if ($this->hasValidFrontendUser()) {
-            $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);
-            $data = unserialize((string)$sessionData);
-            if (is_array($data) && !empty($data)) {
-                foreach ($data as $key => $value) {
-                    if (empty($value)) {
-                        unset($data[$key]);
-                    }
-                }
-            }
-            return $data;
+        if (! $this->hasValidFrontendUser()) {
+            return null;
         }
-        return null;
+
+        $sessionData = $this->frontendUser->getKey('ses', $this->sessionNamespace);
+        $data = unserialize((string)$sessionData);
+
+        if (! is_array($data)) {
+            return null;
+        }
+
+        if ($data === []) {
+            return null;
+        }
+
+        foreach ($data as $key => $value) {
+            if (empty($value)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 
     public function writeToSession($object): void
