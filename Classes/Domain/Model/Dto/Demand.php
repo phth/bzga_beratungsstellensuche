@@ -100,9 +100,9 @@ class Demand extends AbstractValueObject implements GeoPositionDemandInterface
         return $this->kilometers;
     }
 
-    public function setKilometers(int $kilometers): void
+    public function setKilometers(?int $kilometers = null): void
     {
-        $this->kilometers = $kilometers;
+        $this->kilometers = $kilometers??0;
     }
 
     public function getKeywords(): string

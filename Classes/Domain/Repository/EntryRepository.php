@@ -154,6 +154,9 @@ class EntryRepository extends AbstractBaseRepository
         if (! $userLocation->getLatitude() || ! $userLocation->getLongitude()) {
             return [];
         }
+        if ($radius === 0) {
+            return [];
+        }
 
         $earthRadius = GeolocationService::EARTH_RADIUS;
 
