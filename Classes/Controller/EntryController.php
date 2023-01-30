@@ -22,12 +22,15 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Service\SessionService;
 use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
+use GeorgRinger\NumberedPagination\NumberedPagination;
 use Psr\Http\Message\ResponseInterface;
 use SJBR\StaticInfoTables\Domain\Model\Country;
 use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\StringUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
@@ -165,6 +168,18 @@ class EntryController extends ActionController
         $countryZonesGermany = $this->findCountryZonesForGermany();
         $kilometers = $this->kilometerRepository->findKilometersBySettings($this->settings);
         $categories = $this->categoryRepository->findAll();
+
+        $itemsPerPage = (int)($this->settings['list']['itemsPerPage'] ?? 10);
+        $maximumLinks = (int)($this->settings['list']['maximumLinks'] ?? 10);
+        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+
+        // For some reason the QueryResultPaginator does not work
+        $paginator = new ArrayPaginator($entries->toArray(), $currentPage, $itemsPerPage);
+        $pagination = new NumberedPagination($paginator, $maximumLinks);
+        $this->view->assign('pagination', [
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+        ]);
         $assignedViewValues = compact('entries', 'demand', 'kilometers', 'categories', 'countryZonesGermany');
         $assignedViewValues = $this->emitActionSignal(Events::LIST_ACTION_SIGNAL, $assignedViewValues);
         $this->view->assignMultiple($assignedViewValues);
