@@ -16,15 +16,13 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\AbstractEntity;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Events;
-use Countable;
-use IteratorAggregate;
 use SimpleXMLIterator;
 use Traversable;
 
 /**
  * @author Sebastian Schreiber
  */
-class XmlImporter extends AbstractImporter implements Countable, IteratorAggregate
+class XmlImporter extends AbstractImporter
 {
     /**
      * @var string
@@ -52,12 +50,13 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
         $this->entries = $this->sxe->entrys->entry;
     }
 
-    public function importEntry(SimpleXMLIterator $entry): void
+    public function importEntry($entry): void
     {
         $this->convertRelation($this->entryManager, Entry::class, $this->pid, $entry);
     }
 
-    public function getIterator(): \SimpleXMLIterator
+    #[\ReturnTypeWillChange]
+    public function getIterator()
     {
         return $this->entries;
     }
@@ -74,7 +73,7 @@ class XmlImporter extends AbstractImporter implements Countable, IteratorAggrega
         $this->entryManager->persist();
     }
 
-    public function convertRelations(Traversable $relations = null, AbstractManager $manager, string $relationClassName, int $pid): void
+    private function convertRelations(Traversable $relations = null, AbstractManager $manager, string $relationClassName, int $pid): void
     {
         if ($relations instanceof Traversable) {
             foreach ($relations as $relationData) {
