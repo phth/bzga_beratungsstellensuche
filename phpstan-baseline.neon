@@ -23,7 +23,7 @@ parameters:
 		-
 			message: "#^Call to sprintf contains 2 placeholders, 3 values given\\.$#"
 			count: 1
-			path: Classes/Service/Geolocation/AbstractGeolocationService.php
+			path: Classes/Service/Geolocation/GeolocationService.php
 
 		-
 			message: "#^Property Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\SettingsService\\:\\:\\$settings \\(array\\) on left side of \\?\\? is not nullable\\.$#"
