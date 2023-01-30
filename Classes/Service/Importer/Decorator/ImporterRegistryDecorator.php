@@ -30,15 +30,9 @@ class ImporterRegistryDecorator extends AbstractImporter
      */
     public const REGISTRY_KEY = 'import';
 
-    /**
-     * @var ImporterInterface
-     */
-    protected $importer;
+    protected ImporterInterface $importer;
 
-    /**
-     * @var Registry
-     */
-    protected $registry;
+    protected Registry $registry;
 
     public function __construct(ImporterInterface $importer, Registry $registry)
     {

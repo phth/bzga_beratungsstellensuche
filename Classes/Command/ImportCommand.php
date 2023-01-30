@@ -13,6 +13,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\ValueObject\ImportAuthorization;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -23,13 +24,13 @@ use TYPO3\CMS\Core\Core\Bootstrap;
 
 final class ImportCommand extends Command
 {
-    private XmlImporter $xmlImporter;
+    private ImporterInterface $importer;
 
     private EntryRepository $entryRepository;
 
-    public function __construct(XmlImporter $xmlImporter, EntryRepository $entryRepository)
+    public function __construct(ImporterInterface $importer, EntryRepository $entryRepository)
     {
-        $this->xmlImporter = $xmlImporter;
+        $this->importer = $importer;
         $this->entryRepository = $entryRepository;
         parent::__construct();
     }
@@ -67,14 +68,14 @@ final class ImportCommand extends Command
         $pid = (int)$input->getOption('pid');
 
         if ($file) {
-            $this->xmlImporter->importFromFile($file, $pid);
+            $this->importer->importFromFile($file, $pid);
         } elseif ($url) {
             $importAuthorization = new ImportAuthorization(
                 $tokenUrl,
                 $clientId,
                 $clientSecret
             );
-            $this->xmlImporter->importFromUrl($url, $importAuthorization, $pid);
+            $this->importer->importFromUrl($url, $importAuthorization, $pid);
         }
 
         $this->import($output, (bool)$input->getOption('forceReImport'));
@@ -91,21 +92,21 @@ final class ImportCommand extends Command
         $persistBatch = 200;
         $i = 0;
 
-        $progressBar = new ProgressBar($output, $this->xmlImporter->count());
+        $progressBar = new ProgressBar($output, $this->importer->count());
 
-        foreach ($this->xmlImporter as $value) {
-            $this->xmlImporter->importEntry($value);
+        foreach ($this->importer as $value) {
+            $this->importer->importEntry($value);
             $progressBar->advance();
 
             if ($i === $persistBatch) {
-                $this->xmlImporter->persist();
+                $this->importer->persist();
                 $i = 0;
             } else {
                 $i++;
             }
         }
-        $this->xmlImporter->persist();
+        $this->importer->persist();
         $progressBar->finish();
-        $this->xmlImporter->cleanUp();
+        $this->importer->cleanUp();
     }
 }

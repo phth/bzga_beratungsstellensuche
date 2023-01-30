@@ -17,6 +17,8 @@ use Bzga\BzgaBeratungsstellensuche\Factory\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
+use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Geocoder\Provider\Provider;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -36,6 +38,7 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
 
     $services->set(GeolocationService::class)->arg('$geocoder', service('beratungsstellensuche.geocoder'));
     $services->alias(GeolocationServiceInterface::class, GeolocationService::class);
+    $services->alias(ImporterInterface::class, XmlImporter::class);
 
     $services->set('beratungsstellensuche.cache.geolcation', FrontendInterface::class)
             ->factory([service(CacheManager::class), 'getCache'])
