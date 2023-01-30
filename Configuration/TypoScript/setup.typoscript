@@ -1,3 +1,4 @@
+
 plugin.tx_bzgaberatungsstellensuche.features.requireCHashArgumentForActionArguments = 0
 plugin.tx_bzgaberatungsstellensuche {
     mvc.callDefaultActionIfActionCantBeResolved = 1
@@ -8,6 +9,7 @@ plugin.tx_bzgaberatungsstellensuche {
         }
         partialRootPaths {
             0 = EXT:bzga_beratungsstellensuche/Resources/Private/Partials/
+            5 = EXT:numbered_pagination/Resources/Private/Partials/
             100 = {$plugin.tx_bzgaberatungsstellensuche.view.partialRootPath}
         }
         layoutRootPaths {
@@ -28,6 +30,7 @@ plugin.tx_bzgaberatungsstellensuche {
         }
         list {
             itemsPerPage = {$plugin.tx_bzgaberatungsstellensuche.settings.list.itemsPerPage}
+            maximumLinks = {$plugin.tx_bzgaberatungsstellensuche.settings.list.maximumLinks}
         }
         map {
             locale = {$plugin.tx_bzgaberatungsstellensuche.settings.map.locale}

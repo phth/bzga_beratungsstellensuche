@@ -19,6 +19,7 @@ plugin.tx_bzgaberatungsstellensuche {
         }
         list {
             itemsPerPage = 10
+            maximumLinks = 10
         }
         map {
             pathToDefaultMarker = EXT:bzga_beratungsstellensuche/Resources/Public/Icons/default.png
