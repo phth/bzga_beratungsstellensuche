@@ -27,25 +27,13 @@ use UnexpectedValueException;
  */
 abstract class AbstractImporter implements ImporterInterface
 {
-    /**
-     * @var Serializer
-     */
-    protected $serializer;
+    protected Serializer $serializer;
 
-    /**
-     * @var EntryManager
-     */
-    protected $entryManager;
+    protected EntryManager $entryManager;
 
-    /**
-     * @var CategoryManager
-     */
-    protected $categoryManager;
+    protected CategoryManager $categoryManager;
 
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
+    protected Dispatcher $signalSlotDispatcher;
 
     public function importFromFile(string $file, int $pid = 0): void
     {

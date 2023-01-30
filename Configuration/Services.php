@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 use Bzga\BzgaBeratungsstellensuche\Command\ImportCommand;
 use Bzga\BzgaBeratungsstellensuche\Command\TruncateCommand;
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\Leaflet\MapBuilder;
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapBuilderInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Factory\GeocoderFactory;
@@ -46,6 +48,8 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
 
     $services->set('beratungsstellensuche.geocoder', Provider::class)
         ->factory([service(GeocoderFactory::class), 'createInstance']);
+
+    $services->alias(MapBuilderInterface::class, MapBuilder::class);
 
     $services->set(GeolocationServiceCacheDecorator::class)->arg('$cache', service('beratungsstellensuche.cache.geolcation'))->public();
     $services->set(GetSetMethodNormalizer::class)->public();

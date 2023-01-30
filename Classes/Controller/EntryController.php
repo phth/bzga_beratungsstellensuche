@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Controller;
 
-use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapBuilderFactory;
+use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapBuilderInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
@@ -46,35 +46,16 @@ class EntryController extends ActionController
      */
     public const GERMANY_ISOCODENUMBER = 276;
 
-    /**
-     * @var EntryRepository
-     */
-    protected $entryRepository;
+    protected EntryRepository $entryRepository;
 
-    /**
-     * @var KilometerRepository
-     */
-    protected $kilometerRepository;
+    protected KilometerRepository $kilometerRepository;
 
-    /**
-     * @var MapBuilderFactory
-     */
-    protected $mapBuilderFactory;
+    protected SessionService $sessionService;
 
-    /**
-     * @var SessionService
-     */
-    protected $sessionService;
+    protected CategoryRepository $categoryRepository;
 
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
-     * @var CountryZoneRepository
-     */
-    protected $countryZoneRepository;
+    protected CountryZoneRepository $countryZoneRepository;
+    private MapBuilderInterface $mapBuilder;
 
     public function injectCategoryRepository(CategoryRepository $categoryRepository): void
     {
@@ -99,6 +80,11 @@ class EntryController extends ActionController
     public function injectSessionService(SessionService $sessionService): void
     {
         $this->sessionService = $sessionService;
+    }
+
+    public function mapBuilder(MapBuilderInterface $mapBuilder): void
+    {
+        $this->mapBuilder = $mapBuilder;
     }
 
     public function initializeAction(): void
@@ -205,13 +191,10 @@ class EntryController extends ActionController
 
     public function mapJavaScriptAction(string $mapId, ?Entry $mainEntry = null, ?Demand $demand = null): ResponseInterface
     {
-        // TODO: while the tests are green this does not work yet
-        $mapBuilder = $this->mapBuilderFactory->createMapBuilder();
-
         $this->view->assign('mapId', $mapId);
 
         // These are only some defaults and can be overridden via a hook method
-        $map = $mapBuilder->createMap($mapId);
+        $map = $this->mapBuilder->createMap($mapId);
 
         // Set map options configurable via TypoScript, option:value => maxZoom:17
         $mapOptions = isset($this->settings['map']['options']) ? GeneralUtility::trimExplode(',', $this->settings['map']['options']) : [];
@@ -236,12 +219,12 @@ class EntryController extends ActionController
             $entries->attach($mainEntry);
         }
 
-        $markerCluster = $mapBuilder->createMarkerCluster('markercluster', $map);
+        $markerCluster = $this->mapBuilder->createMarkerCluster('markercluster', $map);
 
         foreach ($entries as $entry) {
             /* @var $entry GeopositionInterface|MapWindowInterface */
-            $coordinate = $mapBuilder->createCoordinate($entry->getLatitude(), $entry->getLongitude());
-            $marker = $mapBuilder->createMarker(sprintf('marker_%d', $entry->getUid()), $coordinate);
+            $coordinate = $this->mapBuilder->createCoordinate($entry->getLatitude(), $entry->getLongitude());
+            $marker = $this->mapBuilder->createMarker(sprintf('marker_%d', $entry->getUid()), $coordinate);
 
             $iconFile = $this->settings['map']['pathToDefaultMarker'] ?? '';
             $isCurrentMarker = false;
@@ -269,7 +252,7 @@ class EntryController extends ActionController
             }
 
             // Create Info Window
-            $popUp = $mapBuilder->createPopUp('popUp');
+            $popUp = $this->mapBuilder->createPopUp('popUp');
 
             // Call hook functions for modify the info window
             if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['ViewHelpers/Widget/Controller/MapController.php']['modifyInfoWindow'])) {
@@ -308,7 +291,7 @@ class EntryController extends ActionController
             }
         }
 
-        $this->view->assign('map', $mapBuilder->build($map));
+        $this->view->assign('map', $this->mapBuilder->build($map));
         return $this->htmlResponse();
     }
 
@@ -329,7 +312,7 @@ class EntryController extends ActionController
         if (GeneralUtility::inList($this->settings['formFields'], 'countryZonesGermany') === false) {
             return [];
         }
-        $country = new Country();
+        $country = GeneralUtility::makeInstance(Country::class);
         $country->setIsoCodeNumber(self::GERMANY_ISOCODENUMBER);
 
         return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
