@@ -15,7 +15,7 @@ use Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use Bzga\BzgaBeratungsstellensuche\Cache\CachedClassLoader;
-use Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory;
+use Bzga\BzgaBeratungsstellensuche\Factory\CacheFactory;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ImageLinkConverter;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\StringConverter;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter;
@@ -95,11 +95,11 @@ call_user_func(function ($packageKey) {
     ];
 
     // Caching of user requests
-    if (! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][CacheFactory::CACHE_KEY])
+    if (! is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['bzgaberatungsstellensuche_cache_coordinates'])
     ) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][CacheFactory::CACHE_KEY] = [
-            'frontend' => '\\' . VariableFrontend::class,
-            'backend'  => '\\' . Typo3DatabaseBackend::class,
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['bzgaberatungsstellensuche_cache_coordinates'] = [
+            'frontend' => VariableFrontend::class,
+            'backend'  => Typo3DatabaseBackend::class,
             'options'  => [],
         ];
     }

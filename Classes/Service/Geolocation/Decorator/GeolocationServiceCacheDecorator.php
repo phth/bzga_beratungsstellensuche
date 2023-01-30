@@ -15,7 +15,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeoPositionDemandInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
-use Bzga\BzgaBeratungsstellensuche\Factories\CacheFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
 use Geocoder\Model\Address;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface as CacheInterface;
@@ -25,20 +24,14 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface as CacheInterface;
  */
 class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
 {
-    /**
-     * @var CacheInterface
-     */
-    protected $cache;
+    protected CacheInterface $cache;
 
-    /**
-     * @var GeolocationServiceInterface
-     */
-    protected $geolocationService;
+    protected GeolocationServiceInterface $geolocationService;
 
-    public function __construct(GeolocationServiceInterface $geolocationService, CacheFactory $cacheFactory)
+    public function __construct(GeolocationServiceInterface $geolocationService, CacheInterface $cache)
     {
         $this->geolocationService = $geolocationService;
-        $this->cache              = $cacheFactory->createInstance();
+        $this->cache              = $cache;
     }
 
     public function findAddressByDemand(Demand $demand): ?Address

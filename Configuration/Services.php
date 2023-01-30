@@ -13,11 +13,16 @@ use Bzga\BzgaBeratungsstellensuche\Command\ImportCommand;
 use Bzga\BzgaBeratungsstellensuche\Command\TruncateCommand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
+use Bzga\BzgaBeratungsstellensuche\Factory\GeocoderFactory;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
+use Geocoder\Provider\Provider;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
     $services = $containerConfigurator->services();
@@ -29,9 +34,17 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
         __DIR__ . '/../Classes/Domain/Model',
     ]);
 
+    $services->set(GeolocationService::class)->arg('$geocoder', service('beratungsstellensuche.geocoder'));
     $services->alias(GeolocationServiceInterface::class, GeolocationService::class);
 
-    $services->set(GeolocationServiceCacheDecorator::class)->public();
+    $services->set('beratungsstellensuche.cache.geolcation', FrontendInterface::class)
+            ->factory([service(CacheManager::class), 'getCache'])
+            ->args(['bzgaberatungsstellensuche_cache_coordinates']);
+
+    $services->set('beratungsstellensuche.geocoder', Provider::class)
+        ->factory([service(GeocoderFactory::class), 'createInstance']);
+
+    $services->set(GeolocationServiceCacheDecorator::class)->arg('$cache', service('beratungsstellensuche.cache.geolcation'))->public();
     $services->set(GetSetMethodNormalizer::class)->public();
     $services->set(EntryNormalizer::class)->public();
 
