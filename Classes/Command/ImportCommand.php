@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Command;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\ValueObject\ImportAuthorization;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\ImporterInterface;
-use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
@@ -80,7 +79,7 @@ final class ImportCommand extends Command
 
         $this->import($output, (bool)$input->getOption('forceReImport'));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function import(OutputInterface $output, bool $forceReImport): void
