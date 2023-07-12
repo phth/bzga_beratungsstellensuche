@@ -15,7 +15,8 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\AbstractManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\AbstractEntity;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Category;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Events\AfterImportEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\BeforeImportEvent;
 use SimpleXMLIterator;
 use Traversable;
 
@@ -41,8 +42,7 @@ class XmlImporter extends AbstractImporter
 
         $this->sxe = new SimpleXMLIterator($content);
 
-        $this->emitImportSignal(Events::PRE_IMPORT_SIGNAL);
-        $this->eventDispatcher->dispatch(new Events\BeforeImportEvent($this, $this->sxe, $this->pid, $this->serializer));
+        $this->eventDispatcher->dispatch(new BeforeImportEvent($this, $this->sxe, $this->pid, $this->serializer));
 
         // Import beratungsarten
         $this->convertRelations($this->sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
@@ -69,10 +69,8 @@ class XmlImporter extends AbstractImporter
 
     public function persist(): void
     {
+        $this->eventDispatcher->dispatch(new AfterImportEvent($this, $this->sxe, $this->pid, $this->serializer));
         // In the end we are calling all the managers to persist, this saves a lot of memory
-        $this->emitImportSignal(Events::POST_IMPORT_SIGNAL);
-
-        $this->eventDispatcher->dispatch(new Events\AfterImportEvent($this, $this->sxe, $this->pid, $this->serializer));
         $this->entryManager->persist();
     }
 
@@ -84,12 +82,6 @@ class XmlImporter extends AbstractImporter
             }
         }
     }
-
-    private function emitImportSignal(string $signal): void
-    {
-        $this->signalSlotDispatcher->dispatch(static::class, $signal, [$this, $this->sxe, $this->pid, $this->serializer]);
-    }
-
     private function convertRelation(AbstractManager $manager, string $relationClassName, int $pid, \SimpleXMLIterator $relationData): void
     {
         $externalId = (integer)$relationData->index;

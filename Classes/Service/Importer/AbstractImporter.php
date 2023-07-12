@@ -20,7 +20,6 @@ use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use UnexpectedValueException;
 
 /**
@@ -33,8 +32,6 @@ abstract class AbstractImporter implements ImporterInterface
     protected EntryManager $entryManager;
 
     protected CategoryManager $categoryManager;
-
-    protected Dispatcher $signalSlotDispatcher;
 
     protected EventDispatcher $eventDispatcher;
 
@@ -111,11 +108,6 @@ abstract class AbstractImporter implements ImporterInterface
     public function injectSerializer(Serializer $serializer): void
     {
         $this->serializer = $serializer;
-    }
-
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
-    {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
     public function injectEventDispatcher(EventDispatcher $eventDispatcher): void

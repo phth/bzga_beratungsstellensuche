@@ -14,7 +14,6 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
-use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Events\AfterEntriesTruncatedEvent;
 use Bzga\BzgaBeratungsstellensuche\Events\AfterEntryDeletedEvent;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
@@ -142,11 +141,6 @@ class EntryRepository extends AbstractBaseRepository
             $this->deleteByUid($entry['uid']);
         }
         $this->eventDispatcher->dispatch(new AfterEntriesTruncatedEvent($entries));
-
-        $this->signalSlotDispatcher->dispatch(
-            static::class,
-            Events::TABLE_TRUNCATE_ALL_SIGNAL
-        );
     }
 
     private function createCoordsConstraints(
@@ -199,11 +193,5 @@ class EntryRepository extends AbstractBaseRepository
             $this->persistenceManager->persistAll();
         }
         $this->eventDispatcher->dispatch(new AfterEntryDeletedEvent($uid));
-
-        $this->signalSlotDispatcher->dispatch(
-            static::class,
-            Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
-            ['uid' => $uid]
-        );
     }
 }

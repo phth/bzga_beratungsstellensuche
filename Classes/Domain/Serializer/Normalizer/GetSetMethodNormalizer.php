@@ -12,22 +12,17 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter\BaseMappingNameConverter;
-use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Events\ExtendDenormalizeCallbacksEvent;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer as BaseGetSetMethodNormalizer;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
  */
 class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 {
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
     private EventDispatcher $eventDispatcher;
 
     /**
@@ -49,7 +44,6 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
 
     public function setDenormalizeCallbacks(array $callbacks): self
     {
-        $callbacks = $this->emitDenormalizeCallbacksSignal($callbacks);
         $callbacks = $this->dispatchDenormalizeCallbacksEvent($callbacks);
         foreach ($callbacks as $attribute => $callback) {
             if (!is_callable($callback)) {
@@ -101,38 +95,15 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         return $object;
     }
 
-    protected function emitDenormalizeCallbacksSignal(array $callbacks): array
-    {
-        $signalArguments = [];
-        $signalArguments['extendedCallbacks'] = [];
-
-        $additionalCallbacks = $this->signalSlotDispatcher->dispatch(
-            static::class,
-            Events::DENORMALIZE_CALLBACKS_SIGNAL,
-            $signalArguments
-        );
-
-        if (isset($additionalCallbacks['extendedCallbacks']) && $additionalCallbacks['extendedCallbacks']) {
-            $callbacks = array_merge($callbacks, $additionalCallbacks['extendedCallbacks']);
-        }
-
-        return $callbacks;
-    }
-
     protected function dispatchDenormalizeCallbacksEvent(array $callbacks): array
     {
-        $event = new Events\ExtendDenormalizeCallbacksEvent($callbacks, []);
+        $event = new ExtendDenormalizeCallbacksEvent($callbacks, []);
         $event = $this->eventDispatcher->dispatch($event);
         if ($event->getExtendedCallbacks()) {
             $callbacks = array_merge($callbacks, $event->getExtendedCallbacks());
         }
 
         return $callbacks;
-    }
-
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
-    {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
     public function injectEventDispatcher(EventDispatcher $eventDispatcher): void

@@ -17,18 +17,12 @@ use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
  */
 abstract class AbstractBaseRepository extends Repository
 {
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
     protected EventDispatcher $eventDispatcher;
 
     /**
@@ -59,11 +53,6 @@ abstract class AbstractBaseRepository extends Repository
     public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
     {
         $this->eventDispatcher = $eventDispatcher;
-    }
-
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
-    {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
     }
 
     public function findOldEntriesByExternalUidsDiffForTable(string $table, array $entries): ?array

@@ -19,7 +19,6 @@ use SJBR\StaticInfoTables\Domain\Repository\CountryZoneRepository;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Persistence\RepositoryInterface;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
@@ -36,9 +35,9 @@ class EntryNormalizer extends GetSetMethodNormalizer
      */
     protected $categoryRepository;
 
-    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null, Dispatcher $signalSlotDispatcher = null)
+    public function __construct(ClassMetadataFactoryInterface $classMetadataFactory = null)
     {
-        parent::__construct($classMetadataFactory, new EntryNameConverter([], true, $signalSlotDispatcher));
+        parent::__construct($classMetadataFactory, new EntryNameConverter([], true));
     }
 
     /**

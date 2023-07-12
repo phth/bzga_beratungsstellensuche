@@ -13,27 +13,20 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
-use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Events\ExtendNormalizersEvent;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Serializer as BaseSerializer;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
  */
 class Serializer extends BaseSerializer
 {
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
     protected EventDispatcher $eventDispatcher;
 
-    public function __construct(array $normalizers = [], array $encoders = [], ?Dispatcher $signalSlotDispatcher = null, ?EventDispatcher $eventDispatcher = null)
+    public function __construct(array $normalizers = [], array $encoders = [], ?EventDispatcher $eventDispatcher = null)
     {
         if (empty($normalizers)) {
             $normalizers = [
@@ -47,10 +40,8 @@ class Serializer extends BaseSerializer
             ];
         }
 
-        $this->signalSlotDispatcher = $signalSlotDispatcher ?? GeneralUtility::makeInstance(Dispatcher::class);
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcher::class);
 
-        $normalizers = $this->emitAdditionalNormalizersSignal($normalizers);
         $normalizers = $this->dispatchAdditionalNormalizersEvent($normalizers);
 
         parent::__construct($normalizers, $encoders);
@@ -65,22 +56,5 @@ class Serializer extends BaseSerializer
         $event = $this->eventDispatcher->dispatch($event);
 
         return array_merge($normalizers, $event->getAdditionalNormalizers());
-    }
-
-    /**
-     * @param array $normalizers
-     */
-    private function emitAdditionalNormalizersSignal(array $normalizers): array
-    {
-        $signalArguments = [];
-        $signalArguments['extendedNormalizers'] = [];
-
-        $additionalNormalizers = $this->signalSlotDispatcher->dispatch(
-            static::class,
-            Events::ADDITIONAL_NORMALIZERS_SIGNAL,
-            $signalArguments
-        );
-
-        return array_merge($normalizers, $additionalNormalizers['extendedNormalizers']);
     }
 }

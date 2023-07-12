@@ -19,7 +19,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\MapWindowInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
-use Bzga\BzgaBeratungsstellensuche\Events;
 use Bzga\BzgaBeratungsstellensuche\Events\AfterEntryControllerInitializedEvent;
 use Bzga\BzgaBeratungsstellensuche\Events\BeforeFormActionViewAssignedEvent;
 use Bzga\BzgaBeratungsstellensuche\Events\BeforeListActionViewAssignedEvent;
@@ -110,7 +109,6 @@ class EntryController extends ActionController
             $propertyMappingConfiguration->allowCreationForSubProperty('categories');
             $propertyMappingConfiguration->allowModificationForSubProperty('categories');
             $this->eventDispatcher->dispatch(new AfterEntryControllerInitializedEvent($propertyMappingConfiguration));
-            $this->emitInitializeActionSignal(['propertyMappingConfiguration' => $propertyMappingConfiguration]);
         }
     }
 
@@ -130,7 +128,6 @@ class EntryController extends ActionController
         $categories = $this->categoryRepository->findAll();
         $random = random_int(0, 1000);
         $assignedViewValues = compact('demand', 'kilometers', 'categories', 'countryZonesGermany', 'random');
-        $assignedViewValues = $this->emitActionSignal(Events::FORM_ACTION_SIGNAL, $assignedViewValues);
         $event = new BeforeFormActionViewAssignedEvent($assignedViewValues);
         $event = $this->eventDispatcher->dispatch($event);
         $this->view->assignMultiple($event->getAssignedViewValues());
@@ -174,7 +171,6 @@ class EntryController extends ActionController
             'pagination' => $pagination,
         ]);
         $assignedViewValues = compact('entries', 'demand', 'kilometers', 'categories', 'countryZonesGermany');
-        $assignedViewValues = $this->emitActionSignal(Events::LIST_ACTION_SIGNAL, $assignedViewValues);
         $event = new BeforeListActionViewAssignedEvent($assignedViewValues);
         $event = $this->eventDispatcher->dispatch($event);
         $this->view->assignMultiple($event->getAssignedViewValues());
@@ -195,7 +191,6 @@ class EntryController extends ActionController
 
         $mapId = sprintf('map_%s', StringUtility::getUniqueId());
         $assignedViewValues = compact('entry', 'demand', 'mapId');
-        $assignedViewValues = $this->emitActionSignal(Events::SHOW_ACTION_SIGNAL, $assignedViewValues);
 
         $event = new BeforeShowActionViewAssignedEvent($assignedViewValues);
         $event = $this->eventDispatcher->dispatch($event);
@@ -330,21 +325,6 @@ class EntryController extends ActionController
         $country->setIsoCodeNumber(self::GERMANY_ISOCODENUMBER);
 
         return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
-    }
-
-    private function emitInitializeActionSignal(array $signalArguments): void
-    {
-        $this->signalSlotDispatcher->dispatch(static::class, Events::INITIALIZE_ACTION_SIGNAL, $signalArguments);
-    }
-
-    private function emitActionSignal(string $signalName, array $assignedViewValues): array
-    {
-        $signalArguments = [];
-        $signalArguments['extendedVariables'] = [];
-
-        $additionalViewValues = $this->signalSlotDispatcher->dispatch(static::class, $signalName, $signalArguments);
-
-        return array_merge($assignedViewValues, $additionalViewValues['extendedVariables']);
     }
 
     private function addDemandRequestArgumentFromSession(): void

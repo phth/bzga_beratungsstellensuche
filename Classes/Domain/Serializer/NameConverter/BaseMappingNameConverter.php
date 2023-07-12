@@ -11,23 +11,17 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
 
-use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Events\ExtendMapNamesEvent;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
  */
 class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
-
     private EventDispatcher $eventDispatcher;
 
     /**
@@ -49,17 +43,14 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      *
      * @param array|null $attributes
      * @param bool $lowerCamelCase
-     * @param Dispatcher|null $signalSlotDispatcher
      */
-    public function __construct(array $attributes = null, $lowerCamelCase = true, ?Dispatcher $signalSlotDispatcher = null, ?EventDispatcher $eventDispatcher = null)
+    public function __construct(array $attributes = null, $lowerCamelCase = true, ?EventDispatcher $eventDispatcher = null)
     {
         parent::__construct($attributes, $lowerCamelCase);
 
-        $this->signalSlotDispatcher = $signalSlotDispatcher??GeneralUtility::makeInstance(Dispatcher::class);
         $this->eventDispatcher = $eventDispatcher??GeneralUtility::makeInstance(EventDispatcher::class);
 
-        $this->emitMapNamesSignal();
-        $event = new Events\ExtendMapNamesEvent($this->mapNames, []);
+        $event = new ExtendMapNamesEvent($this->mapNames, []);
         $event = $this->eventDispatcher->dispatch($event);
         $this->addAdditionalMapNames($event->getExtendedMapNames());
         $this->mapNamesFlipped();
@@ -90,14 +81,5 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
         }
 
         return $propertyName;
-    }
-
-    protected function emitMapNamesSignal(): void
-    {
-        $signalArguments = [];
-        $signalArguments['extendedMapNames'] = [];
-
-        $mapNames = $this->signalSlotDispatcher->dispatch(static::class, Events::SIGNAL_MAP_NAMES, $signalArguments);
-        $this->addAdditionalMapNames($mapNames['extendedMapNames']);
     }
 }
