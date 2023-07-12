@@ -15,7 +15,6 @@ use Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use Bzga\BzgaBeratungsstellensuche\Cache\CachedClassLoader;
-use Bzga\BzgaBeratungsstellensuche\Factory\CacheFactory;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ImageLinkConverter;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\StringConverter;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter;
@@ -23,9 +22,6 @@ use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\BoolConverter;
 use Bzga\BzgaBeratungsstellensuche\Updates\CreateImageUploadFolderUpdate;
 use Bzga\BzgaBeratungsstellensuche\Updates\ImportCountryZonesUpdate;
-use TYPO3\CMS\Extbase\Object\Container\Container;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use Bzga\BzgaBeratungsstellensuche\Persistence\QueryResult;
 if (! defined('TYPO3')) {
     die('Access denied.');
 }
@@ -129,5 +125,3 @@ GeneralExtensionManagementUtility::addTypoScriptSetup(trim('
         }
     }
 '));
-
-GeneralUtility::makeInstance(Container::class)->registerImplementation(QueryResultInterface::class, QueryResult::class);
