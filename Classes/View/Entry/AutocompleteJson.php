@@ -12,10 +12,12 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\View\Entry;
 
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
-use TYPO3\CMS\Extbase\Mvc\View\AbstractView;
+use TYPO3Fluid\Fluid\View\ViewInterface;
 
-final class AutocompleteJson extends AbstractView
+final class AutocompleteJson implements ViewInterface
 {
+    protected $variables = [];
+
     public function render(): string
     {
         /** @var Entry[] $entries */
@@ -35,5 +37,27 @@ final class AutocompleteJson extends AbstractView
         }
 
         return json_encode(array_unique($suggestions), JSON_THROW_ON_ERROR);
+    }
+
+    public function assign($key, $value)
+    {
+        $this->variables[$key] = $value;
+        return $this;
+    }
+
+    public function assignMultiple(array $values)
+    {
+        foreach ($values as $key => $value) {
+            $this->assign($key, $value);
+        }
+        return $this;
+    }
+
+    public function renderSection($sectionName, array $variables = [], $ignoreUnknown = false)
+    {
+    }
+
+    public function renderPartial($partialName, $sectionName, array $variables, $ignoreUnknown = false)
+    {
     }
 }
