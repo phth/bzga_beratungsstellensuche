@@ -16,6 +16,7 @@ use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer as BaseGetSetMethodNormalizer;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
@@ -27,6 +28,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
      * @var Dispatcher
      */
     protected $signalSlotDispatcher;
+    private EventDispatcher $eventDispatcher;
 
     /**
      * @var array
@@ -48,6 +50,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
     public function setDenormalizeCallbacks(array $callbacks): self
     {
         $callbacks = $this->emitDenormalizeCallbacksSignal($callbacks);
+        $callbacks = $this->dispatchDenormalizeCallbacksEvent($callbacks);
         foreach ($callbacks as $attribute => $callback) {
             if (!is_callable($callback)) {
                 throw new \InvalidArgumentException(sprintf(
@@ -116,8 +119,24 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
         return $callbacks;
     }
 
+    protected function dispatchDenormalizeCallbacksEvent(array $callbacks): array
+    {
+        $event = new Events\ExtendDenormalizeCallbacksEvent($callbacks, []);
+        $event = $this->eventDispatcher->dispatch($event);
+        if ($event->getExtendedCallbacks()) {
+            $callbacks = array_merge($callbacks, $event->getExtendedCallbacks());
+        }
+
+        return $callbacks;
+    }
+
     public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
+
+    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
     }
 }

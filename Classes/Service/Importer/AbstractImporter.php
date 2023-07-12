@@ -16,6 +16,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\EntryManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
 use Bzga\BzgaBeratungsstellensuche\Domain\ValueObject\ImportAuthorization;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -34,6 +35,8 @@ abstract class AbstractImporter implements ImporterInterface
     protected CategoryManager $categoryManager;
 
     protected Dispatcher $signalSlotDispatcher;
+
+    protected EventDispatcher $eventDispatcher;
 
     public function importFromFile(string $file, int $pid = 0): void
     {
@@ -113,5 +116,10 @@ abstract class AbstractImporter implements ImporterInterface
     public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {
         $this->signalSlotDispatcher = $signalSlotDispatcher;
+    }
+
+    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
     }
 }
