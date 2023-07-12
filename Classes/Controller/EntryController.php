@@ -252,8 +252,7 @@ class EntryController extends ActionController
             // Current marker does not need detail link
             if (!$isCurrentMarker) {
                 $detailsPid = (int)($this->settings['singlePid'] ?? $this->getTyposcriptFrontendController()->id);
-                $uriBuilder = $this->controllerContext->getUriBuilder();
-                $infoWindowParameters['detailLink'] = $uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
+                $infoWindowParameters['detailLink'] = $this->uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
                     'show',
                     ['entry' => $entry],
                     'Entry'
