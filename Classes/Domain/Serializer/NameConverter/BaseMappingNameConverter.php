@@ -13,6 +13,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Serializer\NameConverter;
 
 use Bzga\BzgaBeratungsstellensuche\Events;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -26,6 +27,8 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      * @var Dispatcher
      */
     protected $signalSlotDispatcher;
+
+    private EventDispatcher $eventDispatcher;
 
     /**
      * Mapping of names, left side incoming names in xml|array, right side name for object
@@ -48,17 +51,17 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      * @param bool $lowerCamelCase
      * @param Dispatcher|null $signalSlotDispatcher
      */
-    public function __construct(array $attributes = null, $lowerCamelCase = true, Dispatcher $signalSlotDispatcher = null)
+    public function __construct(array $attributes = null, $lowerCamelCase = true, ?Dispatcher $signalSlotDispatcher = null, ?EventDispatcher $eventDispatcher = null)
     {
         parent::__construct($attributes, $lowerCamelCase);
 
-        if (!$signalSlotDispatcher instanceof Dispatcher) {
-            $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-        }
-
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->signalSlotDispatcher = $signalSlotDispatcher??GeneralUtility::makeInstance(Dispatcher::class);
+        $this->eventDispatcher = $eventDispatcher??GeneralUtility::makeInstance(EventDispatcher::class);
 
         $this->emitMapNamesSignal();
+        $event = new Events\ExtendMapNamesEvent($this->mapNames, []);
+        $event = $this->eventDispatcher->dispatch($event);
+        $this->addAdditionalMapNames($event->getExtendedMapNames());
         $this->mapNamesFlipped();
     }
 

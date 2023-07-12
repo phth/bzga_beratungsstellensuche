@@ -13,6 +13,7 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 use Doctrine\DBAL\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -27,6 +28,8 @@ abstract class AbstractBaseRepository extends Repository
      * @var Dispatcher
      */
     protected $signalSlotDispatcher;
+
+    protected EventDispatcher $eventDispatcher;
 
     /**
      * @var array<non-empty-string, QueryInterface::ORDER_*>
@@ -52,6 +55,11 @@ abstract class AbstractBaseRepository extends Repository
      * @var string
      */
     public const SYS_FILE_REFERENCE = 'sys_file_reference';
+
+    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
     {

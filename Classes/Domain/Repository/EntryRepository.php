@@ -15,6 +15,8 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Events\AfterEntriesTruncatedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\AfterEntryDeletedEvent;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use RuntimeException;
@@ -139,6 +141,7 @@ class EntryRepository extends AbstractBaseRepository
         foreach ($entries as $entry) {
             $this->deleteByUid($entry['uid']);
         }
+        $this->eventDispatcher->dispatch(new AfterEntriesTruncatedEvent($entries));
 
         $this->signalSlotDispatcher->dispatch(
             static::class,
@@ -195,6 +198,7 @@ class EntryRepository extends AbstractBaseRepository
             $this->remove($entry);
             $this->persistenceManager->persistAll();
         }
+        $this->eventDispatcher->dispatch(new AfterEntryDeletedEvent($uid));
 
         $this->signalSlotDispatcher->dispatch(
             static::class,
