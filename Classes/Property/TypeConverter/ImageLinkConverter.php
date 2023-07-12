@@ -150,7 +150,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         if (is_array($imageInfo)) {
             $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
             if ($extension) {
-                $pathToUploadFile = Environment::getPublicPath() . '/' . $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
+                $pathToUploadFile = Environment::getPublicPath() . '/' . $this->tempFolder . GeneralUtility::hmac($entity->getExternalId()) . '.' . $extension;
                 $error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent);
                 // due to Bug https://forge.typo3.org/issues/90063#change-431917 error always conatains something.
                 // therefore just testing if file got uploaded
