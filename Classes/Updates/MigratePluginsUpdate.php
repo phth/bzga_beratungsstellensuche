@@ -106,12 +106,12 @@ class MigratePluginsUpdate implements UpgradeWizardInterface
                 }
 
                 // Remove empty sheets
-                if (!count($flexFormData['data'][$sheetKey]['lDEF']) > 0) {
+                if (!(is_countable($flexFormData['data'][$sheetKey]['lDEF']) ? count($flexFormData['data'][$sheetKey]['lDEF']) : 0) > 0) {
                     unset($flexFormData['data'][$sheetKey]);
                 }
             }
 
-            if (count($flexFormData['data']) > 0) {
+            if ((is_countable($flexFormData['data']) ? count($flexFormData['data']) : 0) > 0) {
                 $newFlexform = $this->array2xml($flexFormData);
             } else {
                 $newFlexform = '';

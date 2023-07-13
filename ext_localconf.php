@@ -36,7 +36,7 @@ call_user_func(function ($packageKey) {
         'Pi1',
         [EntryController::class => 'list,show,form,autocomplete'],
         [EntryController::class => 'list,form,autocomplete'],
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
     // Plugin configuration
     ExtensionUtility::configurePlugin(
@@ -44,7 +44,7 @@ call_user_func(function ($packageKey) {
         'List',
         [EntryController::class => 'list,form,autocomplete'],
         [EntryController::class => 'list,form,autocomplete'],
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
     // Plugin configuration
     ExtensionUtility::configurePlugin(
@@ -52,7 +52,7 @@ call_user_func(function ($packageKey) {
         'Show',
         [EntryController::class => 'show,form,autocomplete'],
         [EntryController::class => 'form,autocomplete'],
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
