@@ -16,7 +16,6 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Map\MapBuilderInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\EntryNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Normalizer\GetSetMethodNormalizer;
 use Bzga\BzgaBeratungsstellensuche\Factory\GeocoderFactory;
-use Bzga\BzgaBeratungsstellensuche\Persistence\QueryResult;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationServiceInterface;
@@ -28,7 +27,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 return static function (ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void {
     $services = $containerConfigurator->services();

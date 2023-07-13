@@ -1,5 +1,6 @@
 <?php
 
+use Bzga\BzgaBeratungsstellensuche\Updates\MigratePluginsUpdate;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
 use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
 use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
@@ -34,7 +35,24 @@ call_user_func(function ($packageKey) {
         'BzgaBeratungsstellensuche',
         'Pi1',
         [EntryController::class => 'list,show,form,autocomplete'],
-        [EntryController::class => 'list,form,autocomplete']
+        [EntryController::class => 'list,form,autocomplete'],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+    );
+    // Plugin configuration
+    ExtensionUtility::configurePlugin(
+        'BzgaBeratungsstellensuche',
+        'List',
+        [EntryController::class => 'list,form,autocomplete'],
+        [EntryController::class => 'list,form,autocomplete'],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+    );
+    // Plugin configuration
+    ExtensionUtility::configurePlugin(
+        'BzgaBeratungsstellensuche',
+        'Show',
+        [EntryController::class => 'show,form,autocomplete'],
+        [EntryController::class => 'form,autocomplete'],
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     $versionInformation = GeneralUtility::makeInstance(Typo3Version::class);
@@ -113,6 +131,7 @@ call_user_func(function ($packageKey) {
     // Upgrade wizards
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][CreateImageUploadFolderUpdate::class] = CreateImageUploadFolderUpdate::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][ImportCountryZonesUpdate::class] = ImportCountryZonesUpdate::class;
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][MigratePluginsUpdate::class] = MigratePluginsUpdate::class;
 
 }, 'bzga_beratungsstellensuche');
 

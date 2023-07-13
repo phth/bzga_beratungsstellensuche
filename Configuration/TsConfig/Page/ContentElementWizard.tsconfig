@@ -1,12 +1,27 @@
 mod.wizards.newContentElement.wizardItems.plugins {
 	elements {
-		bzga_beratungsstellensuche {
+		bzgaberatungsstellensuche_pi1 {
 			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
 			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
 			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
 			tt_content_defValues {
-				CType = list
-				list_type = bzgaberatungsstellensuche_pi1
+				CType = bzgaberatungsstellensuche_pi1
+			}
+		}
+		bzgaberatungsstellensuche_list {
+			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
+			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
+			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
+			tt_content_defValues {
+				CType = bzgaberatungsstellensuche_list
+			}
+		}
+		bzgaberatungsstellensuche_show {
+			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
+			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
+			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
+			tt_content_defValues {
+				CType = bzgaberatungsstellensuche_show
 			}
 		}
 	}
