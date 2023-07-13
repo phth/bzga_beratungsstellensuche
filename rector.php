@@ -8,6 +8,7 @@ use Rector\PostRector\Rector\NameImportingPostRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Ssch\TYPO3Rector\Rector\General\ConvertImplicitVariablesToExplicitGlobalsRector;
 use Ssch\TYPO3Rector\Rector\General\ExtEmConfRector;
+use Ssch\TYPO3Rector\Rector\v11\v0\ExtbaseControllerActionsMustReturnResponseInterfaceRector;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -37,5 +38,10 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->rule(ConvertImplicitVariablesToExplicitGlobalsRector::class);
     $rectorConfig->ruleWithConfiguration(ExtEmConfRector::class, [
         ExtEmConfRector::ADDITIONAL_VALUES_TO_BE_REMOVED => []
+    ]);
+    $rectorConfig->ruleWithConfiguration(ExtbaseControllerActionsMustReturnResponseInterfaceRector::class, [
+        ExtbaseControllerActionsMustReturnResponseInterfaceRector::REDIRECT_METHODS => [
+            'myRedirectMethod',
+        ],
     ]);
 };

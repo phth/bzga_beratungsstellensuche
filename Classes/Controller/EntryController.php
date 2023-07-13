@@ -144,14 +144,14 @@ class EntryController extends ActionController
         }
     }
 
-    public function listAction(Demand $demand = null): void
+    public function listAction(Demand $demand = null): ResponseInterface
     {
         if (!$demand instanceof Demand) {
             $demand = GeneralUtility::makeInstance(Demand::class);
         }
 
         if (!$demand->hasValidCoordinates()) {
-            $this->redirect('form', 'Entry', 'bzga_beratungsstellensuche', ['demand' => $demand], $this->settings['backPid']);
+            return $this->redirect('form', 'Entry', 'bzga_beratungsstellensuche', ['demand' => $demand], $this->settings['backPid']);
         }
 
         $entries = $this->entryRepository->findDemanded($demand);
@@ -175,6 +175,8 @@ class EntryController extends ActionController
         $event = $this->eventDispatcher->dispatch($event);
         $this->view->assignMultiple($event->getAssignedViewValues());
         $this->view->assignMultiple($assignedViewValues);
+
+        return $this->htmlResponse();
     }
 
     public function initializeShowAction(): void
@@ -182,11 +184,11 @@ class EntryController extends ActionController
         $this->addDemandRequestArgumentFromSession();
     }
 
-    public function showAction(Entry $entry = null, Demand $demand = null): void
+    public function showAction(Entry $entry = null, Demand $demand = null): ResponseInterface
     {
         if (!$entry instanceof Entry) {
             // @TODO: Add possibility to hook into here.
-            $this->redirect('list', null, null, [], $this->settings['listPid'], null, 404);
+            return $this->redirect('list', null, null, [], $this->settings['listPid'], null, 404);
         }
 
         $mapId = sprintf('map_%s', StringUtility::getUniqueId());
@@ -196,6 +198,7 @@ class EntryController extends ActionController
         $event = $this->eventDispatcher->dispatch($event);
         $this->view->assignMultiple($event->getAssignedViewValues());
         $this->view->assignMultiple($assignedViewValues);
+        return $this->htmlResponse();
     }
 
     public function mapJavaScriptAction(string $mapId, ?Entry $mainEntry = null, ?Demand $demand = null): ResponseInterface
