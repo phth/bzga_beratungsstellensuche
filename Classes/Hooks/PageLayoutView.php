@@ -272,7 +272,7 @@ class PageLayoutView
                 ->from('pages')
                 ->where($queryBuilder->expr()->in('uid', GeneralUtility::intExplode(',', $value, true)))
                 ->execute()
-                ->fetchAll();
+                ->fetchAllAssociative();
 
             foreach ($rawPagesRecords as $page) {
                 $pagesOut[] = htmlspecialchars(BackendUtilityCore::getRecordTitle(

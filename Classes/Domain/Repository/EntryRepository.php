@@ -136,7 +136,7 @@ class EntryRepository extends AbstractBaseRepository
     public function truncateAll(): void
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::ENTRY_TABLE);
-        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAll();
+        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAllAssociative();
         foreach ($entries as $entry) {
             $this->deleteByUid($entry['uid']);
         }

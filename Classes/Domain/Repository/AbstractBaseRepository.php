@@ -64,7 +64,7 @@ abstract class AbstractBaseRepository extends Repository
             ->from(self::ENTRY_TABLE)
             ->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))
             ->execute()
-            ->fetchAll();
+            ->fetchAllAssociative();
     }
 
     public function countByExternalIdAndHash($externalId, string $hash): int

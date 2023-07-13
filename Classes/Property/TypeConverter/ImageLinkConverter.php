@@ -222,7 +222,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
             $row = $queryBuilder->select('*')
                 ->from('sys_file')
-                ->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->execute()->fetch();
+                ->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->execute()->fetchAssociative();
             if ($row) {
                 return $row['uid'];
             }

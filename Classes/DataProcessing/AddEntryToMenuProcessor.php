@@ -78,7 +78,7 @@ final class AddEntryToMenuProcessor implements DataProcessorInterface
                     $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($entryId, \PDO::PARAM_INT))
                 )
                 ->execute()
-                ->fetch();
+                ->fetchAssociative();
 
             if ($row) {
                 $row = $this->getTypoScriptFrontendController()->sys_page->getRecordOverlay('tx_bzgaberatungsstellensuche_domain_model_entry', $row, $this->getCurrentLanguage());
