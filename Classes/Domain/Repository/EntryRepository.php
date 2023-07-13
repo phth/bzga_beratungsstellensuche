@@ -16,6 +16,7 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
 use Bzga\BzgaBeratungsstellensuche\Events\AfterEntriesTruncatedEvent;
 use Bzga\BzgaBeratungsstellensuche\Events\AfterEntryDeletedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\ExtendDemandConstraintsEvent;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use RuntimeException;
@@ -101,6 +102,10 @@ class EntryRepository extends AbstractBaseRepository
 
         // Call hook functions for additional constraints
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'])) {
+            trigger_error(
+                'The hook "bzga_beratungsstellensuche" is deprecated. Implement a listener for  ExtendDemandConstraintsEvent instead.',
+                E_USER_DEPRECATED
+            );
             $params = [
                 'demand' => $demand,
                 'query' => $query,
@@ -110,9 +115,11 @@ class EntryRepository extends AbstractBaseRepository
                 GeneralUtility::callUserFunction($reference, $params, $this);
             }
         }
+        $event = new ExtendDemandConstraintsEvent($demand, $query, $constraints);
+        $event = $this->eventDispatcher->dispatch($event);
 
-        if (! empty($constraints) && is_array($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
+        if (! empty($event->getConstraints())) {
+            $query->matching($query->logicalAnd($event->getConstraints()));
         }
 
         // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
