@@ -74,7 +74,7 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
      * @param array|string|null $propertyName
      * @return mixed|string|null
      */
-    public function denormalize($propertyName)
+    public function denormalize($propertyName): string
     {
         if (isset($this->mapNames[$propertyName])) {
             $propertyName = GeneralUtility::underscoredToLowerCamelCase($this->mapNames[$propertyName]);

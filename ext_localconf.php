@@ -1,28 +1,29 @@
 <?php
 
-use Bzga\BzgaBeratungsstellensuche\Updates\MigratePluginsUpdate;
-use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
-use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
-use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility as GeneralExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-use Bzga\BzgaBeratungsstellensuche\Controller\EntryController;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Bzga\BzgaBeratungsstellensuche\Backend\FormDataProvider\BeratungsstellensucheFlexFormManipulation;
-use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
-use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
-use Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor;
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
-use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use Bzga\BzgaBeratungsstellensuche\Cache\CachedClassLoader;
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ImageLinkConverter;
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\StringConverter;
+use Bzga\BzgaBeratungsstellensuche\Controller\EntryController;
+use Bzga\BzgaBeratungsstellensuche\Hooks\DataHandlerProcessor;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\AbstractEntityConverter;
-use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter;
 use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\BoolConverter;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ImageLinkConverter;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\ObjectStorageConverter;
+use Bzga\BzgaBeratungsstellensuche\Property\TypeConverter\StringConverter;
 use Bzga\BzgaBeratungsstellensuche\Updates\CreateImageUploadFolderUpdate;
 use Bzga\BzgaBeratungsstellensuche\Updates\ImportCountryZonesUpdate;
+use Bzga\BzgaBeratungsstellensuche\Updates\MigratePluginsUpdate;
+use Bzga\BzgaBeratungsstellensuche\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare;
+use TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexProcess;
+use TYPO3\CMS\Core\Cache\Backend\FileBackend;
+use TYPO3\CMS\Core\Cache\Backend\Typo3DatabaseBackend;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
+use TYPO3\CMS\Core\Information\Typo3Version;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility as GeneralExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
 if (! defined('TYPO3')) {
     die('Access denied.');
 }
@@ -132,7 +133,6 @@ call_user_func(function ($packageKey) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][CreateImageUploadFolderUpdate::class] = CreateImageUploadFolderUpdate::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][ImportCountryZonesUpdate::class] = ImportCountryZonesUpdate::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update'][MigratePluginsUpdate::class] = MigratePluginsUpdate::class;
-
 }, 'bzga_beratungsstellensuche');
 
 GeneralExtensionManagementUtility::addTypoScriptSetup(trim('

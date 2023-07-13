@@ -49,6 +49,4 @@ final class ExtendDemandConstraintsEvent
     {
         $this->constraints = $constraints;
     }
-
-
 }
