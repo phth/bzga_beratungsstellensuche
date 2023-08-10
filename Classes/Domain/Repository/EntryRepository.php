@@ -119,7 +119,7 @@ class EntryRepository extends AbstractBaseRepository
         $event = $this->eventDispatcher->dispatch($event);
 
         if (! empty($event->getConstraints())) {
-            $query->matching($query->logicalAnd($event->getConstraints()));
+            $query->matching($query->logicalAnd(...$event->getConstraints()));
         }
 
         // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
