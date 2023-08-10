@@ -17,7 +17,6 @@ return [
         'label' => 'title',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'origUid' => 't3_origuid',
         'languageField' => 'sys_language_uid',
@@ -84,7 +83,7 @@ return [
                 'default' => 0,
                 'items' => [
                     [
-                        0 => '',
+                        'label' => '',
                         1 => '',
                     ],
                 ],
@@ -135,7 +134,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
+                'required' => true,
             ],
         ],
         'subtitle' => [
@@ -186,9 +186,10 @@ return [
                 'renderType' => 'inputLink',
                 'size' => 30,
                 'max' => 255,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
                 'softref' => 'email[subst]',
                 'default' => '',
+                'required' => true,
             ],
         ],
         'hotline' => [
@@ -222,9 +223,10 @@ return [
                 'renderType' => 'inputLink',
                 'size' => 30,
                 'max' => 255,
-                'eval' => 'trim,required',
+                'eval' => 'trim',
                 'softref' => 'typolink_tag,email[subst],url',
                 'default' => '',
+                'required' => true,
             ],
         ],
         'zip' => [
@@ -264,7 +266,7 @@ return [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [
-                    ['', 0],
+                    ['label' => '', 'value' => 0],
                 ],
                 'foreign_table' => 'static_country_zones',
                 'foreign_table_where' => 'AND static_country_zones.pid=0 AND static_country_zones.zn_country_iso_3 = "DEU" ORDER BY static_country_zones.zn_name_local',

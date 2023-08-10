@@ -18,14 +18,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Events;
  */
 final class BeforeFormActionViewAssignedEvent
 {
-    private array $assignedViewValues;
-
-    /**
-     * @param array $assignedViewValues
-     */
-    public function __construct(array $assignedViewValues)
+    public function __construct(private array $assignedViewValues)
     {
-        $this->assignedViewValues = $assignedViewValues;
     }
 
     /**
@@ -36,9 +30,6 @@ final class BeforeFormActionViewAssignedEvent
         return $this->assignedViewValues;
     }
 
-    /**
-     * @param array $assignedViewValues
-     */
     public function setAssignedViewValues(array $assignedViewValues): void
     {
         $this->assignedViewValues = $assignedViewValues;

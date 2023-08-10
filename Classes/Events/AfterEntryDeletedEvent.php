@@ -16,11 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Events;
  */
 final class AfterEntryDeletedEvent
 {
-    private int $deletedEntry;
-
-    public function __construct(int $deletedEntry)
+    public function __construct(private readonly int $deletedEntry)
     {
-        $this->deletedEntry = $deletedEntry;
     }
 
     public function getDeletedEntry(): int

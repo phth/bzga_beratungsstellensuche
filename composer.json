@@ -79,6 +79,11 @@
         "post-autoload-dump": [
             "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
         ],
+        "test": [
+            "@test-php-lint",
+            "@php-cs-fixer",
+            "@test-stan"
+        ],
         "test-php-lint": [
             "parallel-lint ./Classes/",
             "parallel-lint ./Configuration/TCA/",

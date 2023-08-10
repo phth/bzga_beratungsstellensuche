@@ -27,11 +27,11 @@ final class AutocompleteJson implements ViewInterface
         $suggestions = [];
 
         foreach ($entries as $entry) {
-            if (\str_starts_with($entry->getCity(), $q)) {
+            if (\str_starts_with($entry->getCity(), (string)$q)) {
                 $suggestions[] = $entry->getCity();
             }
 
-            if (\str_starts_with($entry->getZip(), $q)) {
+            if (\str_starts_with($entry->getZip(), (string)$q)) {
                 $suggestions[] = $entry->getZip();
             }
         }

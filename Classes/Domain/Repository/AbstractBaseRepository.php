@@ -61,9 +61,7 @@ abstract class AbstractBaseRepository extends Repository
 
         return $queryBuilder
             ->select('uid')
-            ->from(self::ENTRY_TABLE)
-            ->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))
-            ->execute()
+            ->from(self::ENTRY_TABLE)->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))->executeQuery()
             ->fetchAllAssociative();
     }
 
@@ -78,11 +76,9 @@ abstract class AbstractBaseRepository extends Repository
     }
 
     /**
-     * @param mixed $externalId
-     *
      * @return object|null
      */
-    public function findOneByExternalId($externalId): ?object
+    public function findOneByExternalId(mixed $externalId): ?object
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);

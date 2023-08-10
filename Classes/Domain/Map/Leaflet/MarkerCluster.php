@@ -17,7 +17,7 @@ use Netzmacht\LeafletPHP\Plugins\MarkerCluster\MarkerClusterGroup;
 
 final class MarkerCluster implements MarkerClusterInterface
 {
-    private MarkerClusterGroup $markerCluster;
+    private readonly MarkerClusterGroup $markerCluster;
 
     public function __construct(string $identifier)
     {

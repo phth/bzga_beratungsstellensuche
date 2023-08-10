@@ -48,7 +48,7 @@ class DataHandlerProcessor
             foreach ($checkFields as $sheet => $fields) {
                 foreach ($fields as $field) {
                     if (isset($flexformData['data'][$sheet]['lDEF'][$field]['vDEF']) &&
-                        trim($flexformData['data'][$sheet]['lDEF'][$field]['vDEF']) === ''
+                        trim((string)$flexformData['data'][$sheet]['lDEF'][$field]['vDEF']) === ''
                     ) {
                         unset($flexformData['data'][$sheet]['lDEF'][$field]);
                     }

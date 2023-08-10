@@ -31,6 +31,11 @@ parameters:
 			path: Classes/Domain/Repository/EntryRepository.php
 
 		-
+			message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/EntryRepository.php
+
+		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$constraints of method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\DomainObjectInterface\\>\\:\\:logicalOr\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\Qom\\\\ConstraintInterface, array\\<int, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\Qom\\\\ComparisonInterface\\> given\\.$#"
 			count: 3
 			path: Classes/Domain/Repository/EntryRepository.php
@@ -74,6 +79,21 @@ parameters:
 			message: "#^Strict comparison using \\=\\=\\= between string and false will always evaluate to false\\.$#"
 			count: 1
 			path: Classes/Service/Importer/AbstractImporter.php
+
+		-
+			message: "#^Parameter \\#1 \\$manager of method Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\Importer\\\\XmlImporter\\:\\:convertRelations\\(\\) expects Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Manager\\\\AbstractManager, string given\\.$#"
+			count: 1
+			path: Classes/Service/Importer/XmlImporter.php
+
+		-
+			message: "#^Parameter \\#2 \\$relationClassName of method Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\Importer\\\\XmlImporter\\:\\:convertRelations\\(\\) expects string, int given\\.$#"
+			count: 1
+			path: Classes/Service/Importer/XmlImporter.php
+
+		-
+			message: "#^Parameter \\#3 \\$pid of method Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\Importer\\\\XmlImporter\\:\\:convertRelations\\(\\) expects int, \\(SimpleXMLIterator\\|null\\) given\\.$#"
+			count: 1
+			path: Classes/Service/Importer/XmlImporter.php
 
 		-
 			message: "#^Property Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\SettingsService\\:\\:\\$settings \\(array\\) on left side of \\?\\? is not nullable\\.$#"

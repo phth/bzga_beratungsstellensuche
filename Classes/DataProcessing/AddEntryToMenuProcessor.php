@@ -73,11 +73,7 @@ final class AddEntryToMenuProcessor implements DataProcessorInterface
                 ->getQueryBuilderForTable('tx_bzgaberatungsstellensuche_domain_model_entry');
             $row = $queryBuilder
                 ->select('*')
-                ->from('tx_bzgaberatungsstellensuche_domain_model_entry')
-                ->where(
-                    $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($entryId, \PDO::PARAM_INT))
-                )
-                ->execute()
+                ->from('tx_bzgaberatungsstellensuche_domain_model_entry')->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($entryId, \PDO::PARAM_INT)))->executeQuery()
                 ->fetchAssociative();
 
             if ($row) {
@@ -95,7 +91,7 @@ final class AddEntryToMenuProcessor implements DataProcessorInterface
         $context = GeneralUtility::makeInstance(Context::class);
         try {
             $languageId = $context->getPropertyFromAspect('language', 'contentId');
-        } catch (AspectNotFoundException $e) {
+        } catch (AspectNotFoundException) {
             // do nothing
         }
 

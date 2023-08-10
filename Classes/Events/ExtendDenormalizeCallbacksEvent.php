@@ -17,17 +17,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Events;
  */
 final class ExtendDenormalizeCallbacksEvent
 {
-    private array $callbacks;
-    private array $extendedCallbacks;
-
-    /**
-     * @param array $callbacks
-     * @param array $extendedCallbacks
-     */
-    public function __construct(array $callbacks, array $extendedCallbacks)
+    public function __construct(private readonly array $callbacks, private array $extendedCallbacks)
     {
-        $this->callbacks = $callbacks;
-        $this->extendedCallbacks = $extendedCallbacks;
     }
 
     /**
@@ -46,9 +37,6 @@ final class ExtendDenormalizeCallbacksEvent
         return $this->extendedCallbacks;
     }
 
-    /**
-     * @param array $extendedCallbacks
-     */
     public function setExtendedCallbacks(array $extendedCallbacks): void
     {
         $this->extendedCallbacks = $extendedCallbacks;

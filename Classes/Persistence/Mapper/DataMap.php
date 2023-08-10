@@ -23,11 +23,8 @@ class DataMap
      */
     private array $cachedTableNames = [];
 
-    private DataMapFactory $dataMapFactory;
-
-    public function __construct(DataMapFactory $dataMapFactory)
+    public function __construct(private readonly DataMapFactory $dataMapFactory)
     {
-        $this->dataMapFactory = $dataMapFactory;
     }
 
     public function getTableNameByClassName(string $className): string

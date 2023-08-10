@@ -23,12 +23,12 @@ use Traversable;
 /**
  * @author Sebastian Schreiber
  */
-class XmlImporter extends AbstractImporter
+class XmlImporter extends AbstractImporter implements \Stringable
 {
     /**
      * @var string
      */
-    public const FORMAT = 'xml';
+    final public const FORMAT = 'xml';
 
     private ?int $pid = null;
 
@@ -45,7 +45,7 @@ class XmlImporter extends AbstractImporter
         $this->eventDispatcher->dispatch(new BeforeImportEvent($this, $this->sxe, $this->pid, $this->serializer));
 
         // Import beratungsarten
-        $this->convertRelations($this->sxe->beratungsarten->beratungsart, $this->categoryManager, Category::class, $pid);
+        $this->convertRelations(Category::class, $pid, $this->sxe->beratungsarten->beratungsart, $this->categoryManager);
         $this->categoryManager->persist();
 
         $this->entries = $this->sxe->entrys->entry;
@@ -74,7 +74,7 @@ class XmlImporter extends AbstractImporter
         $this->entryManager->persist();
     }
 
-    private function convertRelations(Traversable $relations = null, AbstractManager $manager, string $relationClassName, int $pid): void
+    private function convertRelations(AbstractManager $manager, string $relationClassName, int $pid, Traversable $relations = null): void
     {
         if ($relations instanceof Traversable) {
             foreach ($relations as $relationData) {

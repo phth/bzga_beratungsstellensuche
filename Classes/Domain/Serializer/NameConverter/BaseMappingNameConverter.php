@@ -22,7 +22,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
-    private EventDispatcher $eventDispatcher;
+    private readonly EventDispatcher $eventDispatcher;
 
     /**
      * Mapping of names, left side incoming names in xml|array, right side name for object
@@ -56,9 +56,6 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
         $this->mapNamesFlipped();
     }
 
-    /**
-     * @param array $mapNames
-     */
     public function addAdditionalMapNames(array $mapNames): void
     {
         ArrayUtility::mergeRecursiveWithOverrule($this->mapNames, $mapNames);

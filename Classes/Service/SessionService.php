@@ -18,15 +18,12 @@ use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
  */
 class SessionService
 {
-    private ?FrontendUserAuthentication $frontendUser;
-
-    private string $sessionNamespace;
+    private readonly ?FrontendUserAuthentication $frontendUser;
 
     public function __construct(
-        string $sessionNamespace = 'beratungsstellendatenbank'
+        private readonly string $sessionNamespace = 'beratungsstellendatenbank'
     ) {
         $this->frontendUser = $GLOBALS['TSFE'] ? $GLOBALS['TSFE']->fe_user : null;
-        $this->sessionNamespace = $sessionNamespace;
     }
 
     public function restoreFromSession(): ?array

@@ -47,9 +47,6 @@ class Serializer extends BaseSerializer
         parent::__construct($normalizers, $encoders);
     }
 
-    /**
-     * @param array $normalizers
-     */
     private function dispatchAdditionalNormalizersEvent(array $normalizers): array
     {
         $event = new ExtendNormalizersEvent($normalizers, []);

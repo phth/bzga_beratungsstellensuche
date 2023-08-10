@@ -30,6 +30,6 @@ final class StringConverter implements TypeConverterBeforeInterface
      */
     public function convert($source, array $configuration = null): string
     {
-        return strip_tags($source, $this->allowedTags);
+        return strip_tags((string)$source, $this->allowedTags);
     }
 }

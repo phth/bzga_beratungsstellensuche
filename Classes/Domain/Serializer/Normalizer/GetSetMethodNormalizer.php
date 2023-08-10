@@ -79,7 +79,7 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             $ignored = in_array($attribute, $this->ignoredAttributes);
 
             if ($allowed && !$ignored) {
-                $setter = 'set' . ucfirst($attribute);
+                $setter = 'set' . ucfirst((string)$attribute);
 
                 if (in_array($setter, $classMethods, false) && !$reflectionClass->getMethod($setter)->isStatic()) {
                     if (isset($this->denormalizeCallbacks[$attribute])) {

@@ -20,23 +20,8 @@ use Bzga\BzgaBeratungsstellensuche\Service\Importer\XmlImporter;
  */
 final class BeforeImportEvent
 {
-    private XmlImporter $xmlImporter;
-    private ?\SimpleXMLIterator $sxe = null;
-    private ?int $pid = null;
-    private Serializer $serializer;
-
-    /**
-     * @param XmlImporter $xmlImporter
-     * @param \SimpleXMLIterator|null $sxe
-     * @param int|null $pid
-     * @param Serializer $serializer
-     */
-    public function __construct(XmlImporter $xmlImporter, ?\SimpleXMLIterator $sxe, ?int $pid, Serializer $serializer)
+    public function __construct(private readonly XmlImporter $xmlImporter, private readonly ?\SimpleXMLIterator $sxe, private readonly ?int $pid, private readonly Serializer $serializer)
     {
-        $this->xmlImporter = $xmlImporter;
-        $this->sxe = $sxe;
-        $this->pid = $pid;
-        $this->serializer = $serializer;
     }
 
     /**

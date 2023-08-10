@@ -70,7 +70,7 @@ class EntryRepository extends AbstractBaseRepository
             $searchFields = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
             $searchConstraints = [];
 
-            if (count($searchFields) === 0) {
+            if ((is_countable($searchFields) ? count($searchFields) : 0) === 0) {
                 throw new \UnexpectedValueException('No search fields defined', 1_318_497_755);
             }
 
@@ -143,7 +143,7 @@ class EntryRepository extends AbstractBaseRepository
     public function truncateAll(): void
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::ENTRY_TABLE);
-        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAllAssociative();
+        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->executeQuery()->fetchAllAssociative();
         foreach ($entries as $entry) {
             $this->deleteByUid($entry['uid']);
         }
@@ -187,7 +187,7 @@ class EntryRepository extends AbstractBaseRepository
         foreach ($fileReferences as $fileReference) {
             try {
                 $fileDeleted = $fileReference->getOriginalFile()->delete();
-            } catch (RuntimeException $e) {
+            } catch (RuntimeException) {
             }
         }
 

@@ -14,15 +14,8 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 final class ExtendDemandConstraintsEvent
 {
-    private Demand $demand;
-    private QueryInterface $query;
-    private array $constraints;
-
-    public function __construct(Demand $demand, QueryInterface $query, array $constraints)
+    public function __construct(private readonly Demand $demand, private readonly QueryInterface $query, private array $constraints)
     {
-        $this->demand = $demand;
-        $this->query = $query;
-        $this->constraints = $constraints;
     }
 
     /**
@@ -49,9 +42,6 @@ final class ExtendDemandConstraintsEvent
         return $this->constraints;
     }
 
-    /**
-     * @param array $constraints
-     */
     public function setConstraints(array $constraints): void
     {
         $this->constraints = $constraints;

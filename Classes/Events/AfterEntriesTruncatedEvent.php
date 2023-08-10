@@ -16,11 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Events;
  */
 final class AfterEntriesTruncatedEvent
 {
-    private array $entries;
-
-    public function __construct(array $entries)
+    public function __construct(private readonly array $entries)
     {
-        $this->entries = $entries;
     }
 
     public function getEntries(): array

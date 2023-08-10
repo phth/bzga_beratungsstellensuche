@@ -19,14 +19,8 @@ use Netzmacht\LeafletPHP\Definition\UI\Marker;
 
 final class Map implements MapInterface
 {
-    /**
-     * @var LeafletMap
-     */
-    private LeafletMap $map;
-
-    public function __construct(LeafletMap $map)
+    public function __construct(private readonly LeafletMap $map)
     {
-        $this->map = $map;
     }
 
     public function getMap(): LeafletMap

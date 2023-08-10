@@ -16,17 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Events;
  */
 final class ExtendNormalizersEvent
 {
-    private array $normalizers;
-    private array $additionalNormalizers;
-
-    /**
-     * @param array $normalizers
-     * @param array $additionalNormalizers
-     */
-    public function __construct(array $normalizers, array $additionalNormalizers)
+    public function __construct(private readonly array $normalizers, private array $additionalNormalizers)
     {
-        $this->normalizers = $normalizers;
-        $this->additionalNormalizers = $additionalNormalizers;
     }
 
     /**
@@ -45,9 +36,6 @@ final class ExtendNormalizersEvent
         return $this->additionalNormalizers;
     }
 
-    /**
-     * @param array $additionalNormalizers
-     */
     public function setAdditionalNormalizers(array $additionalNormalizers): void
     {
         $this->additionalNormalizers = $additionalNormalizers;

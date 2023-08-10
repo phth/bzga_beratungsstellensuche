@@ -16,17 +16,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Events;
  */
 final class ExtendMapNamesEvent
 {
-    private array $mapNames;
-    private array $extendedMapNames;
-
-    /**
-     * @param array $mapNames
-     * @param array $extendedMapNames
-     */
-    public function __construct(array $mapNames, array $extendedMapNames)
+    public function __construct(private readonly array $mapNames, private array $extendedMapNames)
     {
-        $this->mapNames = $mapNames;
-        $this->extendedMapNames = $extendedMapNames;
     }
 
     /**
@@ -45,9 +36,6 @@ final class ExtendMapNamesEvent
         return $this->extendedMapNames;
     }
 
-    /**
-     * @param array $extendedMapNames
-     */
     public function setExtendedMapNames(array $extendedMapNames): void
     {
         $this->extendedMapNames = $extendedMapNames;

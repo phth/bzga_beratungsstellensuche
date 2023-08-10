@@ -47,7 +47,7 @@ class EntryController extends ActionController
     /**
      * @var int
      */
-    public const GERMANY_ISOCODENUMBER = 276;
+    final public const GERMANY_ISOCODENUMBER = 276;
 
     protected EntryRepository $entryRepository;
 
@@ -223,7 +223,7 @@ class EntryController extends ActionController
             try {
                 $queryResult = $this->entryRepository->findDemanded($demand);
                 $entries = Utility::transformQueryResultToObjectStorage($queryResult);
-            } catch (InvalidQueryException $e) {
+            } catch (InvalidQueryException) {
             }
         }
 

@@ -18,14 +18,8 @@ use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
  */
 final class AfterEntryControllerInitializedEvent
 {
-    private PropertyMappingConfiguration $propertyMappingConfiguration;
-
-    /**
-     * @param PropertyMappingConfiguration $propertyMappingConfiguration
-     */
-    public function __construct(PropertyMappingConfiguration $propertyMappingConfiguration)
+    public function __construct(private readonly PropertyMappingConfiguration $propertyMappingConfiguration)
     {
-        $this->propertyMappingConfiguration = $propertyMappingConfiguration;
     }
 
     /**

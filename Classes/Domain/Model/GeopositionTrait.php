@@ -31,10 +31,7 @@ trait GeopositionTrait
         return (float)$this->longitude;
     }
 
-    /**
-     * @param mixed $longitude
-     */
-    public function setLongitude($longitude): void
+    public function setLongitude(mixed $longitude): void
     {
         $this->longitude = (float)$longitude;
     }
@@ -44,10 +41,7 @@ trait GeopositionTrait
         return (float)$this->latitude;
     }
 
-    /**
-     * @param mixed $latitude
-     */
-    public function setLatitude($latitude): void
+    public function setLatitude(mixed $latitude): void
     {
         $this->latitude = (float)$latitude;
     }

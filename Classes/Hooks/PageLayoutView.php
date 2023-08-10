@@ -32,14 +32,14 @@ class PageLayoutView
      *
      * @var string
      */
-    public const KEY = 'bzgaberatungsstellensuche';
+    final public const KEY = 'bzgaberatungsstellensuche';
 
     /**
      * Path to the locallang file
      *
      * @var string
      */
-    public const LLPATH = 'LLL:EXT:%s/Resources/Private/Language/locallang_be.xlf:';
+    final public const LLPATH = 'LLL:EXT:%s/Resources/Private/Language/locallang_be.xlf:';
 
     /**
      * Table information
@@ -89,7 +89,7 @@ class PageLayoutView
                 $actionList = GeneralUtility::trimExplode(';', $actions);
 
                 // translate the first action into its translation
-                $actionTranslationKey = strtolower(str_replace('->', '_', $actionList[0]));
+                $actionTranslationKey = strtolower(str_replace('->', '_', (string)$actionList[0]));
                 $actionTranslation = $this->sL('flexforms_general.mode.' . $actionTranslationKey);
 
                 $result .= $actionTranslation;
@@ -269,9 +269,7 @@ class PageLayoutView
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
             $rawPagesRecords = $queryBuilder
                 ->select('*')
-                ->from('pages')
-                ->where($queryBuilder->expr()->in('uid', GeneralUtility::intExplode(',', $value, true)))
-                ->execute()
+                ->from('pages')->where($queryBuilder->expr()->in('uid', GeneralUtility::intExplode(',', $value, true)))->executeQuery()
                 ->fetchAllAssociative();
 
             foreach ($rawPagesRecords as $page) {
