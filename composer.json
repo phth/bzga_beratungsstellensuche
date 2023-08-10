@@ -96,6 +96,9 @@
         "test-stan": [
             "phpstan"
         ],
+        "stan-baseline": [
+            "phpstan --generate-baseline"
+        ],
         "test-functional": [
             "phpunit --colors -c Tests/Build/FunctionalTests.xml"
         ]

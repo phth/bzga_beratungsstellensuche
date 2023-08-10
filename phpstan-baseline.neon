@@ -1,9 +1,14 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Bzga\\\\BzgaBeratungsstellensuche\\\\Backend\\\\FormDataProvider\\\\BeratungsstellensucheFlexFormManipulation\\:\\:updateFlexforms\\(\\) is unused\\.$#"
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Mvc\\\\RequestInterface\\:\\:setArgument\\(\\)\\.$#"
+			count: 2
+			path: Classes/Controller/EntryController.php
+
+		-
+			message: "#^Call to protected method getRecordOverlay\\(\\) of class TYPO3\\\\CMS\\\\Core\\\\Domain\\\\Repository\\\\PageRepository\\.$#"
 			count: 1
-			path: Classes/Backend/FormDataProvider/BeratungsstellensucheFlexFormManipulation.php
+			path: Classes/DataProcessing/AddEntryToMenuProcessor.php
 
 		-
 			message: "#^Parameter \\#4 \\$jsonEncodeFlags of class Netzmacht\\\\LeafletPHP\\\\Leaflet constructor expects null, int given\\.$#"
@@ -11,9 +16,34 @@ parameters:
 			path: Classes/Domain/Map/Leaflet/MapBuilder.php
 
 		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\:\\:statement\\(\\)\\.$#"
+			message: "#^Parameter \\#1 \\.\\.\\.\\$constraints of method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\DomainObjectInterface\\>\\:\\:logicalAnd\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\Qom\\\\ConstraintInterface, array\\<int, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\Qom\\\\ComparisonInterface\\> given\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/AbstractBaseRepository.php
+
+		-
+			message: "#^Return type \\(TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\DomainObjectInterface\\>\\) of method Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Repository\\\\AbstractBaseRepository\\:\\:createQuery\\(\\) should be compatible with return type \\(TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<object\\>\\) of method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\RepositoryInterface\\<object\\>\\:\\:createQuery\\(\\)$#"
+			count: 1
+			path: Classes/Domain/Repository/AbstractBaseRepository.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\DomainObjectInterface\\>\\:\\:statement\\(\\)\\.$#"
 			count: 1
 			path: Classes/Domain/Repository/EntryRepository.php
+
+		-
+			message: "#^Parameter \\#1 \\.\\.\\.\\$constraints of method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\DomainObjectInterface\\>\\:\\:logicalOr\\(\\) expects TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\Qom\\\\ConstraintInterface, array\\<int, TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\Generic\\\\Qom\\\\ComparisonInterface\\> given\\.$#"
+			count: 3
+			path: Classes/Domain/Repository/EntryRepository.php
+
+		-
+			message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/KilometerRepository.php
+
+		-
+			message: "#^PHPDoc tag @return with type mixed is not subtype of native type string\\.$#"
+			count: 1
+			path: Classes/Domain/Serializer/NameConverter/BaseMappingNameConverter.php
 
 		-
 			message: "#^Call to an undefined method SJBR\\\\StaticInfoTables\\\\Domain\\\\Repository\\\\CountryZoneRepository\\:\\:findOneByExternalId\\(\\)\\.$#"
@@ -21,11 +51,41 @@ parameters:
 			path: Classes/Domain/Serializer/Normalizer/EntryNormalizer.php
 
 		-
+			message: "#^Access to an undefined property Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Serializer\\\\Normalizer\\\\GetSetMethodNormalizer\\:\\:\\$ignoredAttributes\\.$#"
+			count: 1
+			path: Classes/Domain/Serializer/Normalizer/GetSetMethodNormalizer.php
+
+		-
+			message: "#^Class Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Serializer\\\\Normalizer\\\\GetSetMethodNormalizer extends @final class Symfony\\\\Component\\\\Serializer\\\\Normalizer\\\\GetSetMethodNormalizer\\.$#"
+			count: 1
+			path: Classes/Domain/Serializer/Normalizer/GetSetMethodNormalizer.php
+
+		-
+			message: "#^Parameter \\#1 \\$defaultContext of class Symfony\\\\Component\\\\Serializer\\\\Encoder\\\\XmlEncoder constructor expects array, string given\\.$#"
+			count: 1
+			path: Classes/Domain/Serializer/Serializer.php
+
+		-
 			message: "#^Call to sprintf contains 2 placeholders, 3 values given\\.$#"
 			count: 1
 			path: Classes/Service/Geolocation/GeolocationService.php
 
 		-
+			message: "#^Strict comparison using \\=\\=\\= between string and false will always evaluate to false\\.$#"
+			count: 1
+			path: Classes/Service/Importer/AbstractImporter.php
+
+		-
 			message: "#^Property Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\SettingsService\\:\\:\\$settings \\(array\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: Classes/Service/SettingsService.php
+
+		-
+			message: "#^Method Bzga\\\\BzgaBeratungsstellensuche\\\\View\\\\Entry\\\\AutocompleteJson\\:\\:renderPartial\\(\\) should return string but return statement is missing\\.$#"
+			count: 1
+			path: Classes/View/Entry/AutocompleteJson.php
+
+		-
+			message: "#^Method Bzga\\\\BzgaBeratungsstellensuche\\\\View\\\\Entry\\\\AutocompleteJson\\:\\:renderSection\\(\\) should return string but return statement is missing\\.$#"
+			count: 1
+			path: Classes/View/Entry/AutocompleteJson.php
