@@ -76,9 +76,8 @@ class GetSetMethodNormalizer extends BaseGetSetMethodNormalizer
             }
 
             $allowed = $allowedAttributes === false || in_array($attribute, $allowedAttributes);
-            $ignored = in_array($attribute, $this->ignoredAttributes);
 
-            if ($allowed && !$ignored) {
+            if ($allowed) {
                 $setter = 'set' . ucfirst((string)$attribute);
 
                 if (in_array($setter, $classMethods, false) && !$reflectionClass->getMethod($setter)->isStatic()) {

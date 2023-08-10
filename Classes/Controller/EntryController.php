@@ -333,7 +333,7 @@ class EntryController extends ActionController
     {
         $demand = $this->sessionService->restoreFromSession();
         if ($demand) {
-            $this->request->setArgument('demand', $demand);
+            $this->request = $this->request->withArgument('demand', $demand);
         }
     }
 
@@ -341,7 +341,7 @@ class EntryController extends ActionController
     {
         if ($this->request->hasArgument('reset')) {
             $this->sessionService->cleanUpSession();
-            $this->request->setArgument('demand', null);
+            $this->request = $this->request->withArgument('demand', null);
         }
     }
 }

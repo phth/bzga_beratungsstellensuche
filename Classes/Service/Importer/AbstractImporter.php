@@ -88,7 +88,7 @@ abstract class AbstractImporter implements ImporterInterface
 
         $content = $response->getBody()->__toString();
 
-        if ($content === false) {
+        if ($content === '') {
             throw new ContentCouldNotBeFetchedException('The content could not be fetched');
         }
 

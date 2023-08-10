@@ -55,10 +55,10 @@ class EntryRepository extends AbstractBaseRepository
     public function findByQuery(string $q)
     {
         $query = $this->createQuery();
-        return $query->matching($query->logicalOr([
+        return $query->matching($query->logicalOr(
             $query->like('zip', $q . '%'),
-            $query->like('city', $q . '%'),
-        ]))->execute();
+            $query->like('city', $q . '%')
+        ))->execute();
     }
 
     public function findDemanded(Demand $demand)
@@ -70,7 +70,7 @@ class EntryRepository extends AbstractBaseRepository
             $searchFields = GeneralUtility::trimExplode(',', $demand->getSearchFields(), true);
             $searchConstraints = [];
 
-            if ((is_countable($searchFields) ? count($searchFields) : 0) === 0) {
+            if (count($searchFields) === 0) {
                 throw new \UnexpectedValueException('No search fields defined', 1_318_497_755);
             }
 
@@ -82,7 +82,7 @@ class EntryRepository extends AbstractBaseRepository
             }
 
             if (count($searchConstraints)) {
-                $constraints[] = $query->logicalOr($searchConstraints);
+                $constraints[] = $query->logicalOr(...$searchConstraints);
             }
         }
 
@@ -92,7 +92,7 @@ class EntryRepository extends AbstractBaseRepository
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
             if (! empty($categoryConstraints)) {
-                $constraints[] = $query->logicalOr($categoryConstraints);
+                $constraints[] = $query->logicalOr(...$categoryConstraints);
             }
         }
 

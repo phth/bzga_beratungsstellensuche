@@ -20,6 +20,8 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * @author Sebastian Schreiber
+ * @template T of \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface
+ * @extends \TYPO3\CMS\Extbase\Persistence\Repository<T>
  */
 abstract class AbstractBaseRepository extends Repository
 {
@@ -72,7 +74,7 @@ abstract class AbstractBaseRepository extends Repository
         $constraints[] = $query->equals('externalId', $externalId);
         $constraints[] = $query->equals('hash', $hash);
 
-        return $query->matching($query->logicalAnd($constraints))->execute()->count();
+        return $query->matching($query->logicalAnd(...$constraints))->execute()->count();
     }
 
     /**
@@ -88,6 +90,10 @@ abstract class AbstractBaseRepository extends Repository
         return $object;
     }
 
+    /**
+     * @return QueryInterface
+     * @phpstan-return QueryInterface<T>
+     */
     public function createQuery(): QueryInterface
     {
         $query = parent::createQuery();

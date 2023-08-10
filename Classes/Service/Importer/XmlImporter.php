@@ -45,7 +45,7 @@ class XmlImporter extends AbstractImporter implements \Stringable
         $this->eventDispatcher->dispatch(new BeforeImportEvent($this, $this->sxe, $this->pid, $this->serializer));
 
         // Import beratungsarten
-        $this->convertRelations(Category::class, $pid, $this->sxe->beratungsarten->beratungsart, $this->categoryManager);
+        $this->convertRelations($this->categoryManager, Category::class, $pid, $this->sxe->beratungsarten->beratungsart);
         $this->categoryManager->persist();
 
         $this->entries = $this->sxe->entrys->entry;

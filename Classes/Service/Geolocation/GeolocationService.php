@@ -58,8 +58,7 @@ class GeolocationService implements GeolocationServiceInterface
         return sprintf(
             self::DISTANCE_SQL_FIELD,
             $demandPosition->getLatitude(),
-            $demandPosition->getLongitude(),
-            $demandPosition->getKilometers()
+            $demandPosition->getLongitude()
         ) . ' AS ' . $alias;
     }
     public function findAddressByDemand(Demand $demand): ?Location

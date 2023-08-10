@@ -25,9 +25,10 @@ class KilometerRepository
         $kilometers = [];
 
         foreach ($kilometerPairs as $kilometerPair) {
-            [$label, $value] = GeneralUtility::trimExplode(':', $kilometerPair, true, 2);
+            $array = GeneralUtility::trimExplode(':', $kilometerPair, true, 2);
             // This is for backwards compatibility reasons, if we have something like 10,20,30 and so on
-            $value = ($value !== '')?$value:$label;
+            $label = $array[0];
+            $value = $array[1]??$array[0];
             $kilometers[$value] = $label;
         }
 

@@ -69,7 +69,6 @@ class BaseMappingNameConverter extends CamelCaseToSnakeCaseNameConverter
 
     /**
      * @param array|string|null $propertyName
-     * @return mixed|string|null
      */
     public function denormalize($propertyName): string
     {

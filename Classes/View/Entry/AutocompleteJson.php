@@ -53,11 +53,13 @@ final class AutocompleteJson implements ViewInterface
         return $this;
     }
 
-    public function renderSection($sectionName, array $variables = [], $ignoreUnknown = false)
+    public function renderSection($sectionName, array $variables = [], $ignoreUnknown = false): string
     {
+        return '';
     }
 
-    public function renderPartial($partialName, $sectionName, array $variables, $ignoreUnknown = false)
+    public function renderPartial($partialName, $sectionName, array $variables, $ignoreUnknown = false): string
     {
+        return '';
     }
 }
