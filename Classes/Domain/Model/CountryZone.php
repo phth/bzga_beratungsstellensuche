@@ -19,5 +19,5 @@ use SJBR\StaticInfoTables\Domain\Model\AbstractEntity;
 class CountryZone extends AbstractEntity implements ExternalIdInterface
 {
     // FQN must be used, otherwise there is an error in static_info_tables
-    use ExternalIdTrait;
+    use \Bzga\BzgaBeratungsstellensuche\Domain\Model\ExternalIdTrait;
 }
