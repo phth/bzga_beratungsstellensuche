@@ -26,8 +26,11 @@ class Serializer extends BaseSerializer
 {
     protected EventDispatcher $eventDispatcher;
 
-    public function __construct(array $normalizers = [], array $encoders = [], ?EventDispatcher $eventDispatcher = null)
-    {
+    public function __construct(
+        array $normalizers = [],
+        array $encoders = [],
+        ?EventDispatcher $eventDispatcher = null,
+    ) {
         if (empty($normalizers)) {
             $normalizers = [
                 GeneralUtility::makeInstance(EntryNormalizer::class),
@@ -43,7 +46,6 @@ class Serializer extends BaseSerializer
         $this->eventDispatcher = $eventDispatcher ?? GeneralUtility::makeInstance(EventDispatcher::class);
 
         $normalizers = $this->dispatchAdditionalNormalizersEvent($normalizers);
-
         parent::__construct($normalizers, $encoders);
     }
 
