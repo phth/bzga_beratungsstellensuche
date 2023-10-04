@@ -11,12 +11,24 @@ declare(strict_types=1);
 
 namespace Bzga\BzgaBeratungsstellensuche\Events;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
 /**
  *  Extends the normalizers used in the serializer. Replaces signal `Events::ADDITIONAL_NORMALIZERS_SIGNAL`
  */
 final class ExtendNormalizersEvent
 {
-    public function __construct(private readonly array $normalizers, private array $additionalNormalizers)
+    /**
+     * @param array<NormalizerInterface|DenormalizerInterface> $normalizers
+     * @param array<NormalizerInterface|DenormalizerInterface> $additionalNormalizers
+     * @param LoggerInterface $logger
+     */
+    public function __construct(
+        private readonly array $normalizers,
+        private array $additionalNormalizers
+    )
     {
     }
 
@@ -29,13 +41,15 @@ final class ExtendNormalizersEvent
     }
 
     /**
-     * @return array
+     * @return array<NormalizerInterface|DenormalizerInterface>
      */
     public function getAdditionalNormalizers(): array
     {
         return $this->additionalNormalizers;
     }
-
+    /**
+     * @param array<NormalizerInterface|DenormalizerInterface> $additionalNormalizers
+     */
     public function setAdditionalNormalizers(array $additionalNormalizers): void
     {
         $this->additionalNormalizers = $additionalNormalizers;
