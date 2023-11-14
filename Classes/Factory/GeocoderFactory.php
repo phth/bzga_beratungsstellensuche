@@ -34,13 +34,9 @@ class GeocoderFactory
      * @var string
      */
     private const TYPE_OPEN_STREET_MAP = 'OpenStreetMap';
-    private ClientInterface $client;
-    private SettingsService $settingsService;
 
-    public function __construct(ClientInterface $client, SettingsService $settingsService)
+    public function __construct(private readonly ClientInterface $client, private readonly SettingsService $settingsService)
     {
-        $this->client = $client;
-        $this->settingsService = $settingsService;
     }
 
     public function createInstance(): Provider

@@ -19,7 +19,10 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Model\MapWindowInterface;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\CategoryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\EntryRepository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Repository\KilometerRepository;
-use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Events\AfterEntryControllerInitializedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\BeforeFormActionViewAssignedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\BeforeListActionViewAssignedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\BeforeShowActionViewAssignedEvent;
 use Bzga\BzgaBeratungsstellensuche\Service\SessionService;
 use Bzga\BzgaBeratungsstellensuche\Utility\Utility;
 use GeorgRinger\NumberedPagination\NumberedPagination;
@@ -44,7 +47,7 @@ class EntryController extends ActionController
     /**
      * @var int
      */
-    public const GERMANY_ISOCODENUMBER = 276;
+    final public const GERMANY_ISOCODENUMBER = 276;
 
     protected EntryRepository $entryRepository;
 
@@ -105,7 +108,7 @@ class EntryController extends ActionController
             $propertyMappingConfiguration->forProperty('categories')->allowAllProperties();
             $propertyMappingConfiguration->allowCreationForSubProperty('categories');
             $propertyMappingConfiguration->allowModificationForSubProperty('categories');
-            $this->emitInitializeActionSignal(['propertyMappingConfiguration' => $propertyMappingConfiguration]);
+            $this->eventDispatcher->dispatch(new AfterEntryControllerInitializedEvent($propertyMappingConfiguration));
         }
     }
 
@@ -125,8 +128,9 @@ class EntryController extends ActionController
         $categories = $this->categoryRepository->findAll();
         $random = random_int(0, 1000);
         $assignedViewValues = compact('demand', 'kilometers', 'categories', 'countryZonesGermany', 'random');
-        $assignedViewValues = $this->emitActionSignal(Events::FORM_ACTION_SIGNAL, $assignedViewValues);
-        $this->view->assignMultiple($assignedViewValues);
+        $event = new BeforeFormActionViewAssignedEvent($assignedViewValues);
+        $event = $this->eventDispatcher->dispatch($event);
+        $this->view->assignMultiple($event->getAssignedViewValues());
         return $this->htmlResponse();
     }
 
@@ -140,14 +144,14 @@ class EntryController extends ActionController
         }
     }
 
-    public function listAction(Demand $demand = null): void
+    public function listAction(Demand $demand = null): ResponseInterface
     {
         if (!$demand instanceof Demand) {
             $demand = GeneralUtility::makeInstance(Demand::class);
         }
 
         if (!$demand->hasValidCoordinates()) {
-            $this->redirect('form', 'Entry', 'bzga_beratungsstellensuche', ['demand' => $demand], $this->settings['backPid']);
+            return $this->redirect('form', 'Entry', 'bzga_beratungsstellensuche', ['demand' => $demand], $this->settings['backPid']);
         }
 
         $entries = $this->entryRepository->findDemanded($demand);
@@ -167,8 +171,12 @@ class EntryController extends ActionController
             'pagination' => $pagination,
         ]);
         $assignedViewValues = compact('entries', 'demand', 'kilometers', 'categories', 'countryZonesGermany');
-        $assignedViewValues = $this->emitActionSignal(Events::LIST_ACTION_SIGNAL, $assignedViewValues);
+        $event = new BeforeListActionViewAssignedEvent($assignedViewValues);
+        $event = $this->eventDispatcher->dispatch($event);
+        $this->view->assignMultiple($event->getAssignedViewValues());
         $this->view->assignMultiple($assignedViewValues);
+
+        return $this->htmlResponse();
     }
 
     public function initializeShowAction(): void
@@ -176,17 +184,21 @@ class EntryController extends ActionController
         $this->addDemandRequestArgumentFromSession();
     }
 
-    public function showAction(Entry $entry = null, Demand $demand = null): void
+    public function showAction(Entry $entry = null, Demand $demand = null): ResponseInterface
     {
         if (!$entry instanceof Entry) {
             // @TODO: Add possibility to hook into here.
-            $this->redirect('list', null, null, [], $this->settings['listPid'], null, 404);
+            return $this->redirect('list', null, null, [], $this->settings['listPid'], null, 404);
         }
 
         $mapId = sprintf('map_%s', StringUtility::getUniqueId());
         $assignedViewValues = compact('entry', 'demand', 'mapId');
-        $assignedViewValues = $this->emitActionSignal(Events::SHOW_ACTION_SIGNAL, $assignedViewValues);
+
+        $event = new BeforeShowActionViewAssignedEvent($assignedViewValues);
+        $event = $this->eventDispatcher->dispatch($event);
+        $this->view->assignMultiple($event->getAssignedViewValues());
         $this->view->assignMultiple($assignedViewValues);
+        return $this->htmlResponse();
     }
 
     public function mapJavaScriptAction(string $mapId, ?Entry $mainEntry = null, ?Demand $demand = null): ResponseInterface
@@ -211,7 +223,7 @@ class EntryController extends ActionController
             try {
                 $queryResult = $this->entryRepository->findDemanded($demand);
                 $entries = Utility::transformQueryResultToObjectStorage($queryResult);
-            } catch (InvalidQueryException $e) {
+            } catch (InvalidQueryException) {
             }
         }
 
@@ -243,8 +255,7 @@ class EntryController extends ActionController
             // Current marker does not need detail link
             if (!$isCurrentMarker) {
                 $detailsPid = (int)($this->settings['singlePid'] ?? $this->getTyposcriptFrontendController()->id);
-                $uriBuilder = $this->controllerContext->getUriBuilder();
-                $infoWindowParameters['detailLink'] = $uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
+                $infoWindowParameters['detailLink'] = $this->uriBuilder->reset()->setTargetPageUid($detailsPid)->uriFor(
                     'show',
                     ['entry' => $entry],
                     'Entry'
@@ -318,26 +329,11 @@ class EntryController extends ActionController
         return $this->countryZoneRepository->findByCountryOrderedByLocalizedName($country);
     }
 
-    private function emitInitializeActionSignal(array $signalArguments): void
-    {
-        $this->signalSlotDispatcher->dispatch(static::class, Events::INITIALIZE_ACTION_SIGNAL, $signalArguments);
-    }
-
-    private function emitActionSignal(string $signalName, array $assignedViewValues): array
-    {
-        $signalArguments = [];
-        $signalArguments['extendedVariables'] = [];
-
-        $additionalViewValues = $this->signalSlotDispatcher->dispatch(static::class, $signalName, $signalArguments);
-
-        return array_merge($assignedViewValues, $additionalViewValues['extendedVariables']);
-    }
-
     private function addDemandRequestArgumentFromSession(): void
     {
         $demand = $this->sessionService->restoreFromSession();
         if ($demand) {
-            $this->request->setArgument('demand', $demand);
+            $this->request = $this->request->withArgument('demand', $demand);
         }
     }
 
@@ -345,7 +341,7 @@ class EntryController extends ActionController
     {
         if ($this->request->hasArgument('reset')) {
             $this->sessionService->cleanUpSession();
-            $this->request->setArgument('demand', null);
+            $this->request = $this->request->withArgument('demand', null);
         }
     }
 }

@@ -43,21 +43,19 @@ class ObjectStorageConverterTest extends UnitTestCase
     }
 
     /**
-     * @param mixed $unsupportedSource
      * @test
      * @dataProvider unsupportedSources
      */
-    public function isNotSupported($unsupportedSource)
+    public function isNotSupported(mixed $unsupportedSource)
     {
         self::assertFalse($this->subject->supports($unsupportedSource));
     }
 
     /**
-     * @param mixed $unsupportedSource
      * @test
      * @dataProvider unsupportedSources
      */
-    public function convertThrowsException($unsupportedSource)
+    public function convertThrowsException(mixed $unsupportedSource)
     {
         $this->expectException(InvalidArgumentException::class);
         $this->subject->convert($unsupportedSource);

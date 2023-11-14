@@ -18,11 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class TruncateCommand extends Command
 {
-    private EntryRepository $entryRepository;
-
-    public function __construct(EntryRepository $entryRepository)
+    public function __construct(private readonly EntryRepository $entryRepository)
     {
-        $this->entryRepository = $entryRepository;
         parent::__construct();
     }
 

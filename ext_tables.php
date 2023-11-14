@@ -1,5 +1,7 @@
 <?php
+
 use Bzga\BzgaBeratungsstellensuche\Report\StatusAllowUrlFopenOrCurlReport;
+
 if (!defined('TYPO3')) {
     die('Access denied.');
 }

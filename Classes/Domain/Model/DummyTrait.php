@@ -29,9 +29,6 @@ trait DummyTrait
         return $this->isDummyRecord;
     }
 
-    /**
-     * @param bool $isDummyRecord
-     */
     public function setIsDummyRecord(bool $isDummyRecord): void
     {
         $this->isDummyRecord = $isDummyRecord;

@@ -4,9 +4,15 @@
           product-name="bzga_beratungsstellensuche">
         <header/>
         <body>
-            <trans-unit id="pi1_title" xml:space="preserve">
+            <trans-unit id="plugin.pi1.title" xml:space="preserve">
 				<source>Beratungsstellensuche</source>
 			</trans-unit>
+            <trans-unit id="plugin.list.title" xml:space="preserve">
+                <source>Beratungsstellensuche nur Liste</source>
+            </trans-unit>
+            <trans-unit id="plugin.show.title" xml:space="preserve">
+                <source>Beratungsstellensuche nur Einzelansicht</source>
+            </trans-unit>
             <trans-unit id="pi1_plus_wiz_description" xml:space="preserve">
                 <source>Liste von Beratungsstellen</source>
             </trans-unit>

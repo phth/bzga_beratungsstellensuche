@@ -16,7 +16,7 @@ use Netzmacht\LeafletPHP\Value\LatLng;
 
 final class Coordinate implements CoordinateInterface
 {
-    private LatLng $coordinate;
+    private readonly LatLng $coordinate;
 
     public function __construct(float $latitude, float $longitude)
     {

@@ -13,20 +13,19 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 
 use Doctrine\DBAL\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * @author Sebastian Schreiber
+ * @template T of \TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface
+ * @extends \TYPO3\CMS\Extbase\Persistence\Repository<T>
  */
 abstract class AbstractBaseRepository extends Repository
 {
-    /**
-     * @var Dispatcher
-     */
-    protected $signalSlotDispatcher;
+    protected EventDispatcher $eventDispatcher;
 
     /**
      * @var array<non-empty-string, QueryInterface::ORDER_*>
@@ -53,9 +52,9 @@ abstract class AbstractBaseRepository extends Repository
      */
     public const SYS_FILE_REFERENCE = 'sys_file_reference';
 
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
+    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
     {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function findOldEntriesByExternalUidsDiffForTable(string $table, array $entries): ?array
@@ -64,10 +63,8 @@ abstract class AbstractBaseRepository extends Repository
 
         return $queryBuilder
             ->select('uid')
-            ->from(self::ENTRY_TABLE)
-            ->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))
-            ->execute()
-            ->fetchAll();
+            ->from(self::ENTRY_TABLE)->where($queryBuilder->expr()->notIn('external_id', $queryBuilder->createNamedParameter($entries, Connection::PARAM_INT_ARRAY)))->executeQuery()
+            ->fetchAllAssociative();
     }
 
     public function countByExternalIdAndHash($externalId, string $hash): int
@@ -77,15 +74,13 @@ abstract class AbstractBaseRepository extends Repository
         $constraints[] = $query->equals('externalId', $externalId);
         $constraints[] = $query->equals('hash', $hash);
 
-        return $query->matching($query->logicalAnd($constraints))->execute()->count();
+        return $query->matching($query->logicalAnd(...$constraints))->execute()->count();
     }
 
     /**
-     * @param mixed $externalId
-     *
      * @return object|null
      */
-    public function findOneByExternalId($externalId): ?object
+    public function findOneByExternalId(mixed $externalId): ?object
     {
         $query = $this->createQuery();
         $query->getQuerySettings()->setRespectStoragePage(false);
@@ -95,6 +90,10 @@ abstract class AbstractBaseRepository extends Repository
         return $object;
     }
 
+    /**
+     * @return QueryInterface
+     * @phpstan-return QueryInterface<T>
+     */
     public function createQuery(): QueryInterface
     {
         $query = parent::createQuery();

@@ -29,10 +29,7 @@ trait ExternalIdTrait
         return $this->externalId;
     }
 
-    /**
-     * @param mixed $externalId
-     */
-    public function setExternalId($externalId): void
+    public function setExternalId(mixed $externalId): void
     {
         $this->externalId = $externalId;
     }

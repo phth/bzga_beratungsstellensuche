@@ -28,26 +28,20 @@ class GeolocationService implements GeolocationServiceInterface
     /**
      * @var string
      */
-    public const DISTANCE_SQL_FIELD = '(6371.01 * acos(cos(radians(%1$f)) * cos(radians(latitude)) * cos(radians(longitude) - radians(%2$f)) + sin(radians(%1$f) ) * sin(radians(latitude))))';
+    final public const DISTANCE_SQL_FIELD = '(6371.01 * acos(cos(radians(%1$f)) * cos(radians(latitude)) * cos(radians(longitude) - radians(%2$f)) + sin(radians(%1$f) ) * sin(radians(latitude))))';
 
     /**
      * @var float
      */
-    public const EARTH_RADIUS = 6371.01;
+    final public const EARTH_RADIUS = 6371.01;
 
     /**
      * @var int
      */
-    public const DEFAULT_RADIUS = 10;
+    final public const DEFAULT_RADIUS = 10;
 
-    protected SettingsService $settingsService;
-
-    protected Provider $geocoder;
-
-    public function __construct(SettingsService $settingsService, Provider $geocoder)
+    public function __construct(protected SettingsService $settingsService, protected Provider $geocoder)
     {
-        $this->settingsService = $settingsService;
-        $this->geocoder = $geocoder;
     }
 
     public function calculateDistance(GeopositionInterface $demandPosition, GeopositionInterface $locationPosition): float
@@ -64,8 +58,7 @@ class GeolocationService implements GeolocationServiceInterface
         return sprintf(
             self::DISTANCE_SQL_FIELD,
             $demandPosition->getLatitude(),
-            $demandPosition->getLongitude(),
-            $demandPosition->getKilometers()
+            $demandPosition->getLongitude()
         ) . ' AS ' . $alias;
     }
     public function findAddressByDemand(Demand $demand): ?Location
@@ -73,7 +66,7 @@ class GeolocationService implements GeolocationServiceInterface
         if ($demand->getLocation()) {
             try {
                 return $this->geocoder->geocodeQuery(GeocodeQuery::create($demand->getAddressToGeocode()))->first();
-            } catch (CollectionIsEmpty $e) {
+            } catch (CollectionIsEmpty) {
                 return null;
             }
         }

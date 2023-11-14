@@ -14,7 +14,9 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\Repository;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Dto\Demand;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\Entry;
 use Bzga\BzgaBeratungsstellensuche\Domain\Model\GeopositionInterface;
-use Bzga\BzgaBeratungsstellensuche\Events;
+use Bzga\BzgaBeratungsstellensuche\Events\AfterEntriesTruncatedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\AfterEntryDeletedEvent;
+use Bzga\BzgaBeratungsstellensuche\Events\ExtendDemandConstraintsEvent;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\Decorator\GeolocationServiceCacheDecorator;
 use Bzga\BzgaBeratungsstellensuche\Service\Geolocation\GeolocationService;
 use RuntimeException;
@@ -53,10 +55,10 @@ class EntryRepository extends AbstractBaseRepository
     public function findByQuery(string $q)
     {
         $query = $this->createQuery();
-        return $query->matching($query->logicalOr([
+        return $query->matching($query->logicalOr(
             $query->like('zip', $q . '%'),
-            $query->like('city', $q . '%'),
-        ]))->execute();
+            $query->like('city', $q . '%')
+        ))->execute();
     }
 
     public function findDemanded(Demand $demand)
@@ -80,7 +82,7 @@ class EntryRepository extends AbstractBaseRepository
             }
 
             if (count($searchConstraints)) {
-                $constraints[] = $query->logicalOr($searchConstraints);
+                $constraints[] = $query->logicalOr(...$searchConstraints);
             }
         }
 
@@ -90,7 +92,7 @@ class EntryRepository extends AbstractBaseRepository
                 $categoryConstraints[] = $query->contains('categories', $category);
             }
             if (! empty($categoryConstraints)) {
-                $constraints[] = $query->logicalOr($categoryConstraints);
+                $constraints[] = $query->logicalOr(...$categoryConstraints);
             }
         }
 
@@ -100,6 +102,10 @@ class EntryRepository extends AbstractBaseRepository
 
         // Call hook functions for additional constraints
         if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXT']['bzga_beratungsstellensuche']['Domain/Repository/EntryRepository.php']['findDemanded'])) {
+            trigger_error(
+                'The hook "bzga_beratungsstellensuche" is deprecated. Implement a listener for  ExtendDemandConstraintsEvent instead.',
+                E_USER_DEPRECATED
+            );
             $params = [
                 'demand' => $demand,
                 'query' => $query,
@@ -109,9 +115,11 @@ class EntryRepository extends AbstractBaseRepository
                 GeneralUtility::callUserFunction($reference, $params, $this);
             }
         }
+        $event = new ExtendDemandConstraintsEvent($demand, $query, $constraints);
+        $event = $this->eventDispatcher->dispatch($event);
 
-        if (! empty($constraints) && is_array($constraints)) {
-            $query->matching($query->logicalAnd($constraints));
+        if (! empty($event->getConstraints())) {
+            $query->matching($query->logicalAnd(...$event->getConstraints()));
         }
 
         // Bug. Counting is wrong in TYPO3 Version 8 Doctrine, if we do not use custom statement here. Why?
@@ -135,15 +143,11 @@ class EntryRepository extends AbstractBaseRepository
     public function truncateAll(): void
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable(self::ENTRY_TABLE);
-        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->execute()->fetchAll();
+        $entries = $queryBuilder->select('uid')->from(self::ENTRY_TABLE)->executeQuery()->fetchAllAssociative();
         foreach ($entries as $entry) {
             $this->deleteByUid($entry['uid']);
         }
-
-        $this->signalSlotDispatcher->dispatch(
-            static::class,
-            Events::TABLE_TRUNCATE_ALL_SIGNAL
-        );
+        $this->eventDispatcher->dispatch(new AfterEntriesTruncatedEvent($entries));
     }
 
     private function createCoordsConstraints(
@@ -183,7 +187,7 @@ class EntryRepository extends AbstractBaseRepository
         foreach ($fileReferences as $fileReference) {
             try {
                 $fileDeleted = $fileReference->getOriginalFile()->delete();
-            } catch (RuntimeException $e) {
+            } catch (RuntimeException) {
             }
         }
 
@@ -195,11 +199,6 @@ class EntryRepository extends AbstractBaseRepository
             $this->remove($entry);
             $this->persistenceManager->persistAll();
         }
-
-        $this->signalSlotDispatcher->dispatch(
-            static::class,
-            Events::REMOVE_ENTRY_FROM_DATABASE_SIGNAL,
-            ['uid' => $uid]
-        );
+        $this->eventDispatcher->dispatch(new AfterEntryDeletedEvent($uid));
     }
 }

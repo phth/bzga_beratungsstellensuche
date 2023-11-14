@@ -24,19 +24,13 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface as CacheInterface;
  */
 class GeolocationServiceCacheDecorator implements GeolocationServiceInterface
 {
-    protected CacheInterface $cache;
-
-    protected GeolocationServiceInterface $geolocationService;
-
-    public function __construct(GeolocationServiceInterface $geolocationService, CacheInterface $cache)
+    public function __construct(protected GeolocationServiceInterface $geolocationService, protected CacheInterface $cache)
     {
-        $this->geolocationService = $geolocationService;
-        $this->cache              = $cache;
     }
 
     public function findAddressByDemand(Demand $demand): ?Address
     {
-        $cacheIdentifier = sha1($demand->getAddressToGeocode());
+        $cacheIdentifier = sha1((string)$demand->getAddressToGeocode());
 
         if ($this->cache->has($cacheIdentifier)) {
             return unserialize($this->cache->get($cacheIdentifier));

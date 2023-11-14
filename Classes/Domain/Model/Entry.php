@@ -103,15 +103,15 @@ class Entry extends AbstractEntity implements GeopositionInterface, MapWindowInt
 
     /**
      * @var FileReference
-     * @Cascade("remove")
      */
+    #[Cascade(['value' => 'remove'])]
     protected $image;
 
     /**
      * @var ObjectStorage<Category>
-     * @Lazy
-     * @Cascade("remove")
      */
+    #[Lazy]
+    #[Cascade(['value' => 'remove'])]
     protected $categories;
 
     /**

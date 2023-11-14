@@ -63,8 +63,8 @@ final class BeratungsstellensucheFlexFormManipulation implements FormDataProvide
                 $selectedView = $actionParts[0];
             }
 
-        // new plugin element
-        } elseif (\str_starts_with($row['uid'], 'NEW')) {
+            // new plugin element
+        } elseif (\str_starts_with((string)$row['uid'], 'NEW')) {
             // use List as starting view
             $selectedView = 'Entry->list;Entry->show';
         }

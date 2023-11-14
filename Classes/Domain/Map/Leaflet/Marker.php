@@ -23,7 +23,7 @@ final class Marker implements MarkerInterface
     /**
      * @var LeafletMarker
      */
-    private LeafletMarker $marker;
+    private readonly LeafletMarker $marker;
 
     public function __construct(string $identifier, CoordinateInterface $coordinate)
     {

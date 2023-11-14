@@ -20,10 +20,7 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
  */
 class SettingsService implements SingletonInterface, SettingsServiceInterface
 {
-    /**
-     * @var mixed[]
-     */
-    protected $settings;
+    protected ?array $settings = null;
 
     /**
      * @var ConfigurationManagerInterface

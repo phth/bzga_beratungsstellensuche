@@ -22,7 +22,7 @@ class PropertyMapper implements TypeConverterInterface
     /**
      * @var TypeConverterInterface[]
      */
-    private array $typeConverters;
+    private readonly array $typeConverters;
 
     public function __construct(?array $typeConverters = null)
     {
@@ -72,14 +72,10 @@ class PropertyMapper implements TypeConverterInterface
     private function converterSupportsType(TypeConverterInterface $typeConverter, string $type): bool
     {
         $interfaces = class_implements($typeConverter);
-        switch ($type) {
-            case TypeConverterInterface::CONVERT_AFTER:
-                $className = TypeConverterAfterInterface::class;
-                break;
-            default:
-                $className = TypeConverterBeforeInterface::class;
-                break;
-        }
+        $className = match ($type) {
+            TypeConverterInterface::CONVERT_AFTER => TypeConverterAfterInterface::class,
+            default => TypeConverterBeforeInterface::class,
+        };
         return in_array($className, $interfaces, true) ? true : false;
     }
 

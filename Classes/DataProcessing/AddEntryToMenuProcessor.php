@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Bzga\BzgaBeratungsstellensuche\DataProcessing;
 
 use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
@@ -73,15 +72,11 @@ final class AddEntryToMenuProcessor implements DataProcessorInterface
                 ->getQueryBuilderForTable('tx_bzgaberatungsstellensuche_domain_model_entry');
             $row = $queryBuilder
                 ->select('*')
-                ->from('tx_bzgaberatungsstellensuche_domain_model_entry')
-                ->where(
-                    $queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($entryId, \PDO::PARAM_INT))
-                )
-                ->execute()
-                ->fetch();
+                ->from('tx_bzgaberatungsstellensuche_domain_model_entry')->where($queryBuilder->expr()->eq('uid', $queryBuilder->createNamedParameter($entryId, \PDO::PARAM_INT)))->executeQuery()
+                ->fetchAssociative();
 
             if ($row) {
-                $row = $this->getTypoScriptFrontendController()->sys_page->getRecordOverlay('tx_bzgaberatungsstellensuche_domain_model_entry', $row, $this->getCurrentLanguage());
+                $row = $this->getTypoScriptFrontendController()->sys_page->getLanguageOverlay('tx_bzgaberatungsstellensuche_domain_model_entry', $row, $this->getCurrentLanguage());
             }
 
             return empty($row) ? [] : $row;
@@ -89,17 +84,12 @@ final class AddEntryToMenuProcessor implements DataProcessorInterface
         return [];
     }
 
-    private function getCurrentLanguage(): int
+    private function getCurrentLanguage(): \TYPO3\CMS\Core\Context\LanguageAspect
     {
-        $languageId = 0;
         $context = GeneralUtility::makeInstance(Context::class);
-        try {
-            $languageId = $context->getPropertyFromAspect('language', 'contentId');
-        } catch (AspectNotFoundException $e) {
-            // do nothing
-        }
 
-        return (int)$languageId;
+        // Reading the current fallback chain instead $TSFE->sys_language_mode
+        return $context->getPropertyFromAspect('language', 'fallbackChain');
     }
 
     private function getTypoScriptFrontendController(): TypoScriptFrontendController

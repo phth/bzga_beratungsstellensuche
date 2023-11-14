@@ -43,15 +43,18 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->alias(ImporterInterface::class, XmlImporter::class);
 
     $services->set('beratungsstellensuche.cache.geolcation', FrontendInterface::class)
-            ->factory([service(CacheManager::class), 'getCache'])
-            ->args(['bzgaberatungsstellensuche_cache_coordinates']);
+        ->factory([service(CacheManager::class), 'getCache'])
+        ->args(['bzgaberatungsstellensuche_cache_coordinates']);
 
     $services->set('beratungsstellensuche.geocoder', Provider::class)
         ->factory([service(GeocoderFactory::class), 'createInstance']);
 
     $services->alias(MapBuilderInterface::class, MapBuilder::class);
 
-    $services->set(GeolocationServiceCacheDecorator::class)->arg('$cache', service('beratungsstellensuche.cache.geolcation'))->public();
+    $services->set(GeolocationServiceCacheDecorator::class)->arg(
+        '$cache',
+        service('beratungsstellensuche.cache.geolcation')
+    )->public();
     $services->set(GetSetMethodNormalizer::class)->public();
     $services->set(EntryNormalizer::class)->public();
 

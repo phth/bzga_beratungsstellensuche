@@ -21,7 +21,6 @@ use Netzmacht\JavascriptBuilder\Builder;
 use Netzmacht\JavascriptBuilder\Encoder\ChainEncoder;
 use Netzmacht\JavascriptBuilder\Encoder\JavascriptEncoder;
 use Netzmacht\JavascriptBuilder\Encoder\MultipleObjectsEncoder;
-use Netzmacht\JavascriptBuilder\Flags;
 use Netzmacht\JavascriptBuilder\Output;
 use Netzmacht\JavascriptBuilder\Symfony\EventDispatchingEncoder;
 use Netzmacht\LeafletPHP\Definition\Map as LeafletMap;
@@ -69,7 +68,7 @@ final class MapBuilder implements MapBuilderInterface
     public function build(MapInterface $map): string
     {
         $dispatcher = $this->dispatcherFactory();
-        $mapBuilder = new Leaflet(new Builder($this->mapFactory($dispatcher)), $dispatcher, [], JSON_UNESCAPED_SLASHES ^ Flags::BUILD_STACK);
+        $mapBuilder = new Leaflet(new Builder($this->mapFactory($dispatcher)), $dispatcher, [], null);
 
         return $mapBuilder->build($map->getMap());
     }

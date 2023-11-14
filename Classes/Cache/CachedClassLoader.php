@@ -41,13 +41,13 @@ class CachedClassLoader
 
     public static function registerAutoloader(): bool
     {
-        return spl_autoload_register([self::class, 'autoload'], true, true);
+        return spl_autoload_register(self::autoload(...), true, true);
     }
 
     public static function autoload(string $className): void
     {
         $className = ltrim($className, '\\');
-        if (strpos($className, static::$namespace) !== false) {
+        if (str_contains($className, static::$namespace)) {
             // Lookup the class in the array of the entities defined in ext_localconf.php and check its presence in the class cache
             $entities = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][static::$extensionKey]['entities'];
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
@@ -55,9 +55,9 @@ class CachedClassLoader
             /** @var PhpFrontend $classCache */
             $classCache = $cacheManager->getCache(static::$extensionKey);
             foreach ($entities as $entity) {
-                $entityClassName = static::$namespace . str_replace('/', '\\', $entity);
+                $entityClassName = static::$namespace . str_replace('/', '\\', (string)$entity);
                 if ($className === $entityClassName) {
-                    $entryIdentifier = 'DomainModel' . str_replace('/', '', $entity);
+                    $entryIdentifier = 'DomainModel' . str_replace('/', '', (string)$entity);
                     if (!$classCache->has($entryIdentifier)) {
                         // The class cache needs to be rebuilt
                         $classCacheManager->reBuild();

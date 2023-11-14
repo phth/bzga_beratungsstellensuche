@@ -37,19 +37,19 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
     /**
      * Folder where the file upload should go to (including storage).
      */
-    public const CONFIGURATION_UPLOAD_FOLDER = 1;
+    final public const CONFIGURATION_UPLOAD_FOLDER = 1;
 
     /**
      * How to handle a upload when the name of the uploaded file conflicts.
      */
-    public const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
+    final public const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
 
     /**
      * Whether to replace an already present resource.
      * Useful for "maxitems = 1" fields and properties
      * with no ObjectStorage annotation.
      */
-    public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
+    final public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
     private string $defaultUploadFolder = '1:/user_upload/tx_bzgaberatungsstellensuche';
 
@@ -73,7 +73,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         'tiff' => 'image/tiff',
     ];
 
-    private DataHandler $dataHandler;
+    private readonly DataHandler $dataHandler;
 
     public function __construct(?DataHandler $dataHandler = null)
     {
@@ -130,7 +130,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             $this->dataHandler->process_datamap();
 
             return $this->dataHandler->substNEWwithIDs[$fileReferenceUid];
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             // TODO: Add logging here
         }
 
@@ -150,7 +150,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         if (is_array($imageInfo)) {
             $extension = $this->getExtensionFromMimeType($imageInfo['mime']);
             if ($extension) {
-                $pathToUploadFile = Environment::getPublicPath() . '/' . $this->tempFolder . GeneralUtility::stdAuthCode($entity->getExternalId()) . '.' . $extension;
+                $pathToUploadFile = Environment::getPublicPath() . '/' . $this->tempFolder . GeneralUtility::hmac($entity->getExternalId()) . '.' . $extension;
                 $error = GeneralUtility::writeFileToTypo3tempDir($pathToUploadFile, $imageContent);
                 // due to Bug https://forge.typo3.org/issues/90063#change-431917 error always conatains something.
                 // therefore just testing if file got uploaded
@@ -221,8 +221,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
         if ($source->getIdentifier() !== '') {
             $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_file');
             $row = $queryBuilder->select('*')
-                ->from('sys_file')
-                ->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->execute()->fetch();
+                ->from('sys_file')->where($queryBuilder->expr()->eq('external_identifier', $queryBuilder->createNamedParameter($source->getIdentifier())))->executeQuery()->fetchAssociative();
             if ($row) {
                 return $row['uid'];
             }
@@ -237,7 +236,7 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
                 );
 
                 return $falFile->getUid();
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return null;
             }
         }

@@ -19,7 +19,7 @@ final class PopUp implements PopUpInterface
     /**
      * @var \Netzmacht\LeafletPHP\Definition\UI\Popup
      */
-    private CorePopUp $popUp;
+    private readonly CorePopUp $popUp;
 
     public function __construct(string $identifier)
     {

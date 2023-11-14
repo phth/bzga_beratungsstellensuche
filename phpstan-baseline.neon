@@ -1,31 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Bzga\\\\BzgaBeratungsstellensuche\\\\Backend\\\\FormDataProvider\\\\BeratungsstellensucheFlexFormManipulation\\:\\:updateFlexforms\\(\\) is unused\\.$#"
-			count: 1
-			path: Classes/Backend/FormDataProvider/BeratungsstellensucheFlexFormManipulation.php
-
-		-
-			message: "#^Parameter \\#4 \\$jsonEncodeFlags of class Netzmacht\\\\LeafletPHP\\\\Leaflet constructor expects null, int given\\.$#"
-			count: 1
-			path: Classes/Domain/Map/Leaflet/MapBuilder.php
-
-		-
-			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\:\\:statement\\(\\)\\.$#"
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<TYPO3\\\\CMS\\\\Extbase\\\\DomainObject\\\\DomainObjectInterface\\>\\:\\:statement\\(\\)\\.$#"
 			count: 1
 			path: Classes/Domain/Repository/EntryRepository.php
 
 		-
-			message: "#^Call to an undefined method SJBR\\\\StaticInfoTables\\\\Domain\\\\Repository\\\\CountryZoneRepository\\:\\:findOneByExternalId\\(\\)\\.$#"
+			message: "#^Class Bzga\\\\BzgaBeratungsstellensuche\\\\Domain\\\\Serializer\\\\Normalizer\\\\GetSetMethodNormalizer extends @final class Symfony\\\\Component\\\\Serializer\\\\Normalizer\\\\GetSetMethodNormalizer\\.$#"
 			count: 1
-			path: Classes/Domain/Serializer/Normalizer/EntryNormalizer.php
-
-		-
-			message: "#^Call to sprintf contains 2 placeholders, 3 values given\\.$#"
-			count: 1
-			path: Classes/Service/Geolocation/GeolocationService.php
-
-		-
-			message: "#^Property Bzga\\\\BzgaBeratungsstellensuche\\\\Service\\\\SettingsService\\:\\:\\$settings \\(array\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: Classes/Service/SettingsService.php
+			path: Classes/Domain/Serializer/Normalizer/GetSetMethodNormalizer.php

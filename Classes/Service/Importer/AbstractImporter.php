@@ -16,10 +16,10 @@ use Bzga\BzgaBeratungsstellensuche\Domain\Manager\EntryManager;
 use Bzga\BzgaBeratungsstellensuche\Domain\Serializer\Serializer;
 use Bzga\BzgaBeratungsstellensuche\Domain\ValueObject\ImportAuthorization;
 use Bzga\BzgaBeratungsstellensuche\Service\Importer\Exception\ContentCouldNotBeFetchedException;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use UnexpectedValueException;
 
 /**
@@ -33,7 +33,7 @@ abstract class AbstractImporter implements ImporterInterface
 
     protected CategoryManager $categoryManager;
 
-    protected Dispatcher $signalSlotDispatcher;
+    protected EventDispatcher $eventDispatcher;
 
     public function importFromFile(string $file, int $pid = 0): void
     {
@@ -88,7 +88,7 @@ abstract class AbstractImporter implements ImporterInterface
 
         $content = $response->getBody()->__toString();
 
-        if ($content === false) {
+        if ($content === '') {
             throw new ContentCouldNotBeFetchedException('The content could not be fetched');
         }
 
@@ -110,8 +110,8 @@ abstract class AbstractImporter implements ImporterInterface
         $this->serializer = $serializer;
     }
 
-    public function injectSignalSlotDispatcher(Dispatcher $signalSlotDispatcher): void
+    public function injectEventDispatcher(EventDispatcher $eventDispatcher): void
     {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 }

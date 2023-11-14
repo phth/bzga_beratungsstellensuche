@@ -23,14 +23,8 @@ use TYPO3\CMS\Core\Core\Bootstrap;
 
 final class ImportCommand extends Command
 {
-    private ImporterInterface $importer;
-
-    private EntryRepository $entryRepository;
-
-    public function __construct(ImporterInterface $importer, EntryRepository $entryRepository)
+    public function __construct(private readonly ImporterInterface $importer, private readonly EntryRepository $entryRepository)
     {
-        $this->importer = $importer;
-        $this->entryRepository = $entryRepository;
         parent::__construct();
     }
 

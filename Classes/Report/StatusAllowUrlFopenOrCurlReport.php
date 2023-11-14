@@ -23,7 +23,7 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
     /**
      * @var string
      */
-    public const MESSAGE = 'allow_url_fopen must be on or curl must be enabled to allow
+    final public const MESSAGE = 'allow_url_fopen must be on or curl must be enabled to allow
 				communication between TYPO3 and the remote Server to fetch the XML-Url.';
 
     public function getStatus(): array
@@ -49,5 +49,10 @@ class StatusAllowUrlFopenOrCurlReport implements StatusProviderInterface
         );
 
         return $reports;
+    }
+
+    public function getLabel(): string
+    {
+        return '';
     }
 }

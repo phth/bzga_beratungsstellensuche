@@ -26,15 +26,14 @@
         }
     },
     "require": {
-        "php": "^7.4",
+        "php": "^8.1 || ^8.2",
         "ext-json": "*",
         "ext-simplexml": "*",
-        "typo3/cms-core": "^11.5",
-        "typo3/cms-reports": "^11.5",
-        "typo3/cms-scheduler": "^11.5",
-        "symfony/serializer": "^3.0",
-        "sjbr/static-info-tables": "^11.5",
-        "jambagecom/static-info-tables-de": "^6.0",
+        "typo3/cms-core": "^12.4",
+        "typo3/cms-reports": "^12.4",
+        "typo3/cms-scheduler": "^12.4",
+        "symfony/serializer": "^5.4. || ^6.3",
+        "sjbr/static-info-tables": "dev-master",
         "netzmacht/php-leaflet": "^1.1",
         "geocoder-php/google-maps-provider": "^4.4",
         "php-http/guzzle7-adapter": "^1.0",
@@ -43,19 +42,18 @@
         "georgringer/numbered-pagination": "^1.0"
     },
     "require-dev": {
-        "typo3/testing-framework": "^6.14.0",
-        "typo3/cms-tstemplate": "^11.5",
-        "typo3/cms-seo": "^11.5",
-        "typo3/cms-fluid-styled-content": "^11.5",
-        "typo3/cms-belog": "^11.5",
-        "typo3/cms-rte-ckeditor": "^11.5",
-        "typo3/minimal": "^11.5",
-        "helhum/typo3-console": "^7.0",
+        "typo3/testing-framework": "^7",
+        "typo3/cms-tstemplate": "^11.5 || ^12.4",
+        "typo3/cms-seo": "^11.5 || ^12.4",
+        "typo3/cms-fluid-styled-content": "^12.4",
+        "typo3/cms-belog": "^12.4",
+        "typo3/cms-rte-ckeditor": "^12.4",
+        "typo3/minimal": "^11.5 || ^12.4",
+        "helhum/typo3-console": "^8.0",
         "saschaegerer/phpstan-typo3": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.2",
         "typo3/coding-standards": "^0.5.0",
         "phpspec/prophecy": "^1.16",
-        "nimut/testing-framework": "^6.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/phpstan": "^1.9.14",
         "ssch/typo3-rector": "^1.1"
@@ -73,12 +71,18 @@
         },
         "allow-plugins": {
             "typo3/class-alias-loader": true,
-            "typo3/cms-composer-installers": true
+            "typo3/cms-composer-installers": true,
+            "php-http/discovery": true
         }
     },
     "scripts": {
         "post-autoload-dump": [
             "TYPO3\\TestingFramework\\Composer\\ExtensionTestEnvironment::prepare"
+        ],
+        "test": [
+            "@test-php-lint",
+            "@php-cs-fixer",
+            "@test-stan"
         ],
         "test-php-lint": [
             "parallel-lint ./Classes/",
@@ -97,13 +101,16 @@
         "test-stan": [
             "phpstan"
         ],
+        "stan-baseline": [
+            "phpstan --generate-baseline"
+        ],
         "test-functional": [
             "phpunit --colors -c Tests/Build/FunctionalTests.xml"
         ]
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "11.0.x-dev"
+            "dev-master": "12.0.x-dev"
         },
         "typo3/cms": {
             "extension-key": "bzga_beratungsstellensuche",

@@ -20,9 +20,9 @@ $EM_CONF[$_EXTKEY] = [
         'conflicts' => [],
     ],
     'autoload' => [
-        'psr-4' => ['Bzga\\BzgaBeratungsstellensuche\\' => 'Classes']
+        'psr-4' => ['Bzga\\BzgaBeratungsstellensuche\\' => 'Classes'],
     ],
     'autoload-dev' => [
-        'psr-4' => ['Bzga\\BzgaBeratungsstellensuche\\Tests\\' => 'Tests']
+        'psr-4' => ['Bzga\\BzgaBeratungsstellensuche\\Tests\\' => 'Tests'],
     ],
 ];

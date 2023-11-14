@@ -13,15 +13,8 @@ namespace Bzga\BzgaBeratungsstellensuche\Domain\ValueObject;
 
 final class ImportAuthorization
 {
-    private string $url;
-    private string $clientId;
-    private string $clientSecret;
-
-    public function __construct(string $url, string $clientId, string $clientSecret)
+    public function __construct(private readonly string $url, private readonly string $clientId, private readonly string $clientSecret)
     {
-        $this->url = $url;
-        $this->clientId = $clientId;
-        $this->clientSecret = $clientSecret;
     }
 
     public function getUrl(): string

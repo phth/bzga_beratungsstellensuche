@@ -16,31 +16,26 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity as CoreAbstractEntity;
 /**
  * @author Sebastian Schreiber
  */
-abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterface, ExternalIdInterface
+abstract class AbstractEntity extends CoreAbstractEntity implements DummyInterface, ExternalIdInterface, \Stringable
 {
     use DummyTrait;
     use ExternalIdTrait;
-
     /**
      * @var string
      */
     protected $title;
-
     public function __construct(string $title = '')
     {
         $this->title = $title;
     }
-
     public function getTitle(): string
     {
         return $this->title;
     }
-
     public function setTitle(string $title): void
     {
         $this->title = trim($title);
     }
-
     public function __toString(): string
     {
         return $this->getTitle();
