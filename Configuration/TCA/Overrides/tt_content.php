@@ -20,7 +20,7 @@ foreach ($pluginConfig as $pluginName) {
         'BzgaBeratungsstellensuche',
         \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToUpperCamelCase($pluginName),
         'LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:plugin.' . $pluginName . '.title',
-        null,
+        'ext-bzgaberatungsstellensuche-wizard-icon',
         'bzga_beratungsstellensuche'
     );
 

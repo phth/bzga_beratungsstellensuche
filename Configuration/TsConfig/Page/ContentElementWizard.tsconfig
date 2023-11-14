@@ -1,8 +1,10 @@
-mod.wizards.newContentElement.wizardItems.plugins {
+mod.wizards.newContentElement.wizardItems.bzgaberatungsstellensuche {
+    header = Beratungsstellensuche
+    show = *
 	elements {
 		bzgaberatungsstellensuche_pi1 {
 			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
-			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
+			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:plugin.pi1.title
 			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
 			tt_content_defValues {
 				CType = bzgaberatungsstellensuche_pi1
@@ -10,7 +12,7 @@ mod.wizards.newContentElement.wizardItems.plugins {
 		}
 		bzgaberatungsstellensuche_list {
 			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
-			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
+			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:plugin.list.title
 			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
 			tt_content_defValues {
 				CType = bzgaberatungsstellensuche_list
@@ -18,7 +20,7 @@ mod.wizards.newContentElement.wizardItems.plugins {
 		}
 		bzgaberatungsstellensuche_show {
 			iconIdentifier = ext-bzgaberatungsstellensuche-wizard-icon
-			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_title
+			title = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:plugin.show.title
 			description = LLL:EXT:bzga_beratungsstellensuche/Resources/Private/Language/locallang_be.xlf:pi1_plus_wiz_description
 			tt_content_defValues {
 				CType = bzgaberatungsstellensuche_show
