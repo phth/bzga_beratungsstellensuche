@@ -99,11 +99,6 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
     public function convert($source, array $configuration = null)
     {
-        // Check if we have no image url, return 0 if not
-        if ($source->getExternalUrl() === '') {
-            return 0;
-        }
-
         // First of all we delete the old references
         /** @var AbstractEntity|ExternalIdInterface $entity */
         $entity = $configuration['entity'];
@@ -116,6 +111,12 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
             'pid' => $entity->getPid(),
         ];
 
+        // Check if we have no image url, return 0 if not
+        if ('' === $source->getExternalUrl()) {
+            $this->deleteOldFileReferences($fileReferenceData);
+            return 0;
+        }
+
         if (! $entity->_isNew()) {
             $this->deleteOldFileReferences($fileReferenceData);
         }
@@ -125,12 +126,16 @@ class ImageLinkConverter implements TypeConverterBeforeInterface
 
             $fileReferenceUid = uniqid('NEW_', false);
             $dataMap = [];
-            $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
-            $this->dataHandler->start($dataMap, []);
-            $this->dataHandler->process_datamap();
+            if ($this->dataHandler instanceof DataHandler) {
+                $dataMap['sys_file_reference'][$fileReferenceUid] = $fileReferenceData;
+                $this->dataHandler->start($dataMap, []);
+                $this->dataHandler->process_datamap();
 
-            return $this->dataHandler->substNEWwithIDs[$fileReferenceUid];
-        } catch (\Exception $e) {
+                return $this->dataHandler->substNEWwithIDs[$fileReferenceUid];
+            }
+
+            return $fileReferenceUid;
+        } catch (Exception $e) {
             // TODO: Add logging here
         }
 
